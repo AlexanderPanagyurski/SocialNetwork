@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SocialNetwork.Data.Models\SocialNetwork.Data.Models.csproj" />
+    <ProjectReference Include="..\SocialNetwork.Data\SocialNetwork.Data.csproj" />
+    <ProjectReference Include="..\SocialNetwork.Web.ViewModels\SocialNetwork.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
