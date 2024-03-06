@@ -16,7 +16,7 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpGet("{postId}")]
-        public async Task<IActionResult> Index(string postId)
+        public async Task<IActionResult> GetPostByIdAsync(string postId)
         {
             var viewModel = await this.postsService.GetByIdAsync(postId);
 
