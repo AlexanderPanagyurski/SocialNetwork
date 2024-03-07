@@ -15,22 +15,32 @@ namespace SocialNetwork.WebApi.Controllers
             this.postsService = postsService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetPostsAsync()
+        {
+            var userId = string.Empty;
+
+            var posts =await this.postsService.GetPostsAsync(userId);
+
+            return this.Ok(posts);
+        }
+
         [HttpGet("{postId}")]
         public async Task<IActionResult> GetPostByIdAsync(string postId)
         {
-            var viewModel = await this.postsService.GetByIdAsync(postId);
+            var post = await this.postsService.GetByIdAsync(postId);
 
-            return this.Ok(viewModel);
+            return this.Ok(post);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePostAsync(CreatePostViewModel viewModel)
+        public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostViewModel viewModel)
         {
             var userId = string.Empty;
 
             if (userId != null)
             {
-               // var postId = this.postsService.CreateAsync(viewModel, userId);
+                // var postId = this.postsService.CreateAsync(viewModel, userId);
             }
             return this.NoContent();
         }

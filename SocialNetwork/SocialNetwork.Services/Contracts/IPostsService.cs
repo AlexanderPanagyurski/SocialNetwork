@@ -7,5 +7,7 @@
     public interface IPostsService
     {
         Task<PostViewModel> GetByIdAsync(string id);
+
+        Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId);
     }
 }

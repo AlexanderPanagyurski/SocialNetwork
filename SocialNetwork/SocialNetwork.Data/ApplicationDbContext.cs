@@ -45,6 +45,8 @@
 
         public DbSet<Vote> Votes { get; set; }
 
+        public DbSet<UserFollower> UserFollowers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -22,6 +22,11 @@
             appUser
                 .Property(x => x.PasswordHash)
                 .IsRequired();
+
+            appUser.HasMany(e => e.Followings)
+                .WithOne(f => f.User)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

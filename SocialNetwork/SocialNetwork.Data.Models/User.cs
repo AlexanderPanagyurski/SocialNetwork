@@ -45,5 +45,7 @@
         public virtual ICollection<UserImage> UserImages { get; set; } = new HashSet<UserImage>();
 
         public virtual ICollection<Vote> Votes { get; set; } = new HashSet<Vote>();
+
+        public ICollection<UserFollower> Followings { get; set; } = new HashSet<UserFollower>();
     }
 }
