@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using SocialNetwork.Data;
+    using SocialNetwork.Data.Models;
     using SocialNetwork.Services.Contracts;
     using SocialNetwork.Web.ViewModels.Post;
     using System.Collections.Generic;
@@ -79,6 +80,20 @@
             }
 
             return posts.OrderByDescending(x => x.CreatedOn);
+        }
+
+        public async Task<string> CreateAsync(CreatePostViewModel input, string userId)
+        {
+            var post = new Post
+            {
+                Content = input.Content,
+                Title = input.Title,
+                UserId = userId,
+            };
+
+            await this.dbContext.Posts.AddAsync(post);
+            await this.dbContext.SaveChangesAsync();
+            return post.Id;
         }
     }
 }

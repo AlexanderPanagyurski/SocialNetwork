@@ -9,5 +9,7 @@
         Task<PostViewModel> GetByIdAsync(string id);
 
         Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId);
+
+        Task<string> CreateAsync(CreatePostViewModel input, string userId);
     }
 }

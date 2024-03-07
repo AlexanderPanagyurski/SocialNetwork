@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Post;
+using System.Security.Claims;
 
 namespace SocialNetwork.WebApi.Controllers
 {
@@ -18,9 +19,14 @@ namespace SocialNetwork.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPostsAsync()
         {
-            var userId = string.Empty;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var posts =await this.postsService.GetPostsAsync(userId);
+            if (string.IsNullOrEmpty(userId))
+            {
+                this.BadRequest();
+            }
+
+            var posts = await this.postsService.GetPostsAsync(userId);
 
             return this.Ok(posts);
         }
@@ -36,12 +42,15 @@ namespace SocialNetwork.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostViewModel viewModel)
         {
-            var userId = string.Empty;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId != null)
+            if (string.IsNullOrEmpty(userId))
             {
-                // var postId = this.postsService.CreateAsync(viewModel, userId);
+                this.BadRequest();
             }
+
+            await this.postsService.CreateAsync(viewModel, userId);
+
             return this.NoContent();
         }
 
