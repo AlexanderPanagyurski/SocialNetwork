@@ -18,20 +18,6 @@
 
         public string UserName { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
-
-        public string Address { get; set; }
-
-        public string WebsiteUrl { get; set; }
-
-        public string GithubUrl { get; set; }
-
-        public string TwitterUrl { get; set; }
-
-        public string InstagramUrl { get; set; }
-
-        public string FacebookUrl { get; set; }
-
         public virtual ICollection<UserRole> Roles { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
@@ -45,5 +31,7 @@
         public virtual ICollection<UserImage> UserImages { get; set; } = new HashSet<UserImage>();
 
         public virtual ICollection<Vote> Votes { get; set; } = new HashSet<Vote>();
+
+        public ICollection<UserFollower> Followings { get; set; } = new HashSet<UserFollower>();
     }
 }
