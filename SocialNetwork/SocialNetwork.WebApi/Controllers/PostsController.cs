@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Post;
 using System.Security.Claims;
@@ -46,18 +47,54 @@ namespace SocialNetwork.WebApi.Controllers
 
             if (string.IsNullOrEmpty(userId))
             {
-                this.BadRequest();
+                return this.BadRequest();
             }
 
-            await this.postsService.CreateAsync(viewModel, userId);
+            var postId = await this.postsService.CreateAsync(viewModel, userId);
 
-            return this.NoContent();
+            return this.Ok(postId);
         }
 
         [HttpPut]
         public async Task<IActionResult> EditPostAsync(EditPostViewModel viewModel)
         {
-            return this.NoContent();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null || !ModelState.IsValid)
+            {
+                return BadRequest("Something went wrong...");
+            }
+
+            try
+            {
+                var postId = await this.postsService.EditAsync(viewModel, userId);
+                return this.Ok(postId);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeletePostAsync(string postId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+            {
+                return BadRequest("Something went wrong...");
+            }
+
+            try
+            {
+                await this.postsService.SoftDeleteAsync(postId, userId);
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
