@@ -35,9 +35,17 @@ namespace SocialNetwork.WebApi.Controllers
         [HttpGet("{postId}")]
         public async Task<IActionResult> GetPostByIdAsync(string postId)
         {
-            var post = await this.postsService.GetByIdAsync(postId);
+            try
+            {
+                var post = await this.postsService.GetByIdAsync(postId);
 
-            return this.Ok(post);
+                return this.Ok(post);
+
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
