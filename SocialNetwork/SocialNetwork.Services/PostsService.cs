@@ -28,7 +28,7 @@
                 .Include(p => p.Votes)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (post is null)
+            if (post is null || post.IsDeleted)
             {
                 throw new ArgumentException("Post wasn't found.");
             }
