@@ -39,5 +39,7 @@ namespace SocialNetwork.WebApi.Controllers
             }
             return NoContent();
         }
+
+        // TODO: Implement tags filtation "posts/tags/{tagName}"
     }
 }
