@@ -30,7 +30,7 @@
 
             if (post is null || post.IsDeleted)
             {
-                throw new ArgumentException("Post wasn't found.");
+                throw new ArgumentException("Post not found.");
             }
 
 
@@ -53,7 +53,7 @@
         {
             var userFollowings = await this.dbContext
                 .UserFollowers
-                .Where(uf => uf.FollowerId == userId)
+                .Where(uf => uf.FollowerId == userId && !uf.IsDeleted)
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.Posts)
                 .ThenInclude(p => p.Votes)
@@ -109,7 +109,7 @@
 
             if (post == null || post.UserId != userId)
             {
-                throw new ArgumentException("Post wasn't found.");
+                throw new ArgumentException("Post not found.");
             }
 
             post.Title = input.Title;
@@ -123,7 +123,7 @@
 
         public async Task SoftDeleteAsync(string postId, string userId)
         {
-            var post = await this.dbContext.Posts.FirstOrDefaultAsync(x => x.Id == postId);
+            var post = await this.dbContext.Posts.FirstOrDefaultAsync(x => x.Id == postId && !x.IsDeleted);
 
             if (post == null)
             {

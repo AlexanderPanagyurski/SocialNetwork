@@ -53,6 +53,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddTransient<IPostsService, PostsService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IUsersService, UsersService>();
 
 var app = builder.Build();
 

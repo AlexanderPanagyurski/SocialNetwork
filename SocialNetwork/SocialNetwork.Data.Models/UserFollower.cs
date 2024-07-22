@@ -1,8 +1,9 @@
-﻿using SocialNetwork.Data.Common.Contracts;
+﻿using SocialNetwork.Data.Common;
+using SocialNetwork.Data.Common.Contracts;
 
 namespace SocialNetwork.Data.Models
 {
-    public class UserFollower : IAuditInfo
+    public class UserFollower : BaseDeletableModel<string>
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -13,9 +14,5 @@ namespace SocialNetwork.Data.Models
         public string FollowerId { get; set; }
 
         public virtual User Follower { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
     }
 }
