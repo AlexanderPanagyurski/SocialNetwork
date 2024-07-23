@@ -16,4 +16,12 @@ export class UserService {
     var response = this.http.get<User[]>(`${apiUrl}/users`);
     return response;
   }
+
+  getUserId(userId: string) {
+    const { apiUrl } = environment;
+
+    var response = this.http.get<User>(`${apiUrl}/${userId}`);
+
+    return response;
+  }
 }
