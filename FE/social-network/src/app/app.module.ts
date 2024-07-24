@@ -8,12 +8,14 @@ import { CoreModule } from "./core/core.module";
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    UsersListComponent
+    UsersListComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
