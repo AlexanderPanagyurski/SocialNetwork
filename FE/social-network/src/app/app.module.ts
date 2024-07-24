@@ -21,7 +21,6 @@ import { UserComponent } from './components/user/user.component';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    SharedModule,
     HttpClientModule
 ],
   providers: [],

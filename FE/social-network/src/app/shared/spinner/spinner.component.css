@@ -7,6 +7,7 @@
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
+    margin:10% 50%;
 }
 
 @keyframes rotation {
@@ -17,8 +18,4 @@
     100% {
         transform: rotate(360deg);
     }
-}
-
-.loader {
-    margin:10% 50%;
 }
