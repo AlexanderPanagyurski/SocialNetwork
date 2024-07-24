@@ -1,0 +1,7 @@
+.user-link {
+    text-decoration: none;
+}
+
+.user-followers, .user-posts {
+    cursor: pointer;
+}
