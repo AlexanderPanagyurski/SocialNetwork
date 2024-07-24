@@ -9,6 +9,7 @@ import { User } from 'src/app/types/user';
 })
 export class UsersListComponent implements OnInit {
   users: User[] = [];
+  isLoading: boolean = true;
 
   constructor(private userService: UserService) { }
 
@@ -16,8 +17,10 @@ export class UsersListComponent implements OnInit {
     this.userService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
+        this.isLoading = false;
       },
       error: (err) => {
+        this.isLoading = false;
         console.log('Error: ', err);
       }
     })

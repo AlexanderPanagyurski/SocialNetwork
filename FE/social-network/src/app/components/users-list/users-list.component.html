@@ -1,4 +1,7 @@
-<div class="row">
+<div *ngIf="isLoading">
+    <app-spinner />
+</div>
+<div *ngIf="!isLoading" class="row">
      <div *ngFor="let user of users" class="card card-body col-md-2 m-4">
         <div class="d-flex flex-column align-items-center text-center">
             <img src="../../../assets/images/default-profile-image.png" class="rounded-circle" width="150" height="145">
