@@ -1,1 +1,3 @@
-<app-spinner />
+<div *ngIf="!globalLoaderService.isHidden" class="global-loader-wrapper">
+    <app-spinner />
+</div>
