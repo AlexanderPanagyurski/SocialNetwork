@@ -15,6 +15,39 @@ namespace SocialNetwork.Services
             this.dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<UserViewModel>> GetUserFollwers(string userId)
+        {
+            var userFollowers = await this.dbContext
+                .UserFollowers
+                .Include(uf => uf.Follower)
+                .Where(uf => uf.UserId == userId)
+                .Select(f => new UserViewModel
+                {
+                    UserId = f.UserId,
+                    UserEmail = f.Follower.Email,
+                    UserUserName = f.Follower.UserName,
+                })
+                .ToArrayAsync();
+
+            return userFollowers;
+        }
+
+        public async Task<IEnumerable<UserViewModel>> GetUserFollwings(string userId)
+        {
+            var userFollowings = await this.dbContext
+                .UserFollowers
+                .Include(uf=>uf.User)
+                .Where(uf => uf.FollowerId == userId && !uf.IsDeleted)
+                .Select(x => new UserViewModel
+                {
+                    UserId = x.User.Id,
+                    UserEmail = x.User.Email,
+                    UserUserName = x.User.UserName
+                }).ToArrayAsync();
+
+            return userFollowings;
+        }
+
         public async Task<IEnumerable<UserViewModel>> GetUsersAsync()
         {
             var users = await this.dbContext

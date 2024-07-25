@@ -13,14 +13,30 @@ export class UserService {
   getUsers() {
     const { apiUrl } = environment;
 
-    var response = this.http.get<User[]>(`${apiUrl}/users`);
+    const response = this.http.get<User[]>(`${apiUrl}/users`);
     return response;
   }
 
-  getUserId(userId: string) {
+  getUserById(userId: string) {
     const { apiUrl } = environment;
 
-    var response = this.http.get<User>(`${apiUrl}/${userId}`);
+    const response = this.http.get<User>(`${apiUrl}/users/${userId}`);
+
+    return response;
+  }
+
+  getUserFollowers(userId: string) {
+    const { apiUrl } = environment;
+
+    const response = this.http.get<User[]>(`${apiUrl}/users/${userId}/followers`);
+
+    return response;
+  }
+
+  getUserFollowings(userId: string) {
+    const { apiUrl } = environment;
+
+    const response = this.http.get<User[]>(`${apiUrl}/users/${userId}/followings`);
 
     return response;
   }

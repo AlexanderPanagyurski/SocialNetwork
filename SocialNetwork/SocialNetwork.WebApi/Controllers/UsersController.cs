@@ -26,6 +26,7 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpPost("subscription")]
+
         public async Task<IActionResult> ManageSubscriptionAsync(string followedUserId)
         {
             try
@@ -41,6 +42,37 @@ namespace SocialNetwork.WebApi.Controllers
             return NoContent();
         }
 
+        [HttpGet("{userId}/followers")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUserFollowers(string userId)
+        {
+            try
+            {
+                var userFollowers = await this.usersService.GetUserFollwers(userId);
+
+                return this.Ok(userFollowers);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{userId}/followings")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUserFollowings(string userId)
+        {
+            try
+            {
+                var userFollowings = await this.usersService.GetUserFollwings(userId);
+
+                return this.Ok(userFollowings);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+        }
         // TODO: Implement tags filtation "posts/tags/{tagName}"
     }
 }
