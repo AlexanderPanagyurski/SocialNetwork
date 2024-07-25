@@ -11,18 +11,55 @@ import { User } from 'src/app/types/user';
 export class UsersListComponent implements OnInit {
   users: User[] = [];
   isLoading: boolean = true;
+  usersFollowers: User[] = [];
 
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private globalLoaderService: GlobalLoaderService) { }
 
   ngOnInit(): void {
     this.fetchUsers();
   }
 
+  loadUserFollowers(userId: string) {
+    this.globalLoaderService.showLoader();
+
+    console.log(userId);
+    this.usersFollowers=[];
+    this.userService.getUserFollowers(userId).subscribe({
+      next: (users) => {
+        this.usersFollowers = users;
+        console.log(this.usersFollowers);
+        this.globalLoaderService.hideLoader();
+      },
+      error: (err) => {
+        this.globalLoaderService.hideLoader();
+        console.log('Error: ', err);
+      }
+    });
+  }
+
+  loadUserFollowings(userId: string) {
+    this.globalLoaderService.showLoader();
+
+    console.log(userId);
+    this.usersFollowers=[];
+    this.userService.getUserFollowings(userId).subscribe({
+      next: (users) => {
+        this.usersFollowers = users;
+        console.log(this.usersFollowers);
+        this.globalLoaderService.hideLoader();
+      },
+      error: (err) => {
+        this.globalLoaderService.hideLoader();
+        console.log('Error: ', err);
+      }
+    });
+  }
+
   private fetchUsers() {
     this.globalLoaderService.showLoader();
-    
+
     this.userService.getUsers().subscribe({
       next: (users) => {
         this.users = users;

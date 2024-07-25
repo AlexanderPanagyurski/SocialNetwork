@@ -5,6 +5,9 @@ namespace SocialNetwork.Services.Contracts
     {
         Task<IEnumerable<UserViewModel>> GetUsersAsync();
 
+        Task<IEnumerable<UserViewModel>> GetUserFollwers(string userId);
+        Task<IEnumerable<UserViewModel>> GetUserFollwings(string userId);
+
         Task ManageSubscriptionAsync(string userId, string followingId);
     }
 }

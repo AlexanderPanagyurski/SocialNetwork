@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SocialNetwork.WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BaseApiController : Controller
