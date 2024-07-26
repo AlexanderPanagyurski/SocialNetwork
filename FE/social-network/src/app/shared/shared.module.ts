@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 
 @NgModule({
   declarations: [
-    SpinnerComponent
+    SpinnerComponent,
+    ScrollToTopComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    SpinnerComponent
+    SpinnerComponent,
+    ScrollToTopComponent
   ]
 })
 export class SharedModule { }
