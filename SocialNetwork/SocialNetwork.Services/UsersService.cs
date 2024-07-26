@@ -19,13 +19,14 @@ namespace SocialNetwork.Services
         {
             var userFollowers = await this.dbContext
                 .UserFollowers
-                .Include(uf => uf.Follower)
+                .Include(uf => uf.User)
+                .ThenInclude(u => u.Posts)
                 .Where(uf => uf.UserId == userId)
-                .Select(f => new UserViewModel
+                .Select(uf => new UserViewModel
                 {
-                    UserId = f.UserId,
-                    UserEmail = f.Follower.Email,
-                    UserUserName = f.Follower.UserName,
+                    UserId = uf.UserId,
+                    UserEmail = uf.Follower.Email,
+                    UserUserName = uf.Follower.UserName,
                 })
                 .ToArrayAsync();
 
@@ -36,13 +37,14 @@ namespace SocialNetwork.Services
         {
             var userFollowings = await this.dbContext
                 .UserFollowers
-                .Include(uf=>uf.User)
+                .Include(uf => uf.User)
+                .ThenInclude(u => u.Posts)
                 .Where(uf => uf.FollowerId == userId && !uf.IsDeleted)
-                .Select(x => new UserViewModel
+                .Select(uf => new UserViewModel
                 {
-                    UserId = x.User.Id,
-                    UserEmail = x.User.Email,
-                    UserUserName = x.User.UserName
+                    UserId = uf.User.Id,
+                    UserEmail = uf.User.Email,
+                    UserUserName = uf.User.UserName,
                 }).ToArrayAsync();
 
             return userFollowings;

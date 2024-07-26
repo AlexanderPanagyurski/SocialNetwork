@@ -1,0 +1,19 @@
+.modal-body {
+    padding: 0%;
+}
+
+.modal-body-content:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.user-link {
+    text-decoration: none;
+}
+
+.modal-body {
+    height: 450px;
+}
+
+.user-profile-image {
+    padding: 10px;
+}
