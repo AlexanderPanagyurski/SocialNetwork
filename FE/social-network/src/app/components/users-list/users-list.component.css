@@ -5,3 +5,7 @@
 .user-followers, .user-posts {
     cursor: pointer;
 }
+
+.user-followers {
+    padding: 0px;
+}

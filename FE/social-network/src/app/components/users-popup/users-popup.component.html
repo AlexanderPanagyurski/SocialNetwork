@@ -1,21 +1,27 @@
 <div class="modal fade" id="users-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                 <button type="button" class="close" (click)="cleanUsersCollections()" data-dismiss="modal"
                     aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <app-global-loader />
-            <div *ngFor="let user of userFollowers" class="modal-body">
-                <div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{user.userUserName}}</h5>
-                        <p class="card-text">{{user.userEmail}}</p>
-                    </div>
+            <div class="modal-body">
+                <div class="modal-body-content" *ngFor="let user of userFollowers">
+                    <a class="user-link" href="users\{{user.userId}}">
+                        <div class="list-group-item d-flex align-items-sm-center">
+                            <img src="../../../assets/images/default-profile-image.png" alt="" width="150px"
+                                class="rounded-circle user-profile-image">
+                            <div class="flex-fill pl-3 pr-3">
+                                <div class="row">
+                                    <h5 class="card-title">{{user.userUserName}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
