@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
@@ -15,6 +16,7 @@ export class UsersListComponent implements OnInit {
 
   constructor(
     public userService: UserService,
+    private router: Router,
     private globalLoaderService: GlobalLoaderService) { }
 
   ngOnInit(): void {
@@ -25,7 +27,7 @@ export class UsersListComponent implements OnInit {
     this.globalLoaderService.showLoader();
 
     console.log(userId);
-    this.usersFollowers=[];
+    this.usersFollowers = [];
     this.userService.getUserFollowers(userId).subscribe({
       next: (users) => {
         this.usersFollowers = users;
@@ -43,7 +45,7 @@ export class UsersListComponent implements OnInit {
     this.globalLoaderService.showLoader();
 
     console.log(userId);
-    this.usersFollowers=[];
+    this.usersFollowers = [];
     this.userService.getUserFollowings(userId).subscribe({
       next: (users) => {
         this.usersFollowers = users;
@@ -57,12 +59,17 @@ export class UsersListComponent implements OnInit {
     });
   }
 
+  onSelect(user: User) {
+    this.router.navigate(['users', user.userId])
+  }
+
   private fetchUsers() {
     this.globalLoaderService.showLoader();
 
     this.userService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
+        console.log(users);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {

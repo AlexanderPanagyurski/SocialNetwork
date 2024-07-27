@@ -4,6 +4,7 @@ namespace SocialNetwork.Services.Contracts
     public interface IUsersService
     {
         Task<IEnumerable<UserViewModel>> GetUsersAsync();
+        Task<UserViewModel> GetUserAsync(string userId);
 
         Task<IEnumerable<UserViewModel>> GetUserFollwers(string userId);
         Task<IEnumerable<UserViewModel>> GetUserFollwings(string userId);

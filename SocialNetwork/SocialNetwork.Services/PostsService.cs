@@ -79,7 +79,6 @@
                         IsDeleted = post.IsDeleted,
                         DeletedOn = post.DeletedOn,
                         Content = post.Content,
-                        IsOwner = post.UserId == userId,
                         UserUserName = post.User.UserName,
                         VotesCount = post.Votes.Count,
                     });

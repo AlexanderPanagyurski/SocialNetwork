@@ -1,3 +1,5 @@
+import { Post } from "./post";
+
 export interface User {
     userId: string,
     userUserName: string,
@@ -5,5 +7,6 @@ export interface User {
     userFollowingsCount: number,
     userFollowersCount: number,
     userPostsCount: number,
-    createdOn: string
+    createdOn: string,
+    userPosts: Post[]
 }
