@@ -1,4 +1,6 @@
-﻿namespace SocialNetwork.Web.ViewModels.User
+﻿using SocialNetwork.Web.ViewModels.Post;
+
+namespace SocialNetwork.Web.ViewModels.User
 {
     public class UserViewModel
     {
@@ -13,5 +15,7 @@
         public int UserFollowersCount { get; set; }
 
         public int UserPostsCount { get; set; }
+
+        public IEnumerable<PostViewModel> UserPosts { get; set; }
     }
 }

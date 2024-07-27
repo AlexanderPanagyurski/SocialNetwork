@@ -25,6 +25,21 @@ namespace SocialNetwork.WebApi.Controllers
             return this.Ok(users);
         }
 
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserAsync(string userId)
+        {
+            try
+            {
+                var user = await usersService.GetUserAsync(userId);
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("subscription")]
 
         public async Task<IActionResult> ManageSubscriptionAsync(string followedUserId)

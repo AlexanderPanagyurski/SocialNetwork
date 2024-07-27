@@ -2,6 +2,7 @@
 using SocialNetwork.Data;
 using SocialNetwork.Data.Models;
 using SocialNetwork.Services.Contracts;
+using SocialNetwork.Web.ViewModels.Post;
 using SocialNetwork.Web.ViewModels.User;
 
 namespace SocialNetwork.Services
@@ -13,6 +14,39 @@ namespace SocialNetwork.Services
         public UsersService(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task<UserViewModel> GetUserAsync(string userId)
+        {
+            var user = await this.dbContext
+                .Users
+                .Include(u => u.Posts)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                throw new ArgumentException("User doesn't exist.");
+            }
+
+            var viewModel = new UserViewModel
+            {
+                UserId = user.Id,
+                UserEmail = user.Email,
+                UserUserName = user.UserName,
+                UserPostsCount = user.Posts.Count(p => !p.IsDeleted),
+                UserPosts = user.Posts.Where(p => !p.IsDeleted).Select(p => new PostViewModel
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Content = p.Content,
+                    CreatedOn = p.CreatedOn,
+                    ModifiedOn = p.ModifiedOn,
+                    UserUserName = user.UserName,
+                    UserId = user.Id
+                })
+            };
+
+            return viewModel;
         }
 
         public async Task<IEnumerable<UserViewModel>> GetUserFollwers(string userId)
