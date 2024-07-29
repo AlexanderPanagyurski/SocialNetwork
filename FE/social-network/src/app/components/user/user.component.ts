@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
@@ -17,9 +17,10 @@ export class UserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
+    private router: Router,
     private globalLoaderService: GlobalLoaderService) { }
 
-  
+
   ngOnInit(): void {
     this.mapUserId();
     this.fetchUser();
@@ -77,9 +78,9 @@ export class UserComponent implements OnInit {
     });
   }
 
-  private mapUserId(){
+  private mapUserId() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      if(params.get('userId')){
+      if (params.get('userId')) {
         this.userId = params.get('userId') || '';
       }
     });
