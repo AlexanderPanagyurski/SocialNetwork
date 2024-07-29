@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './components/user/user.component';
 import { UsersPopupComponent } from './components/users-popup/users-popup.component';
 import { SharedModule } from "./shared/shared.module";
+import { ErrorComponent } from './error/error/error.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SharedModule } from "./shared/shared.module";
     MainComponent,
     UsersListComponent,
     UserComponent,
-    UsersPopupComponent
+    UsersPopupComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
