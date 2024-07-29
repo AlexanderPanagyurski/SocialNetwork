@@ -60,7 +60,7 @@ export class UsersListComponent implements OnInit {
   }
 
   onSelect(user: User) {
-    this.router.navigate(['users', user.userId])
+    this.router.navigate(['users', user.userId]);
   }
 
   private fetchUsers() {

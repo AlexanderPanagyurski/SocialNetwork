@@ -11,7 +11,7 @@
             <app-global-loader />
             <div class="modal-body">
                 <div class="modal-body-content" *ngFor="let user of userFollowers">
-                    <a class="user-link" href="users\{{user.userId}}">
+                    <a class="user-link" routerLink="/users/{{user.userId}}">
                         <div class="list-group-item d-flex align-items-sm-center">
                             <img src="../../../assets/images/default-profile-image.png" alt="" width="150px"
                                 class="rounded-circle user-profile-image">
@@ -27,3 +27,4 @@
         </div>
     </div>
 </div>
+<router-outlet />
