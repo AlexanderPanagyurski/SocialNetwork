@@ -10,6 +10,8 @@ namespace SocialNetwork.Web.ViewModels.User
 
         public string UserEmail { get; set; }
 
+        public string CreatedOn { get; set; }
+
         public int UserFollowingsCount { get; set; }
 
         public int UserFollowersCount { get; set; }

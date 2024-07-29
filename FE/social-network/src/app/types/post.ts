@@ -2,8 +2,8 @@ export interface Post {
     Id: string,
     userId: string,
     userUserName: string,
-    createdOn: string,
-    modifiedOn: string,
+    createdOn: Date,
+    modifiedOn: Date,
     title: string,
     content: string,
 }

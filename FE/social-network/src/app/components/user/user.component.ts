@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { UserService } from 'src/app/services/user.service';
@@ -19,6 +19,7 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute,
     private globalLoaderService: GlobalLoaderService) { }
 
+  
   ngOnInit(): void {
     this.mapUserId();
     this.fetchUser();
