@@ -103,8 +103,9 @@
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
                 <h6 class="mb-4">{{user.userUserName}} posts: </h6>
-                <div class="col-sm-9" *ngFor="let post of user.userPosts">
+                <div class="col-sm-12" *ngFor="let post of user.userPosts">
                   <p class="text-muted mb-0 user-post-link" ><a href="#">{{post.title}}</a></p>
+                <hr>
                 </div>
               </div>
             </div>
