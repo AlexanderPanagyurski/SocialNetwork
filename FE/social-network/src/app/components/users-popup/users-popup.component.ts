@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
@@ -11,7 +12,9 @@ import { User } from 'src/app/types/user';
 export class UsersPopupComponent {
   @Input() userFollowers: User[] = [] as User[];
 
-  constructor(private globalLoaderService: GlobalLoaderService) { }
+  constructor(
+    private router: Router,
+    private globalLoaderService: GlobalLoaderService) { }
 
   cleanUsersCollections() {
     this.userFollowers = [];

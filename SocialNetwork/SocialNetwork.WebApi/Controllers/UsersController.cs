@@ -26,6 +26,7 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpGet("{userId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUserAsync(string userId)
         {
             try

@@ -1,0 +1,10 @@
+.user-post-link a {
+    color:#007bff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.user-followers {
+    cursor: pointer;
+    padding: 0px;
+}

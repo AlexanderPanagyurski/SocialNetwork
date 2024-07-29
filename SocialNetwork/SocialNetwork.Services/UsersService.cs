@@ -4,6 +4,7 @@ using SocialNetwork.Data.Models;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Post;
 using SocialNetwork.Web.ViewModels.User;
+using System.Runtime.CompilerServices;
 
 namespace SocialNetwork.Services
 {
@@ -21,6 +22,7 @@ namespace SocialNetwork.Services
             var user = await this.dbContext
                 .Users
                 .Include(u => u.Posts)
+                .Include(u => u.Followings)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user == null)
@@ -34,6 +36,8 @@ namespace SocialNetwork.Services
                 UserEmail = user.Email,
                 UserUserName = user.UserName,
                 UserPostsCount = user.Posts.Count(p => !p.IsDeleted),
+                UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == user.Id),
+                UserFollowersCount = user.Followings.Count(uf => uf.UserId == user.Id),
                 UserPosts = user.Posts.Where(p => !p.IsDeleted).Select(p => new PostViewModel
                 {
                     Id = p.Id,
@@ -58,7 +62,7 @@ namespace SocialNetwork.Services
                 .Where(uf => uf.UserId == userId)
                 .Select(uf => new UserViewModel
                 {
-                    UserId = uf.UserId,
+                    UserId = uf.FollowerId,
                     UserEmail = uf.Follower.Email,
                     UserUserName = uf.Follower.UserName,
                 })
