@@ -35,6 +35,7 @@ namespace SocialNetwork.Services
                 UserId = user.Id,
                 UserEmail = user.Email,
                 UserUserName = user.UserName,
+                CreatedOn = user.CreatedOn.ToString("D"),
                 UserPostsCount = user.Posts.Count(p => !p.IsDeleted),
                 UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == user.Id),
                 UserFollowersCount = user.Followings.Count(uf => uf.UserId == user.Id),
