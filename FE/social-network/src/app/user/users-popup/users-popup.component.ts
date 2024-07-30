@@ -1,7 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
-import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user';
 
 @Component({

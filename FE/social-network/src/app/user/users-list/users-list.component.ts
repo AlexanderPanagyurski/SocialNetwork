@@ -1,31 +1,26 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/user/user.service';
 import { User } from 'src/app/types/user';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-users-list',
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.css']
 })
-export class UserComponent implements OnInit {
-  userId: string = '';
-  user: User = {} as User;
+export class UsersListComponent implements OnInit {
+  users: User[] = [];
+  isLoading: boolean = true;
   usersFollowers: User[] = [];
 
   constructor(
-    private userService: UserService,
-    private route: ActivatedRoute,
+    public userService: UserService,
     private router: Router,
     private globalLoaderService: GlobalLoaderService) { }
 
-
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.userId = params.get('userId') || '';
-      this.fetchUser(this.userId);
-    });
+    this.fetchUsers();
   }
 
   loadUserFollowers(userId: string) {
@@ -64,13 +59,17 @@ export class UserComponent implements OnInit {
     });
   }
 
-  private fetchUser(userId: string) {
+  onSelect(user: User) {
+    this.router.navigate(['users', user.userId]);
+  }
+
+  private fetchUsers() {
     this.globalLoaderService.showLoader();
-    console.log(this.userId);
-    this.userService.getUserById(userId).subscribe({
-      next: (user) => {
-        this.user = user;
-        console.log(user);
+
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        this.users = users;
+        console.log(users);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {

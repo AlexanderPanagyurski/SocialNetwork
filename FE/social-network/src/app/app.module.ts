@@ -5,20 +5,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { CoreModule } from "./core/core.module";
-import { UsersListComponent } from './components/users-list/users-list.component';
 import { HttpClientModule } from '@angular/common/http';
-import { UserComponent } from './components/user/user.component';
-import { UsersPopupComponent } from './components/users-popup/users-popup.component';
 import { SharedModule } from "./shared/shared.module";
 import { ErrorComponent } from './error/error/error.component';
+import { UsersListComponent } from './user/users-list/users-list.component';
+import { UserDetailsComponent } from './user/user-details/user-details.component';
+import { UsersPopupComponent } from './user/users-popup/users-popup.component';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    UsersListComponent,
-    UserComponent,
-    UsersPopupComponent,
     ErrorComponent
   ],
   imports: [
@@ -26,7 +24,8 @@ import { ErrorComponent } from './error/error/error.component';
     AppRoutingModule,
     CoreModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    UserModule
 ],
   providers: [],
   bootstrap: [AppComponent]
