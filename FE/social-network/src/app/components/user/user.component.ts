@@ -22,8 +22,10 @@ export class UserComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.mapUserId();
-    this.fetchUser();
+    this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId') || '';
+      this.fetchUser(this.userId);
+    });
   }
 
   loadUserFollowers(userId: string) {
@@ -62,10 +64,10 @@ export class UserComponent implements OnInit {
     });
   }
 
-  private fetchUser() {
+  private fetchUser(userId: string) {
     this.globalLoaderService.showLoader();
     console.log(this.userId);
-    this.userService.getUserById(this.userId).subscribe({
+    this.userService.getUserById(userId).subscribe({
       next: (user) => {
         this.user = user;
         console.log(user);
@@ -74,14 +76,6 @@ export class UserComponent implements OnInit {
       error: (err) => {
         this.globalLoaderService.hideLoader();
         console.log('Error: ', err);
-      }
-    });
-  }
-
-  private mapUserId() {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      if (params.get('userId')) {
-        this.userId = params.get('userId') || '';
       }
     });
   }
