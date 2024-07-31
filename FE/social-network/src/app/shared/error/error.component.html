@@ -5,10 +5,8 @@
         <div class="error-details pt-4">
             Sorry, an error has occured, Requested page not found!
         </div>
-        <div class="error-actions pt-4">
-            <a routerLink="/" class="btn btn-primary btn-lg">
-                <i class="fa-solid fa-house"></i> Take Me Home
-            </a>
+        <div class="btn btn-primary error-actions p-2 mt-4" (click)="navigateTo('')">
+            <i class="fa-solid fa-house"></i> Take Me Home
         </div>
     </div>
 </div>

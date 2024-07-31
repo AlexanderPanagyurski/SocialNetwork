@@ -3,25 +3,24 @@
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" #userModalClose (click)="cleanUsersCollections()" data-dismiss="modal"
-                    aria-label="Close">
+                <button type="button" class="close" #userModalClose (click)="cleanUsersCollections()"
+                    data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <app-global-loader />
             <div class="modal-body">
                 <div class="modal-body-content" *ngFor="let user of userFollowers">
-                    <a class="user-link" routerLink="/users/{{user.userId}}" (click)="onSelect(user)">
-                        <div class="list-group-item d-flex align-items-sm-center">
-                            <img src="../../../assets/images/default-profile-image.png" alt="" width="150px"
-                                class="rounded-circle user-profile-image">
-                            <div class="flex-fill pl-3 pr-3">
-                                <div class="row">
-                                    <h5 class="card-title">{{user.userUserName}}</h5>
-                                </div>
+                    <div class="list-group-item d-flex align-items-sm-center user-link"
+                        (click)="navigateTo('users', user)">
+                        <img src="../../../assets/images/default-profile-image.png" alt="" width="150px"
+                            class="rounded-circle user-profile-image">
+                        <div class="flex-fill pl-3 pr-3">
+                            <div class="row">
+                                <h5 class="card-title">{{user.userUserName}}</h5>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
