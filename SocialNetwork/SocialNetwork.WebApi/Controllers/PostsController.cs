@@ -33,6 +33,7 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpGet("{postId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPostByIdAsync(string postId)
         {
             try

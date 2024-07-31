@@ -1,8 +1,9 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { UserService } from 'src/app/user/user.service';
 import { User } from 'src/app/types/user';
+import { Post } from 'src/app/types/post';
 
 @Component({
   selector: 'app-user-details',
@@ -25,6 +26,7 @@ export class UserDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId') || '';
       this.fetchUser(this.userId);
+      console.log(this.user.userPosts);
     });
   }
 
@@ -62,6 +64,10 @@ export class UserDetailsComponent implements OnInit {
         console.log('Error: ', err);
       }
     });
+  }
+
+  navigateTo(path: string, post: Post) {
+    this.router.navigate([path, post.postId]);
   }
 
   private fetchUser(userId: string) {

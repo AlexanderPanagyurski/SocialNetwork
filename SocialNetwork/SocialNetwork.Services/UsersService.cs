@@ -41,7 +41,7 @@ namespace SocialNetwork.Services
                 UserFollowersCount = user.Followings.Count(uf => uf.UserId == user.Id),
                 UserPosts = user.Posts.Where(p => !p.IsDeleted).Select(p => new PostViewModel
                 {
-                    Id = p.Id,
+                    PostId = p.Id,
                     Title = p.Title,
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,

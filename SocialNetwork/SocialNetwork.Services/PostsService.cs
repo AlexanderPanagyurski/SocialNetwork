@@ -36,7 +36,7 @@
 
             var viewModel = new PostViewModel
             {
-                Id = post.Id,
+                PostId = post.Id,
                 CreatedOn = post.CreatedOn,
                 ModifiedOn = post.ModifiedOn,
                 DeletedOn = post.DeletedOn,
@@ -44,6 +44,7 @@
                 Title = post.Title,
                 Content = post.Content,
                 UserUserName = post.User.UserName,
+                UserId=post.User.Id
             };
 
             return viewModel;
@@ -72,7 +73,7 @@
                 {
                     posts.Add(new PostViewModel
                     {
-                        Id = post.Id,
+                        PostId = post.Id,
                         Title = post.Title,
                         CreatedOn = post.CreatedOn,
                         ModifiedOn = post.ModifiedOn,

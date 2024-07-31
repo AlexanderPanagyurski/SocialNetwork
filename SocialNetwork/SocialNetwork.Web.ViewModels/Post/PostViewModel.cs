@@ -6,7 +6,7 @@ namespace SocialNetwork.Web.ViewModels.Post
 {
     public class PostViewModel
     {
-        public string Id { get; set; }
+        public string PostId { get; set; }
 
         public string UserProfileImage { get; set; }
 
