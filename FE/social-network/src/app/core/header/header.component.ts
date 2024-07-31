@@ -11,8 +11,7 @@ export class HeaderComponent {
 
   constructor(private router: Router) { }
 
-
-  onSelect() {
-    this.router.navigate(['users']);
+  navigateTo(path: string) {
+    this.router.navigate([path]);
   }
 }

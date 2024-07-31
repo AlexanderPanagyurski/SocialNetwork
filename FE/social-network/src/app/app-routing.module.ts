@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ErrorComponent } from './error/error/error.component';
 import { UserDetailsComponent } from './user/user-details/user-details.component';
 import { UsersListComponent } from './user/users-list/users-list.component';
+import { ErrorComponent } from './shared/error/error.component';
 
 const routes: Routes = [
-  { path: '', component: UsersListComponent },
+  { path: '', pathMatch: 'full', component: UsersListComponent },
   { path: 'users', component: UsersListComponent },
   { path: 'users/:userId', component: UserDetailsComponent },
-  {path: 'not-found' , component: ErrorComponent},
-  {path: '**' , redirectTo: '/not-found'}
+  { path: 'not-found', component: ErrorComponent },
+  { path: '**', redirectTo: '/not-found' }
 ];
 
 @NgModule({
@@ -17,4 +17,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponents = [UsersListComponent, UserDetailsComponent]

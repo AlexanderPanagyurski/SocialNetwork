@@ -59,8 +59,8 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  onSelect(user: User) {
-    this.router.navigate(['users', user.userId]);
+  navigateTo(path: string, user: User) {
+    this.router.navigate([path, user.userId]);
   }
 
   private fetchUsers() {

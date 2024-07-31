@@ -21,9 +21,9 @@ export class UsersPopupComponent {
     this.userFollowers = [];
   }
   
-  onSelect(user: User) {
+  navigateTo(path: string, user: User) {
     this.userModalClose.nativeElement.click();
-    this.router.navigate(['users', user.userId]);
+    this.router.navigate([path, user.userId]);
   }
 
 }
