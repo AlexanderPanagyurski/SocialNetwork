@@ -1,0 +1,21 @@
+.fa-angle-up,
+.fa-angle-down,
+#votes-count {
+    font-size: 25px;
+}
+
+.author-username {
+    cursor: pointer;
+}
+
+.author-username:hover {
+    color: #007bff;
+}
+
+.fa-angle-up:hover {
+    color: green;
+}
+
+.fa-angle-down:hover {
+    color: red;
+}

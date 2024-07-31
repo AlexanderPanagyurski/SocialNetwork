@@ -4,7 +4,6 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { UsersPopupComponent } from './users-popup/users-popup.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { CoreModule } from '../core/core.module';
-import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 
 

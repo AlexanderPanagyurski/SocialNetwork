@@ -62,7 +62,7 @@
                 <div class="col-sm-12" *ngFor="let post of user.userPosts">
                   <div class="card m-2">
                     <div class="card-body">
-                      <h5 class="card-title user-post-link"><a href="#">{{post.title}}</a></h5>
+                      <h5 class="card-title user-post-link" (click)="navigateTo('posts', post)">{{post.title}}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{post.createdOn | date:'fullDate'}}</h6>
                       <p class="card-text">{{post.content}}</p>
                     </div>

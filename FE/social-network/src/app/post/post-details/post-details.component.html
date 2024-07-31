@@ -1,0 +1,34 @@
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="media flex-wrap w-100 align-items-center">
+                    <img src="../../../assets/images/default-profile-image.png" style="width:80px; height:80px;"
+                        class="d-block ui-w-40 rounded-circle" alt="">
+                    <div class="media-body ml-3">
+                        <h6 class="author-username" (click)="navigateTo('users',post)">{{post.userUserName}}</h6>
+                        <div class="datetime text-muted small">
+                            {{post.createdOn}}
+                        </div>
+                    </div>
+                    <div class="text-muted small ml-3">
+                        <div>
+                            <a href="#" xs>
+                                <i class="fa fa-angle-up"></i>
+                            </a>
+                        </div>
+                        <div id="votes-count">1</div>
+                        <div>
+                            <a href="#">
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                {{post.content}}
+            </div>
+        </div>
+    </div>
+</div>
