@@ -6,4 +6,6 @@ export interface Post {
     modifiedOn: Date,
     title: string,
     content: string,
+    votesCount: number,
+    favoritesCount: number,
 }

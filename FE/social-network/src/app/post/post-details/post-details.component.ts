@@ -3,6 +3,7 @@ import { Post } from 'src/app/types/post';
 import { PostService } from '../post.service';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-post-details',
@@ -29,6 +30,18 @@ export class PostDetailsComponent implements OnInit {
 
   navigateTo(path: string, post: Post) {
     this.router.navigate([path, post.userId]);
+  }
+
+  checkIfEdited(post: Post): string {
+    const datePipe: DatePipe = new DatePipe('en-US');
+    let date = post.createdOn;
+    let isEdited = false;
+
+    if (post.modifiedOn) {
+      date = post.modifiedOn;
+      isEdited = true;
+    }
+    return `${datePipe.transform(date, 'fullDate')} ${isEdited ? '(edited)' : ''}`;
   }
 
   private fetchPost(postId: string) {

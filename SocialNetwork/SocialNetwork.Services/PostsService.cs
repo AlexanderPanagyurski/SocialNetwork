@@ -26,6 +26,7 @@
                 //.ThenInclude(c => c.Children)
                 //.Include(p => p.Images)
                 .Include(p => p.Votes)
+                .Include(p => p.FavoritePosts)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (post is null || post.IsDeleted)
@@ -44,7 +45,9 @@
                 Title = post.Title,
                 Content = post.Content,
                 UserUserName = post.User.UserName,
-                UserId=post.User.Id
+                UserId = post.User.Id,
+                VotesCount = post.Votes.Count,
+                FavoritesCount = post.FavoritePosts.Count
             };
 
             return viewModel;
