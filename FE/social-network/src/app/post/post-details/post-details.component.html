@@ -8,7 +8,7 @@
                     <div class="media-body ml-3">
                         <h6 class="author-username" (click)="navigateTo('users',post)">{{post.userUserName}}</h6>
                         <div class="datetime text-muted small">
-                            {{post.createdOn}}
+                            {{checkIfEdited(post)}}
                         </div>
                     </div>
                     <div class="text-muted small ml-3">
@@ -17,7 +17,7 @@
                                 <i class="fa fa-angle-up"></i>
                             </a>
                         </div>
-                        <div id="votes-count">1</div>
+                        <div id="votes-count">{{post.votesCount}}</div>
                         <div>
                             <a href="#">
                                 <i class="fa fa-angle-down"></i>
