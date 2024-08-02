@@ -13,21 +13,31 @@
                     </div>
                     <div class="text-muted small ml-3">
                         <div>
-                            <a href="#" xs>
+                            <span>
                                 <i class="fa fa-angle-up"></i>
-                            </a>
+                            </span>
                         </div>
                         <div id="votes-count">{{post.votesCount}}</div>
                         <div>
-                            <a href="#">
+                            <span>
                                 <i class="fa fa-angle-down"></i>
-                            </a>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 {{post.content}}
+            </div>
+            <div class="card-footer">
+                <span class="card-link m-2 pr-3">
+                    <i class="fa-solid fa-heart"></i>
+                    <span class="favorites-count ml-2"> {{post.favoritesCount}}</span>
+                </span>
+                <span class="card-link m-2 pr-3">
+                    <i class="fa fa-comment"></i>
+                    <span class="comment pl-2"> Comments</span>
+                </span>
             </div>
         </div>
     </div>
