@@ -5,6 +5,8 @@ import { UsersPopupComponent } from './users-popup/users-popup.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { CoreModule } from '../core/core.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -12,7 +14,9 @@ import { AppRoutingModule } from '../app-routing.module';
   declarations: [
     UsersListComponent,
     UsersPopupComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
