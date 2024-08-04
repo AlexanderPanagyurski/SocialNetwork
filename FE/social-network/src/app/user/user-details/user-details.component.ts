@@ -82,6 +82,7 @@ export class UserDetailsComponent implements OnInit {
       error: (err) => {
         this.globalLoaderService.hideLoader();
         console.log('Error: ', err);
+        this.router.navigate(['not-found']);
       }
     });
   }

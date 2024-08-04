@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,22 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   title: string = "SocialNetwork";
 
-  constructor(private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private router: Router) { }
+
+  get userLoggedIn(): boolean {
+    return this.userService.isLogged;
+  }
+
+  get userName(): string {
+    return this.userService.user?.userName || '';
+  }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['login']);
+  }
 
   navigateTo(path: string) {
     this.router.navigate([path]);

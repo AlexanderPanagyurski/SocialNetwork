@@ -45,7 +45,7 @@ namespace SocialNetwork.WebApi.Controllers
             }
             catch (ArgumentException ex)
             {
-                return this.BadRequest(ex.Message);
+                return this.NotFound(ex.Message);
             }
         }
 

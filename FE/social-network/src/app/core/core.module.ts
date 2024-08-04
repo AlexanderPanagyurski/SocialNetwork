@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { GlobalLoaderComponent } from './global-loader/global-loader.component';
 import { SharedModule } from "../shared/shared.module";
 import { Router, RouterModule } from '@angular/router';
+import { UserModule } from '../user/user.module';
 
 
 
