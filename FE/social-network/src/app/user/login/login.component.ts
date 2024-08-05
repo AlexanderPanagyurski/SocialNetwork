@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { NgForm, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,20 @@ export class LoginComponent {
     private router: Router,
     private userService: UserService) { }
 
-  login(email: string, password: string) {
+  login(form: NgForm) {
+    console.log(form.value);
+    if (form.invalid) {
+      return;
+    }
+
     this.userService.login();
     this.router.navigate(['/']);
+  }
+
+  addformErrorBorder(touched: boolean, errors?: ValidationErrors): string {
+    if (errors && touched) {
+      return 'form-error';
+    }
+    return '';
   }
 }

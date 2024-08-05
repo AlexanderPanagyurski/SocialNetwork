@@ -8,6 +8,7 @@ import { CoreModule } from "./core/core.module";
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from "./shared/shared.module";
 import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 
 @NgModule({
   declarations: [
@@ -16,11 +17,12 @@ import { UserModule } from './user/user.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
     CoreModule,
     SharedModule,
-    UserModule
+    HttpClientModule,
+    UserModule,
+    PostModule,
+    AppRoutingModule
 ],
   providers: [],
   bootstrap: [AppComponent]

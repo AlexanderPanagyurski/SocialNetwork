@@ -12,7 +12,6 @@ export class PostService {
 
   getPostById(id: string) {
     const { apiUrl } = environment;
-    debugger;
     const response = this.http.get<Post>(`${apiUrl}/posts/${id}`);
 
     return response;
