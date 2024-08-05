@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { SharedModule } from "../shared/shared.module";
 
 
 
@@ -9,8 +10,9 @@ import { PostDetailsComponent } from './post-details/post-details.component';
     PostDetailsComponent
   ],
   imports: [
-    CommonModule
-  ],
+    CommonModule,
+    SharedModule
+],
   exports: [
     PostDetailsComponent
   ]
