@@ -29,10 +29,20 @@
             ngModel
             #inputPassword="ngModel"
             required
+            [appPassword]="inputPassword.value"
         />
         <ng-container *ngIf="inputPassword.touched">
             <p class="error-message" *ngIf="inputPassword.errors?.['required']">Password is required.</p>
-            <!-- <p class="error-message" *ngIf="inputPassword.errors">Password is not valid.</p> -->
+            <div *ngIf="inputPassword.errors?.['passwordValidator']">
+                <span class="error-message">Password should have:</span>
+                <ul>
+                    <li class="error-message">At least one upper case English letter.</li>
+                    <li class="error-message">At least one lower case English letter.</li>
+                    <li class="error-message">At least one digit.</li>
+                    <li class="error-message">At least one special character.</li>
+                    <li class="error-message">Minimum size of 8 characters.</li>
+                </ul>
+            </div>
         </ng-container>
     </div>
     <div class="form-group form-check">

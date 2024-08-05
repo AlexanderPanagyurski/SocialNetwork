@@ -5,6 +5,7 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { ErrorComponent } from './error/error.component';
 import { EmailDirective } from './validators/email.directive';
 import { GlobalLoaderComponent } from './global-loader/global-loader.component';
+import { PasswordDirective } from './validators/password.directive';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { GlobalLoaderComponent } from './global-loader/global-loader.component';
     ScrollToTopComponent,
     ErrorComponent,
     EmailDirective,
-    GlobalLoaderComponent
+    GlobalLoaderComponent,
+    PasswordDirective
   ],
   imports: [
     CommonModule
@@ -22,7 +24,8 @@ import { GlobalLoaderComponent } from './global-loader/global-loader.component';
     GlobalLoaderComponent,
     ScrollToTopComponent,
     ErrorComponent,
-    EmailDirective
+    EmailDirective,
+    PasswordDirective
   ]
 })
 export class SharedModule { }

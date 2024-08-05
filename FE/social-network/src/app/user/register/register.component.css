@@ -1,3 +1,16 @@
 .register-form {
     margin: 10% 20%;
 }
+.login-form {
+    margin: 10% 20%;
+}
+
+.error-message {
+    color: red;
+    padding-top: .5rem;
+}
+
+.form-error {
+    border-color:  red;
+    box-shadow: 0 0 0 0.2rem rgba(255, 67, 54, 0.25);
+}
