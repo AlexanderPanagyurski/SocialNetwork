@@ -1,6 +1,6 @@
 import { ValidatorFn } from "@angular/forms";
 
-export function passwordValidator(value: string): ValidatorFn {
+export function passwordValidator(): ValidatorFn {
     const regex = new RegExp(`(^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$)|(^[0-9]{6,}$)`);
 
     return (control) => {
