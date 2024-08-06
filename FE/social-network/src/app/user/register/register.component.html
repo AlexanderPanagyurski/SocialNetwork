@@ -34,7 +34,7 @@
         <div class="form-group">
             <label for="user-passoword">Password</label>
             <input 
-                class="form-control" 
+                class="form-control {{addformErrorBorder(form.get('passGroup')?.get('password')?.touched || false, form.get('passGroup')?.get('password')?.errors || undefined)}}" 
                 type="password"
                 name="password" 
                 id="user-passoword" 
@@ -60,7 +60,7 @@
         <div class="form-group">
             <label for="user-passoword">Confirm Password</label>
             <input 
-                class="form-control" 
+                class="form-control {{addformErrorBorder(form.get('passGroup')?.get('confirmPassword')?.touched || false, form.get('passGroup')?.get('confirmPassword')?.errors || undefined)}}" 
                 type="password"
                 name="confirmPassword"
                 id="user-confirm-passoword" 

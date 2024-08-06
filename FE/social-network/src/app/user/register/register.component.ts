@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
 import { EMAIL_DOMAINS } from 'src/app/constants';
 import { emailValidator } from 'src/app/shared/utils/email-validator';
 import { matchPasswordsValidator } from 'src/app/shared/utils/match-passwords-validator';
@@ -33,5 +33,12 @@ export class RegisterComponent {
     }
 
     console.log(this.form.value);
+  }
+
+  addformErrorBorder(touched: boolean, errors?: ValidationErrors): string {
+    if (errors && touched) {
+      return 'form-error';
+    }
+    return '';
   }
 }
