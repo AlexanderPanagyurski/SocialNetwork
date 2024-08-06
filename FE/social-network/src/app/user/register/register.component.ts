@@ -15,7 +15,7 @@ export class RegisterComponent {
   form = this.fb.group({
     //controls
     email: ['', [Validators.required, emailValidator(EMAIL_DOMAINS)]],
-    username: ['', [Validators.required, Validators.minLength(6)]],
+    username: ['', [Validators.required, Validators.minLength(4)]],
     passGroup: this.fb.group({
       password: ['', [Validators.required, passwordValidator()]],
       confirmPassword: ['', [Validators.required, passwordValidator()]]
@@ -26,6 +26,18 @@ export class RegisterComponent {
   });
 
   constructor(private fb: FormBuilder) { }
+
+  controlTouched(controlName: string): boolean {
+    return this.form.get(controlName)?.touched || false;
+  }
+
+  controlHasAnyErrors(controlName: string) {
+    return this.form.get(controlName)?.errors || undefined;
+  }
+
+  controlHasErrors(controlName: string, errorType: string) {
+    return this.form.get(controlName)?.errors?.[errorType];
+  }
 
   register(): void {
     if (this.form.invalid) {
