@@ -14,7 +14,7 @@ import { PasswordDirective } from './validators/password.directive';
     ErrorComponent,
     EmailDirective,
     GlobalLoaderComponent,
-    PasswordDirective
+    PasswordDirective,
   ],
   imports: [
     CommonModule

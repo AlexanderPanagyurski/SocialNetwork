@@ -19,11 +19,7 @@ export class PasswordDirective implements Validator, OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { currentValue } = changes['appPassword'];
-
-    if (currentValue?.length) {
-      this.validator = passwordValidator(currentValue);
-    }
+    this.validator = passwordValidator();
   }
 
   validate(control: AbstractControl<any, any>): ValidationErrors | null {

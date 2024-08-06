@@ -1,20 +1,78 @@
-<form class="register-form">
+<form class="register-form" [formGroup]="form" (ngSubmit)="register()">
     <div class="form-group">
         <label for="user-email">Email address</label>
-        <input type="email" class="form-control" id="user-email" aria-describedby="emailHelp" placeholder="Enter email">
+        <input 
+            class="form-control" 
+            type="email"
+            name="email" 
+            id="user-email"
+            placeholder="john.doe@gmail.com"
+            formControlName="email"
+        />
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <ng-container *ngIf="form.get('email')?.touched">
+            <p class="error-message" *ngIf="form.get('email')?.errors?.['required']">Email is required.</p>
+            <p class="error-message" *ngIf="form.get('email')?.errors?.['emailValidator']">Email is not valid.</p>
+        </ng-container>
     </div>
     <div class="form-group">
         <label for="username">Username</label>
-        <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email">
+        <input 
+            class="form-control" 
+            type="text" 
+            name="username"
+            id="username"
+            placeholder="JohnDoe"
+            formControlName="username"
+        />
+        <ng-container *ngIf="form.get('username')?.touched">
+            <p class="error-message" *ngIf="form.get('username')?.errors?.['required']">Username is required.</p>
+            <p class="error-message" *ngIf="form.get('username')?.errors?.['minlength']">Username should be at leat 6 characters.</p>
+        </ng-container>
     </div>
-    <div class="form-group">
-        <label for="user-passoword">Password</label>
-        <input type="password" class="form-control" id="user-passoword" placeholder="Password">
-    </div>
-    <div class="form-group">
-        <label for="user-passoword">Confirm Password</label>
-        <input type="password" class="form-control" id="user-confirm-passoword" placeholder="Confirm Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <ng-container formGroupName="passGroup">
+        <div class="form-group">
+            <label for="user-passoword">Password</label>
+            <input 
+                class="form-control {{addformErrorBorder(form.get('passGroup')?.get('password')?.touched || false, form.get('passGroup')?.get('password')?.errors || undefined)}}" 
+                type="password"
+                name="password" 
+                id="user-passoword" 
+                placeholder="******"
+                formControlName="password"
+            />
+            <ng-container *ngIf="form.get('passGroup')?.get('password')?.touched">
+                <p class="error-message" 
+                *ngIf="form.get('passGroup')?.get('password')?.errors?.['required']">Password is reqired.
+                </p>
+                <div *ngIf="form.get('passGroup')?.get('password')?.errors?.['passwordValidator']">
+                    <span class="error-message">Password should have:</span>
+                    <ul>
+                        <li class="error-message">At least one upper case English letter.</li>
+                        <li class="error-message">At least one lower case English letter.</li>
+                        <li class="error-message">At least one digit.</li>
+                        <li class="error-message">At least one special character.</li>
+                        <li class="error-message">Minimum size of 8 characters.</li>
+                    </ul>
+                </div>
+            </ng-container>
+        </div>
+        <div class="form-group">
+            <label for="user-passoword">Confirm Password</label>
+            <input 
+                class="form-control {{addformErrorBorder(form.get('passGroup')?.get('confirmPassword')?.touched || false, form.get('passGroup')?.get('confirmPassword')?.errors || undefined)}}" 
+                type="password"
+                name="confirmPassword"
+                id="user-confirm-passoword" 
+                placeholder="******"
+                formControlName="confirmPassword"
+            />
+        </div>
+        <ng-container *ngIf="form.get('passGroup')?.get('confirmPassword')?.touched">
+            <p class="error-message" 
+            *ngIf="form.get('passGroup')?.errors?.['matchPasswordsValidator']">Confirm Password does not match.
+            </p>
+        </ng-container>
+    </ng-container>
+    <button class="btn btn-primary">Register</button>
 </form>
