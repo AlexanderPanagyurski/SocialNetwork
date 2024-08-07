@@ -10,6 +10,7 @@ import { SharedModule } from "./shared/shared.module";
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { appInterceptorProvider } from './app.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,9 @@ import { appInterceptorProvider } from './app.interceptor';
     UserModule,
     PostModule,
     AppRoutingModule
-],
-  providers: [appInterceptorProvider],
+  ],
+  providers: [appInterceptorProvider, CookieService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

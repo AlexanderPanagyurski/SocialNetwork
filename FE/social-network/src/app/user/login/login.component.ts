@@ -3,7 +3,7 @@ import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { NgForm, ValidationErrors } from '@angular/forms';
 import { EMAIL_DOMAINS } from 'src/app/constants';
-import { Token } from '@angular/compiler';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +15,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
+    private cookieService: CookieService,
     private userService: UserService) { }
 
   login(form: NgForm) {
@@ -26,8 +27,10 @@ export class LoginComponent {
 
     this.userService.login(email, password).subscribe(
       {
-        next: (response:any) => {
+        next: (response: any) => {
           console.log(response);
+          const expire: number = new Date().getHours() + 1;
+          this.cookieService.set('auth-cookie', response.token, expire);
           this.router.navigate(['/']);
         },
         error: (err) => {
