@@ -26,19 +26,16 @@ export class UserDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId') || '';
       this.fetchUser(this.userId);
-      console.log(this.user.userPosts);
     });
   }
 
   loadUserFollowers(userId: string) {
     this.globalLoaderService.showLoader();
 
-    console.log(userId);
     this.usersFollowers = [];
     this.userService.getUserFollowers(userId).subscribe({
       next: (users) => {
         this.usersFollowers = users;
-        console.log(this.usersFollowers);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {
@@ -51,12 +48,10 @@ export class UserDetailsComponent implements OnInit {
   loadUserFollowings(userId: string) {
     this.globalLoaderService.showLoader();
 
-    console.log(userId);
     this.usersFollowers = [];
     this.userService.getUserFollowings(userId).subscribe({
       next: (users) => {
         this.usersFollowers = users;
-        console.log(this.usersFollowers);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {
@@ -72,11 +67,9 @@ export class UserDetailsComponent implements OnInit {
 
   private fetchUser(userId: string) {
     this.globalLoaderService.showLoader();
-    console.log(this.userId);
     this.userService.getUserById(userId).subscribe({
       next: (user) => {
         this.user = user;
-        console.log(user);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {

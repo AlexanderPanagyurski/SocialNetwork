@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Auth;
@@ -26,8 +28,15 @@ namespace SocialNetwork.WebApi.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Register(RegisterViewModel user)
         {
-            await this.authService.RegisterAsync(user);
-            return NoContent();
+            try
+            {
+                await this.authService.RegisterAsync(user);
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("[action]")]
@@ -41,8 +50,8 @@ namespace SocialNetwork.WebApi.Controllers
             }
 
             var token = CreateToken(loginModel);
-
-            return this.Ok(token);
+            
+            return this.Ok(new { token });
         }
 
         private string CreateToken(LoginViewModel user)

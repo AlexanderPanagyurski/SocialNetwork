@@ -22,6 +22,12 @@
         public async Task RegisterAsync(
             RegisterViewModel userViewModel)
         {
+            var userExist = await this.dbContext.Users.AnyAsync(u => u.Email == userViewModel.Email);
+
+            if (userExist)
+            {
+                throw new ArgumentException("User already exist.");
+            }
             var user = new User()
             {
                 Email = userViewModel.Email,
@@ -45,26 +51,10 @@
             {
                 UserId = user.Id,
                 UserName = user.UserName,
-                Email=user.Email
+                Email = user.Email
             }
             : null;
         }
-
-        //public async Task<LoginViewModel> ValidateUserAsync(SignInViewModel userViewModel)
-        //{
-        //    var user = await this.dbContext
-        //        .Users
-        //        .FirstOrDefaultAsync(u => u.Email == userViewModel.Email
-        //        && u.PasswordHash == this.ComputeHash(userViewModel.Password));
-
-        //    return user != null ? new LoginViewModel
-        //    {
-        //        UserId = user.Id,
-        //        UserName = user.UserName,
-        //    }
-        //    : null;
-        //}
-
         private string ComputeHash(string input)
         {
             var bytes = Encoding.UTF8.GetBytes(input);

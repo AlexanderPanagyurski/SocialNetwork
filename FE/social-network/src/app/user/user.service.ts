@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { User } from '../types/user';
 import { UserForAuth } from '../types/userForAuth';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -55,14 +56,13 @@ export class UserService {
     return response;
   }
 
-  login() {
-    this.user = {
-      userName: 'AlexanderPanagyurski',
-      email: 'alexander.panagyurski@gmail.com',
-      password: '123456'
-    }
+  register(email: string, userName: string, password: string) {
+    debugger;
+    return this.http.post('/api/auth/register', { email, userName, password });
+  }
 
-    localStorage.setItem(this.USER_KEY, JSON.stringify(this.user));
+  login(email: string, password: string):Observable<any> {
+    return this.http.post('/api/auth/login', { email, password });
   }
 
   logout() {

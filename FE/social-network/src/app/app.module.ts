@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from "./shared/shared.module";
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
+import { appInterceptorProvider } from './app.interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { PostModule } from './post/post.module';
     PostModule,
     AppRoutingModule
 ],
-  providers: [],
+  providers: [appInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
