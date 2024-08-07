@@ -26,12 +26,10 @@ export class UsersListComponent implements OnInit {
   loadUserFollowers(userId: string) {
     this.globalLoaderService.showLoader();
 
-    console.log(userId);
     this.usersFollowers = [];
     this.userService.getUserFollowers(userId).subscribe({
       next: (users) => {
         this.usersFollowers = users;
-        console.log(this.usersFollowers);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {
@@ -44,12 +42,10 @@ export class UsersListComponent implements OnInit {
   loadUserFollowings(userId: string) {
     this.globalLoaderService.showLoader();
 
-    console.log(userId);
     this.usersFollowers = [];
     this.userService.getUserFollowings(userId).subscribe({
       next: (users) => {
         this.usersFollowers = users;
-        console.log(this.usersFollowers);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {
@@ -69,7 +65,6 @@ export class UsersListComponent implements OnInit {
     this.userService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
-        console.log(users);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {

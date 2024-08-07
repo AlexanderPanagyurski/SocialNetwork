@@ -5,7 +5,6 @@ export function passwordValidator(): ValidatorFn {
 
     return (control) => {
         const isPasswordValid = control.value === '' || regex.test(control.value);
-        console.log('valid:', isPasswordValid);
 
         return isPasswordValid ? null : { passwordValidator: true };
     };

@@ -22,7 +22,6 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      console.log(params);
       this.postId = params.get('postId') || '';
       this.fetchPost(this.postId);
     });
@@ -49,7 +48,6 @@ export class PostDetailsComponent implements OnInit {
     this.postService.getPostById(postId).subscribe({
       next: (post) => {
         this.post = post;
-        console.log(post);
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {

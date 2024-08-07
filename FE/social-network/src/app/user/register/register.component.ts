@@ -4,6 +4,8 @@ import { EMAIL_DOMAINS } from 'src/app/constants';
 import { emailValidator } from 'src/app/shared/utils/email-validator';
 import { matchPasswordsValidator } from 'src/app/shared/utils/match-passwords-validator';
 import { passwordValidator } from 'src/app/shared/utils/password-validator';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +14,8 @@ import { passwordValidator } from 'src/app/shared/utils/password-validator';
 })
 export class RegisterComponent {
 
-  form = this.fb.group({
+  form = this.fb.group(
+    {
     //controls
     email: ['', [Validators.required, emailValidator(EMAIL_DOMAINS)]],
     username: ['', [Validators.required, Validators.minLength(4)]],
@@ -25,7 +28,10 @@ export class RegisterComponent {
       })
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router) { }
 
   controlTouched(controlName: string): boolean {
     return this.form.get(controlName)?.touched || false;
@@ -43,8 +49,21 @@ export class RegisterComponent {
     if (this.form.invalid) {
       return;
     }
-
-    console.log(this.form.value);
+    const {
+      email,
+      username,
+      passGroup: { password, confirmPassword } = {}
+    } = this.form.value;
+    
+    this.userService.register(email!, username!, password!).subscribe(
+      {
+        next: () => {
+          this.router.navigate(['login']);
+        },
+        error: (err) => {
+          console.log('Error: ', err);
+        }
+      });
   }
 
   addformErrorBorder(touched: boolean, errors?: ValidationErrors): string {
