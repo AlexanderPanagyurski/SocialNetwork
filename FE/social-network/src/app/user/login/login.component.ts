@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { NgForm, ValidationErrors } from '@angular/forms';
-import { EMAIL_DOMAINS } from 'src/app/constants';
+import { AUTH_COOKIE_KEY, EMAIL_DOMAINS } from 'src/app/constants';
 import { CookieService } from 'ngx-cookie-service';
+import { UserForAuth } from 'src/app/types/userForAuth';
 
 @Component({
   selector: 'app-login',
@@ -27,10 +28,9 @@ export class LoginComponent {
 
     this.userService.login(email, password).subscribe(
       {
-        next: (response: any) => {
-          console.log(response);
+        next: (response: UserForAuth) => {
           const expire: number = new Date().getHours() + 1;
-          this.cookieService.set('auth-cookie', response.token, expire);
+          this.cookieService.set(AUTH_COOKIE_KEY, response.token, expire);
           this.router.navigate(['/']);
         },
         error: (err) => {

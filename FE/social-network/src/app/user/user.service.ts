@@ -3,12 +3,17 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { User } from '../types/user';
 import { UserForAuth } from '../types/userForAuth';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { AUTH_COOKIE_KEY } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private user$$ = new BehaviorSubject<UserForAuth | undefined>(undefined);
+  private user$ = this.user$$.asObservable();
+
   user: UserForAuth | undefined;
   USER_KEY: string = '[user]';
 
@@ -16,13 +21,12 @@ export class UserService {
     return !!this.user;
   }
 
-  constructor(private http: HttpClient) {
-    try {
-      const lsUser = localStorage.getItem(this.USER_KEY) || '';
-      this.user = JSON.parse(lsUser);
-    } catch (error) {
-      this.user = undefined;
-    }
+  constructor(
+    private cookieService: CookieService,
+    private http: HttpClient) {
+    this.user$.subscribe(user => {
+      this.user = user;
+    });
   }
 
   getUsers() {
@@ -61,12 +65,16 @@ export class UserService {
     return this.http.post('/api/auth/register', { email, userName, password });
   }
 
-  login(email: string, password: string):Observable<any> {
-    return this.http.post('/api/auth/login', { email, password });
+  login(email: string, password: string) {
+    return this.http
+      .post<UserForAuth>('/api/auth/login', { email, password })
+      .pipe(tap((user) => {
+        this.user$$.next(user);
+      }));
   }
 
   logout() {
     this.user = undefined;
-    localStorage.removeItem(this.USER_KEY);
+    this.cookieService.delete(AUTH_COOKIE_KEY);
   }
 }
