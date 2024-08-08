@@ -84,6 +84,7 @@
                         DeletedOn = post.DeletedOn,
                         Content = post.Content,
                         UserUserName = post.User.UserName,
+                        UserId=post.UserId,
                         VotesCount = post.Votes.Count,
                     });
                 }

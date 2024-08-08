@@ -30,6 +30,7 @@ export class LoginComponent {
       {
         next: (response: UserForAuth) => {
           const expire: number = new Date().getHours() + 1;
+          console.log(expire);
           this.cookieService.set(AUTH_COOKIE_KEY, response.token, expire);
           this.router.navigate(['/']);
         },

@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRoutingModule } from './user-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
 
 
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared/shared.module';
     UsersPopupComponent,
     UserDetailsComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    NewsfeedComponent
   ],
   imports: [
     CommonModule,
