@@ -15,7 +15,6 @@ export class UserService {
   private user$ = this.user$$.asObservable();
 
   user: UserForAuth | undefined;
-  USER_KEY: string = '[user]';
 
   get isLogged(): boolean {
     return !!this.user;
