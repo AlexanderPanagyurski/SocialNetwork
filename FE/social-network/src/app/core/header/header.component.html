@@ -10,13 +10,13 @@
         <a class="nav-link" (click)="navigateTo('newsfeed')">Newsfeed</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="navigateTo('users')">Users</a>
+        <a class="nav-link" routerLink="users">Users</a>
       </li>
       <li class="nav-item" *ngIf="userLoggedIn">
-        <a class="nav-link" (click)="navigateTo('posts')">Posts</a>
+        <a class="nav-link" routerLink="explore">Explore</a>
       </li>
       <li class="nav-item" *ngIf="userLoggedIn">
-        <a class="nav-link" (click)="navigateTo('create-post')">Create Post</a>
+        <a class="nav-link" routerLink="create-post">Create Post</a>
       </li>
     </ul>
     <form class="form-inline mr-sm-4">

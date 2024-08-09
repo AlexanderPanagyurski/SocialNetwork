@@ -11,8 +11,6 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
-
-
 @NgModule({
   declarations: [
     UsersListComponent,
