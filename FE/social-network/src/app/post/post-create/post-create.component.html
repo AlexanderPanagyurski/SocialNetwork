@@ -1,22 +1,35 @@
-<form method="post" asp-action="Create"
-      enctype="multipart/form-data">
+<form class="post-create-form" [formGroup]="form" (ngSubmit)="create()">
     <div class="row">
         <div class="col-sm-6">
             <label>Title</label>
-            <input class="form-control" />
-            <span class="text-danger"></span>
+            <input class="form-control {{addformErrorBorder(controlTouched('title'), controlHasAnyErrors('title'))}}" 
+            type="title"
+            name="title" 
+            id="post-title"
+            formControlName="title"
+            />
+            <ng-container *ngIf="controlTouched('title')">
+                <p class="error-message" *ngIf="controlHasErrors('title','required')">Title is required.</p>
+                <p class="error-message" *ngIf="controlHasErrors('title','minlength')">Title should be at least 6 characters.</p>
+            </ng-container>    
         </div>
-        <div class="col-sm-6 form-group">
+        <!-- <div class="col-sm-6 form-group">
             <label>Images</label>
             <input class="form-control" />
-            <span class="text-danger"></span>
-        </div>
+        </div> -->
     </div>
     <div>
         <label>Content</label>
-        <textarea class="form-control"></textarea>
-        <span class="text-danger"></span>
+        <textarea class="form-control {{addformErrorBorder(controlTouched('content'), controlHasAnyErrors('content'))}}" 
+        type="content"
+        name="content" 
+        id="post-content"
+        formControlName="content"></textarea>
+        <ng-container *ngIf="controlTouched('content')">
+            <p class="error-message" *ngIf="controlHasErrors('content','required')">Content is required.</p>
+            <p class="error-message" *ngIf="controlHasErrors('content','minlength')">Content should be at least 6 characters.</p>
+        </ng-container>   
     </div>
     <hr />
-    <button class="btn btn-primary">Create</button>
+    <button class="btn btn-primary" [disabled]="this.form.invalid">Create</button>
 </form>

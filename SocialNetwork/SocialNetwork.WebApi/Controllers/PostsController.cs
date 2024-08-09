@@ -61,7 +61,7 @@ namespace SocialNetwork.WebApi.Controllers
 
             var postId = await this.postsService.CreateAsync(viewModel, userId);
 
-            return this.Ok(postId);
+            return this.Ok(new { postId });
         }
 
         [HttpPut]
@@ -77,7 +77,7 @@ namespace SocialNetwork.WebApi.Controllers
             try
             {
                 var postId = await this.postsService.EditAsync(viewModel, userId);
-                return this.Ok(postId);
+                return this.Ok(new { postId });
             }
             catch (ArgumentException ex)
             {

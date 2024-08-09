@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.development';
 import { Post } from '../types/post';
 import { CookieService } from 'ngx-cookie-service';
 import { AUTH_COOKIE_KEY } from '../constants';
+import { CreatePost } from '../types/createPost';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,17 @@ export class PostService {
   getPostById(id: string) {
     const { apiUrl } = environment;
     const response = this.http.get<Post>(`${apiUrl}/posts/${id}`);
+
+    return response;
+  }
+
+  create(title: string, content: string) {
+    const post: CreatePost = {
+      postId: '',
+      title: title,
+      content: content
+    }
+    const response = this.http.post<CreatePost>('/api/posts', post);
 
     return response;
   }
