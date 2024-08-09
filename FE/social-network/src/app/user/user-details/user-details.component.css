@@ -8,3 +8,7 @@
     cursor: pointer;
     padding: 0px;
 }
+
+.post-container {
+    height: 400px;
+}
