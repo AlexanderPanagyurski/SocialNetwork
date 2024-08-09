@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.development';
 import { Post } from '../types/post';
 import { CookieService } from 'ngx-cookie-service';
 import { AUTH_COOKIE_KEY } from '../constants';
+import { CreatePost } from '../types/createPost';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,7 @@ export class PostService {
     private http: HttpClient) { }
 
   loadNewsfeed() {
-    const authCookie: string = this.cookieService.get(AUTH_COOKIE_KEY);
-    console.log(authCookie);
-    const headers = { 'Authorization': `Bearer ${authCookie}` }
-
-    const response = this.http.get<Post[]>('/api/posts', { headers });
+    const response = this.http.get<Post[]>('/api/posts');
 
     return response;
   }
@@ -27,6 +24,17 @@ export class PostService {
   getPostById(id: string) {
     const { apiUrl } = environment;
     const response = this.http.get<Post>(`${apiUrl}/posts/${id}`);
+
+    return response;
+  }
+
+  create(title: string, content: string) {
+    const post: CreatePost = {
+      postId: '',
+      title: title,
+      content: content
+    }
+    const response = this.http.post<CreatePost>('/api/posts', post);
 
     return response;
   }

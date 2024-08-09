@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { User } from '../types/user';
 import { UserForAuth } from '../types/userForAuth';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { AUTH_COOKIE_KEY } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnDestroy {
   private user$$ = new BehaviorSubject<UserForAuth | undefined>(undefined);
   private user$ = this.user$$.asObservable();
 
   user: UserForAuth | undefined;
+  userSubscription: Subscription;
 
   get isLogged(): boolean {
     return !!this.user;
@@ -23,7 +24,7 @@ export class UserService {
   constructor(
     private cookieService: CookieService,
     private http: HttpClient) {
-    this.user$.subscribe(user => {
+    this.userSubscription = this.user$.subscribe(user => {
       this.user = user;
     });
   }
@@ -75,5 +76,15 @@ export class UserService {
   logout() {
     this.user = undefined;
     this.cookieService.delete(AUTH_COOKIE_KEY);
+  }
+
+  getProfile() {
+    return this.http
+      .get<UserForAuth>('/api/users/profile')
+      .pipe(tap(user => this.user$$.next(user)));
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 }

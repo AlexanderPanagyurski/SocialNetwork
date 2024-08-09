@@ -29,9 +29,8 @@ export class LoginComponent {
     this.userService.login(email, password).subscribe(
       {
         next: (response: UserForAuth) => {
-          const expire: number = new Date().getHours() + 1;
-          console.log(expire);
-          this.cookieService.set(AUTH_COOKIE_KEY, response.token, expire);
+          const daysToExpire: number = 2;
+          this.cookieService.set(AUTH_COOKIE_KEY, response.token, daysToExpire);
           this.router.navigate(['/']);
         },
         error: (err) => {

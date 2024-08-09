@@ -4,14 +4,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
-import { PostDetailsComponent } from '../post/post-details/post-details.component';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 
 const routes: Routes = [
   { path: 'newsfeed', component: NewsfeedComponent },
   { path: 'users', component: UsersListComponent },
   { path: 'users/:userId', component: UserDetailsComponent },
-  { path: 'posts/:postId', component: PostDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 ]

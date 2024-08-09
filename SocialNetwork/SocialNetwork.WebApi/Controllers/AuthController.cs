@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using SocialNetwork.Data.Models;
+using SocialNetwork.Services;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Auth;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,13 +16,16 @@ namespace SocialNetwork.WebApi.Controllers
     [AllowAnonymous]
     public class AuthController : BaseApiController
     {
+        private readonly IUsersService usersService;
         private readonly IConfiguration configuration;
         private readonly IAuthService authService;
 
         public AuthController(
+            IUsersService usersService,
             IConfiguration configuration,
             IAuthService authService)
         {
+            this.usersService = usersService;
             this.configuration = configuration;
             this.authService = authService;
         }
@@ -38,6 +43,7 @@ namespace SocialNetwork.WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody] SignInViewModel model)
