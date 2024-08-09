@@ -25,6 +25,21 @@ namespace SocialNetwork.WebApi.Controllers
             return this.Ok(users);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> Profile()
+        {
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await this.usersService.GetUserAsync(userId);
+                return this.Ok(new UserViewModel { Id = user.UserId, Email = user.UserEmail, UserName = user.UserUserName });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{userId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetUserAsync(string userId)

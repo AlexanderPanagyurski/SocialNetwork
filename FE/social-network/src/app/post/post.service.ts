@@ -15,11 +15,7 @@ export class PostService {
     private http: HttpClient) { }
 
   loadNewsfeed() {
-    const authCookie: string = this.cookieService.get(AUTH_COOKIE_KEY);
-    console.log(authCookie);
-    const headers = { 'Authorization': `Bearer ${authCookie}` }
-
-    const response = this.http.get<Post[]>('/api/posts', { headers });
+    const response = this.http.get<Post[]>('/api/posts');
 
     return response;
   }

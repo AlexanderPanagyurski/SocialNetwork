@@ -11,11 +11,13 @@ import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { appInterceptorProvider } from './app.interceptor';
 import { CookieService } from 'ngx-cookie-service';
+import { AuthenticateComponent } from './authenticate/authenticate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
+    AuthenticateComponent,
   ],
   imports: [
     BrowserModule,

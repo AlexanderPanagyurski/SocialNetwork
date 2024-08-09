@@ -1,4 +1,6 @@
-<app-scroll-to-top *ngIf="showScroll$ | async" (scrollToTop)="onScrollToTop()"></app-scroll-to-top>
-<app-header />
-<app-main />
-<app-footer />
+<app-authenticate>
+    <app-scroll-to-top *ngIf="showScroll$ | async" (scrollToTop)="onScrollToTop()"></app-scroll-to-top>
+    <app-header />
+    <app-main />
+    <app-footer />
+</app-authenticate>
