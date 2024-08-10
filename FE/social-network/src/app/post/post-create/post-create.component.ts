@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
 
@@ -15,6 +15,8 @@ export class PostCreateComponent {
     title: ['', [Validators.required, Validators.minLength(6)]],
     content: ['', [Validators.required, Validators.minLength(6)]],
   });
+
+  images: any[] = [];
 
   constructor(
     private router: Router,
@@ -47,7 +49,16 @@ export class PostCreateComponent {
 
     const { title, content } = this.form.value;
 
-    this.postService.create(title!, content!).subscribe({
+    const formData = new FormData();
+    formData.append('title', title!);
+    formData.append('content', content!);
+
+    for (const photo of this.images) {
+      console.log(photo);
+      formData.append('image', photo, photo.name);
+    }
+
+    this.postService.create(formData).subscribe({
       next: (res) => {
         console.log(res);
         this.router.navigate(['posts', res.postId]);
@@ -56,5 +67,13 @@ export class PostCreateComponent {
         console.log("Error: ", err);
       }
     });
+  }
+
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      for (const file of event.target.files) {
+        this.images.push(file);
+      }
+    }
   }
 }

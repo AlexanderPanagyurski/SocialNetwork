@@ -28,13 +28,17 @@ export class PostService {
     return response;
   }
 
-  create(title: string, content: string) {
-    const post: CreatePost = {
-      postId: '',
-      title: title,
-      content: content
-    }
-    const response = this.http.post<CreatePost>('/api/posts', post);
+  create(formData: FormData) {
+    // const post: CreatePost = {
+    //   postId: '',
+    //   title: title,
+    //   content: content,
+    //   images: images
+    // }
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'multipart/form-data');
+    headers.set('Accept', '*/*');
+    const response = this.http.post<CreatePost>('/api/posts', formData, { headers });
 
     return response;
   }

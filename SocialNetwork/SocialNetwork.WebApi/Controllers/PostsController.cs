@@ -50,7 +50,8 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePostAsync([FromBody] CreatePostViewModel viewModel)
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> CreatePostAsync()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -58,6 +59,17 @@ namespace SocialNetwork.WebApi.Controllers
             {
                 return this.BadRequest();
             }
+
+            string title = Request.Form["title"];
+            string content = Request.Form["content"];
+            IEnumerable<IFormFile> images = Request.Form.Files;
+
+            var viewModel = new CreatePostViewModel()
+            {
+                Title = title,
+                Content = content,
+                Images = images
+            };
 
             var postId = await this.postsService.CreateAsync(viewModel, userId);
 
