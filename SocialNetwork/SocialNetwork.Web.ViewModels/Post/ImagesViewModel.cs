@@ -2,6 +2,10 @@
 {
     public class ImagesViewModel
     {
-        public string ImageUrl { get; set; }
+        public string Id { get; set; }
+
+        public string PostId { get; set; }
+
+        public byte[] ImageUrl { get; set; }
     }
 }

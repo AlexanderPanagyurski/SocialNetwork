@@ -1,3 +1,5 @@
+import { PostImage } from "./postImage";
+
 export interface Post {
     postId: string,
     userId: string,
@@ -8,4 +10,5 @@ export interface Post {
     content: string,
     votesCount: number,
     favoritesCount: number,
+    images: PostImage[]
 }

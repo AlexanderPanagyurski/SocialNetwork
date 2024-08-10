@@ -27,6 +27,7 @@
                 //.Include(p => p.Images)
                 .Include(p => p.Votes)
                 .Include(p => p.FavoritePosts)
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (post is null || post.IsDeleted)
@@ -47,7 +48,13 @@
                 UserUserName = post.User.UserName,
                 UserId = post.User.Id,
                 VotesCount = post.Votes.Count,
-                FavoritesCount = post.FavoritePosts.Count
+                FavoritesCount = post.FavoritePosts.Count,
+                Images = post.Images.Select(i => new ImagesViewModel
+                {
+                    Id = i.Id,
+                    PostId = post.Id,
+                    ImageUrl = i.Content
+                }).ToArray()
             };
 
             return viewModel;
@@ -64,6 +71,9 @@
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.Posts)
                 .ThenInclude(p => p.Comments)
+                .Include(uf => uf.User)
+                .ThenInclude(u => u.Posts)
+                .ThenInclude(p => p.Images)
                 .ToArrayAsync();
 
             ICollection<PostViewModel> posts = new HashSet<PostViewModel>();
@@ -84,8 +94,14 @@
                         DeletedOn = post.DeletedOn,
                         Content = post.Content,
                         UserUserName = post.User.UserName,
-                        UserId=post.UserId,
+                        UserId = post.UserId,
                         VotesCount = post.Votes.Count,
+                        Images = post.Images.Select(i => new ImagesViewModel
+                        {
+                            Id = i.Id,
+                            PostId = post.Id,
+                            ImageUrl = i.Content
+                        }).ToArray()
                     });
                 }
             }
@@ -101,6 +117,19 @@
                 Title = input.Title,
                 UserId = userId,
             };
+
+            if (input.Images.Any())
+            {
+
+                foreach (var image in input.Images)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        await image.CopyToAsync(stream);
+                        post.Images.Add(new Image { Content = stream.ToArray(), Post = post, UserId = userId });
+                    }
+                }
+            }
 
             await this.dbContext.Posts.AddAsync(post);
             await this.dbContext.SaveChangesAsync();

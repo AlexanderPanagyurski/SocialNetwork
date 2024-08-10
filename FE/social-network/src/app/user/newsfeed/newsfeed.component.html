@@ -1,7 +1,7 @@
 <app-global-loader />
 <div *ngIf="posts.length">
     <div *ngFor="let post of posts" class="row mt-4">
-        <div class="post col-md-8">
+        <div class="post col-sm-6">
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="media flex-wrap w-100 align-items-center">
@@ -28,8 +28,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    {{post.content}}
+                <div class="card-body post-body">
+                    <div class="post-images">
+                        <carousel>
+                            <slide *ngFor="let image of post.images">
+                                <img attr.src="data:image/JPEG;base64,{{image.imageUrl}}"
+                                    style="display: block; width: 100%;">
+                            </slide>
+                        </carousel>
+                    </div>
+                    <div class="post-content">
+                        {{post.content}}
+                    </div>
                 </div>
                 <div class="card-footer">
                     <span class="card-link m-2 pr-3">

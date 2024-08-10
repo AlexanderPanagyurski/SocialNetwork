@@ -3,7 +3,7 @@
         <div class="col-sm-6">
             <label>Title</label>
             <input class="form-control {{addformErrorBorder(controlTouched('title'), controlHasAnyErrors('title'))}}" 
-            type="title"
+            type="text"
             name="title" 
             id="post-title"
             formControlName="title"
@@ -13,15 +13,22 @@
                 <p class="error-message" *ngIf="controlHasErrors('title','minlength')">Title should be at least 6 characters.</p>
             </ng-container>    
         </div>
-        <!-- <div class="col-sm-6 form-group">
+        <div class="col-sm-6 form-group">
             <label>Images</label>
-            <input class="form-control" />
-        </div> -->
+            <input class="form-control" 
+            type="file"
+            name="images" 
+            id="post-images"
+            requiredFileType="image/png"
+            multiple="true"
+            (change)="onFileSelect($event)"
+            />
+        </div>
     </div>
     <div>
         <label>Content</label>
         <textarea class="form-control {{addformErrorBorder(controlTouched('content'), controlHasAnyErrors('content'))}}" 
-        type="content"
+        type="text"
         name="content" 
         id="post-content"
         formControlName="content"></textarea>
