@@ -10,6 +10,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
     RouterModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CarouselModule
   ],
   exports: [
     UsersListComponent,

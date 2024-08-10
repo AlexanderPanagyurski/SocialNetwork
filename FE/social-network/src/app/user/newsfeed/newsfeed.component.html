@@ -1,7 +1,7 @@
 <app-global-loader />
 <div *ngIf="posts.length">
     <div *ngFor="let post of posts" class="row mt-4">
-        <div class="post col-md-8">
+        <div class="post col-sm-6">
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="media flex-wrap w-100 align-items-center">
@@ -28,26 +28,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <!-- <div id="{{post.postId}}" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div *ngFor="let image of post.images">
-                                    <img class="d-block w-100" attr.src="data:image/JPEG;base64,{{image.imageUrl}}"
-                                        alt="{{image.id}}">
-                                </div>
-                            </div>
-                        </div>
-                        <a class="carousel-control-prev" routerLink="#{{post.postId}}" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" routerLink="#{{post.postId}}" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div> -->
-                    {{post.content}}
+                <div class="card-body post-body">
+                    <div class="post-images">
+                        <carousel>
+                            <slide *ngFor="let image of post.images">
+                                <img attr.src="data:image/JPEG;base64,{{image.imageUrl}}"
+                                    style="display: block; width: 100%;">
+                            </slide>
+                        </carousel>
+                    </div>
+                    <div class="post-content">
+                        {{post.content}}
+                    </div>
                 </div>
                 <div class="card-footer">
                     <span class="card-link m-2 pr-3">

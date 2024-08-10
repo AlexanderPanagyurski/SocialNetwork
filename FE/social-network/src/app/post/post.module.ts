@@ -5,6 +5,7 @@ import { SharedModule } from "../shared/shared.module";
 import { PostCreateComponent } from './post-create/post-create.component';
 import { PostRoutingModule } from './post-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 
 
@@ -18,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     PostRoutingModule,
     FormsModule,
+    CarouselModule,
     ReactiveFormsModule
   ]
 })

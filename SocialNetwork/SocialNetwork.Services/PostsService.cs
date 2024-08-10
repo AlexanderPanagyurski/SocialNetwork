@@ -27,6 +27,7 @@
                 //.Include(p => p.Images)
                 .Include(p => p.Votes)
                 .Include(p => p.FavoritePosts)
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (post is null || post.IsDeleted)
@@ -47,7 +48,13 @@
                 UserUserName = post.User.UserName,
                 UserId = post.User.Id,
                 VotesCount = post.Votes.Count,
-                FavoritesCount = post.FavoritePosts.Count
+                FavoritesCount = post.FavoritePosts.Count,
+                Images = post.Images.Select(i => new ImagesViewModel
+                {
+                    Id = i.Id,
+                    PostId = post.Id,
+                    ImageUrl = i.Content
+                }).ToArray()
             };
 
             return viewModel;

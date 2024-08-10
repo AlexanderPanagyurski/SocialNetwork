@@ -26,7 +26,7 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
     HttpClientModule,
     UserModule,
     PostModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [appInterceptorProvider, CookieService],
   bootstrap: [AppComponent]
