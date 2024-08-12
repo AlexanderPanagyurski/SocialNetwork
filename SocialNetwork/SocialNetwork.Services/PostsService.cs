@@ -6,6 +6,7 @@
     using SocialNetwork.Services.Contracts;
     using SocialNetwork.Web.ViewModels.Post;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     public class PostsService : IPostsService
@@ -74,6 +75,9 @@
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.Posts)
                 .ThenInclude(p => p.Images)
+                .Include(uf => uf.User)
+                .ThenInclude(u => u.Posts)
+                .ThenInclude(p => p.FavoritePosts)
                 .ToArrayAsync();
 
             ICollection<PostViewModel> posts = new HashSet<PostViewModel>();
@@ -95,7 +99,11 @@
                         Content = post.Content,
                         UserUserName = post.User.UserName,
                         UserId = post.UserId,
+                        IsVoted = post.Votes.Any(v => v.UserId == userId),
+                        IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
                         VotesCount = post.Votes.Count,
+                        IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
+                        FavoritesCount = post.FavoritePosts.Count(),
                         Images = post.Images.Select(i => new ImagesViewModel
                         {
                             Id = i.Id,
@@ -170,6 +178,31 @@
             post.DeletedOn = DateTime.UtcNow;
 
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> AddToFavouriteAsync(string postId, string userId)
+        {
+            var post = await this.dbContext
+                .FavoritePosts
+                .FirstOrDefaultAsync(x => x.PostId == postId && x.UserId == userId);
+
+            if (post != null)
+            {
+                this.dbContext.FavoritePosts.Remove(post);
+                await this.dbContext.SaveChangesAsync();
+
+                return false;
+            }
+
+            this.dbContext.FavoritePosts.Add(new FavoritePost { PostId = postId, UserId = userId });
+            await this.dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<int> GetFavouritesCountAsync(string postId)
+        {
+            return await this.dbContext.FavoritePosts.CountAsync(x => x.PostId == postId);
         }
     }
 }

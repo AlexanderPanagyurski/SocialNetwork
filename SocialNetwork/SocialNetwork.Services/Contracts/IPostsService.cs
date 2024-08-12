@@ -10,6 +10,10 @@
 
         Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId);
 
+        Task<bool> AddToFavouriteAsync(string postId, string userId);
+
+        Task<int> GetFavouritesCountAsync(string postId);
+
         Task<string> CreateAsync(CreatePostViewModel input, string userId);
 
         Task<string> EditAsync(EditPostViewModel input, string userId);

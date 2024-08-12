@@ -15,14 +15,14 @@
                         </div>
                         <div class="text-muted small ml-3">
                             <div>
-                                <span>
-                                    <i class="fa fa-angle-up"></i>
+                                <span (click)="vote(post,true)">
+                                    <i class="fa fa-angle-up" [ngStyle]="post.isVoted && post.isUpVote  ? {'color': '#00c200'} : null"></i>
                                 </span>
                             </div>
                             <div id="votes-count">{{post.votesCount}}</div>
                             <div>
-                                <span>
-                                    <i class="fa fa-angle-down"></i>
+                                <span (click)="vote(post,false)">
+                                    <i class="fa fa-angle-down" [ngStyle]="post.isVoted && !post.isUpVote  ? {'color': 'red'} : null"></i>
                                 </span>
                             </div>
                         </div>
@@ -42,13 +42,19 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <span class="card-link m-2 pr-3">
-                        <i class="fa-solid fa-heart"></i>
+                    <span class="card-link ml-2" (click)="addToFavourite(post)">
+                        <i class="fa-solid fa-heart" [ngStyle]="post.isFavourite  ? {'color': 'red'} : null"></i>
                         <span class="favorites-count ml-2"> {{post.favoritesCount}}</span>
                     </span>
-                    <span class="card-link m-2 pr-3">
+                    <span class="card-link ml-4">
                         <i class="fa fa-comment"></i>
                         <span class="comment pl-2"> Comments</span>
+                    </span>
+                    <span class="card-link dropdown">
+                        <i class="fa-solid fa-ellipsis " data-toggle="dropdown"></i>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" routerLink="/posts/{{post.postId}}">Open post</a>
+                        </div>
                     </span>
                 </div>
             </div>

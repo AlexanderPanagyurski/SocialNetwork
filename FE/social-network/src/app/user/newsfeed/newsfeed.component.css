@@ -24,7 +24,8 @@
 }
 
 .fa-heart,
-.fa-comment {
+.fa-comment,
+.fa-ellipsis {
     font-size: 25px;
 }
 
@@ -51,9 +52,22 @@
 }
 
 .post-body {
-    padding:0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 .post-content {
-    padding:10px
+    padding: 10px
+}
+
+.fa-ellipsis:hover {
+    cursor: pointer;
+}
+
+.card-footer {
+    display: flex;
+}
+
+.dropdown {
+    margin-left: auto;
+    order: 1;
 }
