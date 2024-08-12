@@ -63,6 +63,7 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTransient<IVotesService,VotesService>();
 builder.Services.AddTransient<IPostsService, PostsService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IUsersService, UsersService>();

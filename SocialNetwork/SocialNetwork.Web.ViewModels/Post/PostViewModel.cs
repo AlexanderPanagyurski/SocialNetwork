@@ -34,6 +34,12 @@ namespace SocialNetwork.Web.ViewModels.Post
 
         public bool IsOwner { get; set; }
 
+        public bool IsVoted { get; set; }
+
+        public bool IsUpVote { get; set; }
+
+        public bool IsFavourite { get; set; }
+
         public IEnumerable<PostCommentViewModel> Comments { get; set; }
 
         public IEnumerable<ImagesViewModel> Images { get; set; }

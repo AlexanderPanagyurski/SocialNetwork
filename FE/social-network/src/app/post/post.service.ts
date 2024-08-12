@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { Post } from '../types/post';
 import { CookieService } from 'ngx-cookie-service';
-import { AUTH_COOKIE_KEY } from '../constants';
 import { CreatePost } from '../types/createPost';
 
 @Injectable({
@@ -39,6 +38,19 @@ export class PostService {
     headers.set('Content-Type', 'multipart/form-data');
     headers.set('Accept', '*/*');
     const response = this.http.post<CreatePost>('/api/posts', formData, { headers });
+
+    return response;
+  }
+
+  vote(postId: string, isUpVote: boolean) {
+
+    const response = this.http.post<Post>(`/api/posts/${postId}/vote`, { postId, isUpVote });
+
+    return response;
+  }
+
+  addToFavourite(postId: string) {
+    const response = this.http.post<Post>(`/api/posts/${postId}/favourite`, { postId });
 
     return response;
   }

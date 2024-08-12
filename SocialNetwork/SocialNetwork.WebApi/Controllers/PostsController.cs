@@ -10,10 +10,14 @@ namespace SocialNetwork.WebApi.Controllers
     [Authorize]
     public class PostsController : BaseApiController
     {
+        private readonly IVotesService votesService;
         private readonly IPostsService postsService;
 
-        public PostsController(IPostsService postsService)
+        public PostsController(
+            IVotesService votesService,
+            IPostsService postsService)
         {
+            this.votesService = votesService;
             this.postsService = postsService;
         }
 
@@ -116,6 +120,28 @@ namespace SocialNetwork.WebApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost("{postId}/vote")]
+        public async Task<IActionResult> VotePostAsync(PostVoteViewModel viewModel)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await this.votesService.VoteAsync(viewModel.PostId, userId, viewModel.IsUpVote);
+            var votesCount = await this.votesService.GetVotesAsync(viewModel.PostId);
+
+            return this.Ok(new { votesCount, viewModel.IsUpVote });
+        }
+
+        [HttpPost("{postId}/favourite")]
+        public async Task<IActionResult> AddToFavourites(PostVoteViewModel viewModel)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var isFavourite = await this.postsService.AddToFavouriteAsync(viewModel.PostId, userId);
+            var favoritesCount = await this.postsService.GetFavouritesCountAsync(viewModel.PostId);
+
+            return this.Ok(new { isFavourite, favoritesCount });
         }
     }
 }
