@@ -24,7 +24,8 @@
 }
 
 .fa-heart,
-.fa-comment {
+.fa-comment,
+.fa-ellipsis {
     font-size: 25px;
 }
 
@@ -56,4 +57,8 @@
 
 .post-content {
     padding:10px
+}
+
+.fa-ellipsis:hover {
+    cursor: pointer;
 }

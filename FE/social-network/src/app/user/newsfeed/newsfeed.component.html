@@ -50,6 +50,12 @@
                         <i class="fa fa-comment"></i>
                         <span class="comment pl-2"> Comments</span>
                     </span>
+                    <span class="card-link m-2  dropdown">
+                        <i class="fa-solid fa-ellipsis " data-toggle="dropdown" style="float:right"></i>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" routerLink="/posts/{{post.postId}}">Open post</a>
+                          </div>
+                    </span>
                 </div>
             </div>
         </div>
