@@ -1,3 +1,29 @@
-.fa-search, a {
+.fa-search,
+a {
     cursor: pointer;
 }
+
+.autocomplete {
+    /*the container must be positioned relative:*/
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;   
+    list-style: none;
+    background-color: #ffffff;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 300px;
+}
+
+.autocomplete-items {
+    list-style: none;
+    width: 100%;
+}
+
+.autocomplete-items:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+} 

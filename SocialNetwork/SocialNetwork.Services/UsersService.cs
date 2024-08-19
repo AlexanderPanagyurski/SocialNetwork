@@ -109,8 +109,13 @@ namespace SocialNetwork.Services
             return users;
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetUsersByUsernameAsync(string username)
+        public async Task<IEnumerable<UserViewModel>> GetUsersByUsernameAsync(string? username)
         {
+            if (username == null)
+            {
+                return Enumerable.Empty<UserViewModel>();
+            }
+
             var users = await this.dbContext
                 .Users
                 .Include(u => u.Followings)
@@ -128,7 +133,7 @@ namespace SocialNetwork.Services
                 })
                 .ToArrayAsync();
 
-            return users ?? Enumerable.Empty<UserViewModel>();
+            return users;
         }
 
         public async Task ManageSubscriptionAsync(string userId, string followingId)

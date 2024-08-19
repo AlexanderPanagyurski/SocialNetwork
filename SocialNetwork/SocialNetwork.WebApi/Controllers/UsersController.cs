@@ -106,9 +106,9 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
 
-        [HttpGet("/api/search/{username}")]
+        [HttpGet("/api/search")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetUsersByUsernameAsync(string username)
+        public async Task<IActionResult> GetUsersByUsernameAsync(string? username)
         {
             var users = await this.usersService.GetUsersByUsernameAsync(username);
             return this.Ok(users);
