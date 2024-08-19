@@ -27,6 +27,19 @@ export class HeaderComponent {
     return this.userService.user?.userName || '';
   }
 
+
+  searchUser(event: any) {
+    let username = event.target.value;
+    this.userService.getUsersByUsername(username).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.log('Error: ', error);
+      }
+    })
+  }
+
   logout() {
     this.userService.logout();
     this.router.navigate(['login']);

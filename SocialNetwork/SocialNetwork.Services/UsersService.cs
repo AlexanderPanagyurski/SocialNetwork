@@ -109,6 +109,28 @@ namespace SocialNetwork.Services
             return users;
         }
 
+        public async Task<IEnumerable<UserViewModel>> GetUsersByUsernameAsync(string username)
+        {
+            var users = await this.dbContext
+                .Users
+                .Include(u => u.Followings)
+                .Include(u => u.Posts)
+                .Where(u => u.UserName.ToUpper().Contains(username.ToUpper()))
+                .Select(u => new UserViewModel
+                {
+                    UserId = u.Id,
+                    UserEmail = u.Email,
+                    UserUserName = u.UserName,
+                    UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id),
+                    UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id),
+                    UserPostsCount = u.Posts.Count(p => !p.IsDeleted),
+
+                })
+                .ToArrayAsync();
+
+            return users ?? Enumerable.Empty<UserViewModel>();
+        }
+
         public async Task ManageSubscriptionAsync(string userId, string followingId)
         {
             var user = await this.dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);

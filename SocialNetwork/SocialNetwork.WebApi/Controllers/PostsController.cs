@@ -143,5 +143,8 @@ namespace SocialNetwork.WebApi.Controllers
 
             return this.Ok(new { isFavourite, favoritesCount });
         }
+
+        // TODO: Implement tags filtation "posts/tags/{tagName}"
+
     }
 }

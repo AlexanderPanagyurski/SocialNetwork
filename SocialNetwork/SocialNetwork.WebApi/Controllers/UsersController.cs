@@ -104,6 +104,15 @@ namespace SocialNetwork.WebApi.Controllers
                 return this.BadRequest(ex.Message);
             }
         }
-        // TODO: Implement tags filtation "posts/tags/{tagName}"
+
+
+        [HttpGet("/api/search/{username}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetUsersByUsernameAsync(string username)
+        {
+            var users = await this.usersService.GetUsersByUsernameAsync(username);
+            return this.Ok(users);
+        }
+
     }
 }
