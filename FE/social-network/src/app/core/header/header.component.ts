@@ -52,7 +52,13 @@ export class HeaderComponent {
     this.router.navigate(['login']);
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, user?: User) {
+    this.searchedUsers = [];
+   
+    if (user) {
+      this.router.navigate([path, user?.userId]);
+    } else {
+      this.router.navigate([path]);
+    }
   }
 }
