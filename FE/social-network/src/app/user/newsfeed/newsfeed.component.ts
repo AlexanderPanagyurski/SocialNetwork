@@ -18,6 +18,30 @@ export class NewsfeedComponent implements OnInit {
     private globalLoaderService: GlobalLoaderService,
     private postService: PostService) { }
 
+  isLargePostContent(content: string): boolean {
+    return content.length > 300;
+  }
+
+  shortContent(content: string): string {
+    return content.substring(0, 300) + '...';
+  }
+
+  readMore(postId: string) {
+    let x = document.getElementById(`short-content ${postId}`);
+    let y = document.getElementById(`whole-content ${postId}`);
+    let hyperlink = document.getElementById(`read-more ${postId}`);
+    
+    if (x && y && hyperlink && y.style.display === "none") {
+        x.style.display = "none";
+        y.style.display = "block";
+        hyperlink.innerHTML = "Read Less";
+    } else if(x && y && hyperlink && y.style.display !== "none") {
+        x.style.display = "block";
+        y.style.display = "none";
+        hyperlink.innerHTML = "Read More";
+    }
+  }
+
   ngOnInit(): void {
     this.fetchPosts();
   }

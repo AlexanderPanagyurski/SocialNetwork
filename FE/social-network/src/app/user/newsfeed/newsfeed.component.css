@@ -5,11 +5,13 @@
     font-size: 25px;
 }
 
-.author-username {
+.author-username,
+.read-more {
     cursor: pointer;
 }
 
-.author-username:hover {
+.author-username,
+.read-more:hover {
     color: #007bff;
 }
 
