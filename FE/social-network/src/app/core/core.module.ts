@@ -4,13 +4,15 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { SharedModule } from "../shared/shared.module";
 import { Router, RouterModule } from '@angular/router';
+import { SearchComponent } from './search/search.component';
 
 
 
 @NgModule({
   declarations: [
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,

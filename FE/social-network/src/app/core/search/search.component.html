@@ -1,0 +1,20 @@
+<div class="searchInputWrapper ml-4">
+    <input class="searchInput" type="text" name="username" placeholder="Search username..." (keyup)="searchUser($event)"
+        autocomplete="off" />
+    <i class="searchInputIcon fa fa-search"></i>
+    <ul class="list-group autocomplete" *ngIf="searchedUsersCount!==0">
+        <li class="list-group-item d-flex align-items-sm-center user-link autocomplete-items"
+            *ngFor="let user of searchedUsers" (click)="navigateTo('users', user)">
+            <img src="../../../assets/images/default-profile-image.png" alt="" width="100px"
+                class="rounded-circle user-profile-image">
+            <div class="flex-fill pl-3 pr-3">
+                <div class="row">
+                    <h5 class="card-title">{{user.userUserName}}</h5>
+                    <span class="user-followers">Followers:<span class="pl-2">{{user.userFollowersCount}}</span></span>
+                    <span class="user-followers">Followings:<span class="pl-2">{{user.userFollowingsCount}}</span>
+                    </span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
