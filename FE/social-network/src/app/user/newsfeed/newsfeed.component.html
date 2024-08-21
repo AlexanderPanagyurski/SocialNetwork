@@ -16,13 +16,15 @@
                         <div class="text-muted small ml-3">
                             <div>
                                 <span (click)="vote(post,true)">
-                                    <i class="fa fa-angle-up" [ngStyle]="post.isVoted && post.isUpVote  ? {'color': '#00c200'} : null"></i>
+                                    <i class="fa fa-angle-up"
+                                        [ngStyle]="post.isVoted && post.isUpVote  ? {'color': '#00c200'} : null"></i>
                                 </span>
                             </div>
                             <div id="votes-count">{{post.votesCount}}</div>
                             <div>
                                 <span (click)="vote(post,false)">
-                                    <i class="fa fa-angle-down" [ngStyle]="post.isVoted && !post.isUpVote  ? {'color': 'red'} : null"></i>
+                                    <i class="fa fa-angle-down"
+                                        [ngStyle]="post.isVoted && !post.isUpVote  ? {'color': 'red'} : null"></i>
                                 </span>
                             </div>
                         </div>
@@ -38,7 +40,11 @@
                         </carousel>
                     </div>
                     <div class="post-content">
-                        {{post.content}}
+                        <span id="short-content {{post.postId}}">
+                            {{shortContent(post.content)}}
+                        </span>
+                        <span id="whole-content {{post.postId}}" style="display:none">{{post.content}}</span>
+                        <span class="read-more" id="read-more {{post.postId}}" *ngIf="isLargePostContent(post.content)" (click)="readMore(post.postId)">Read More</span>
                     </div>
                 </div>
                 <div class="card-footer">
