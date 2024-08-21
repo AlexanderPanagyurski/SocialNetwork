@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/types/user';
 import { UserForAuth } from 'src/app/types/userForAuth';
 import { UserService } from 'src/app/user/user.service';
 
@@ -10,6 +11,7 @@ import { UserService } from 'src/app/user/user.service';
 })
 export class HeaderComponent {
   title: string = "SocialNetwork";
+  searchedUsers: User[] = [];
 
   constructor(
     private userService: UserService,
@@ -27,12 +29,36 @@ export class HeaderComponent {
     return this.userService.user?.userName || '';
   }
 
+  get searchedUsersCount(): number {
+    return this.searchedUsers.length;
+  }
+
+
+  searchUser(event: any) {
+    let username = event.target.value;
+    this.userService.getUsersByUsername(username).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.searchedUsers = response;
+      },
+      error: (error) => {
+        console.log('Error: ', error);
+      }
+    })
+  }
+
   logout() {
     this.userService.logout();
     this.router.navigate(['login']);
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, user?: User) {
+    this.searchedUsers = [];
+   
+    if (user) {
+      this.router.navigate([path, user?.userId]);
+    } else {
+      this.router.navigate([path]);
+    }
   }
 }
