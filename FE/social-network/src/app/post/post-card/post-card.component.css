@@ -1,0 +1,75 @@
+.fa-angle-up,
+.fa-angle-down,
+#votes-count {
+    padding-right: 5px;
+    font-size: 25px;
+}
+
+.author-username,
+.read-more {
+    cursor: pointer;
+}
+
+.author-username,
+.read-more:hover {
+    color: #007bff;
+}
+
+.fa-angle-up:hover {
+    color: #00c200;
+    cursor: pointer;
+}
+
+.fa-angle-down:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.fa-heart,
+.fa-comment,
+.fa-ellipsis {
+    font-size: 25px;
+}
+
+.fa-heart:hover {
+    color: red;
+}
+
+.fa-comment:hover {
+    color: #007bff;
+}
+
+.fa-heart,
+.fa-comment:hover {
+    cursor: pointer;
+}
+
+.favorites-count,
+.comment {
+    font-size: 16px;
+}
+
+.post {
+    margin: auto;
+}
+
+.post-body {
+    padding: 0px 0px 0px 0px;
+}
+
+.post-content {
+    padding: 10px
+}
+
+.fa-ellipsis:hover {
+    cursor: pointer;
+}
+
+.card-footer {
+    display: flex;
+}
+
+.dropdown {
+    margin-left: auto;
+    order: 1;
+}

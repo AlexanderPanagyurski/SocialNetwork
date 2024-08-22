@@ -1,0 +1,63 @@
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="media flex-wrap w-100 align-items-center">
+            <img attr.src={{setProfileImage(post)}}
+            style="width:80px; height:80px;"
+                class="d-block ui-w-40 rounded-circle" alt="">
+            <div class="media-body ml-3">
+                <h6 class="author-username" (click)="navigateTo('users',post)">{{post.userUserName}}</h6>
+                <div class="datetime text-muted small">
+                    {{checkIfEdited(post)}}
+                </div>
+            </div>
+            <div class="text-muted small ml-3">
+                <div>
+                    <span (click)="vote(post,true)">
+                        <i class="fa fa-angle-up"
+                            [ngStyle]="post.isVoted && post.isUpVote  ? {'color': '#00c200'} : null"></i>
+                    </span>
+                </div>
+                <div id="votes-count">{{post.votesCount}}</div>
+                <div>
+                    <span (click)="vote(post,false)">
+                        <i class="fa fa-angle-down"
+                            [ngStyle]="post.isVoted && !post.isUpVote  ? {'color': 'red'} : null"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body post-body">
+        <div class="post-images">
+            <carousel>
+                <slide *ngFor="let image of post.images">
+                    <img attr.src="data:image/JPEG;base64,{{image.imageUrl}}"
+                        style="display: block; width: 100%;">
+                </slide>
+            </carousel>
+        </div>
+        <div class="post-content">
+            <span id="short-content {{post.postId}}">
+                {{shortContent(post.content)}}
+            </span>
+            <span id="whole-content {{post.postId}}" style="display:none">{{post.content}}</span>
+            <span class="read-more" id="read-more {{post.postId}}" *ngIf="isLargePostContent(post.content)" (click)="readMore(post.postId)">Read More</span>
+        </div>
+    </div>
+    <div class="card-footer">
+        <span class="card-link ml-2" (click)="addToFavourite(post)">
+            <i class="fa-solid fa-heart" [ngStyle]="post.isFavourite  ? {'color': 'red'} : null"></i>
+            <span class="favorites-count ml-2"> {{post.favoritesCount}}</span>
+        </span>
+        <span class="card-link ml-4">
+            <i class="fa fa-comment"></i>
+            <span class="comment pl-2"> Comments</span>
+        </span>
+        <span class="card-link dropdown">
+            <i class="fa-solid fa-ellipsis " data-toggle="dropdown"></i>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" routerLink="/posts/{{post.postId}}">Open post</a>
+            </div>
+        </span>
+    </div>
+</div>

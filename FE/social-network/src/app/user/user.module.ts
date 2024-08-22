@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { PostModule } from "../post/post.module";
 
 @NgModule({
   declarations: [
@@ -30,8 +31,9 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    CarouselModule
-  ],
+    CarouselModule,
+    PostModule
+],
   exports: [
     UsersListComponent,
     UsersPopupComponent,

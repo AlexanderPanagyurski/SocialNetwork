@@ -27,53 +27,6 @@ export class PostDetailsComponent implements OnInit {
     });
   }
 
-  navigateTo(path: string, post: Post) {
-    this.router.navigate([path, post.userId]);
-  }
-
-  checkIfEdited(post: Post): string {
-    const datePipe: DatePipe = new DatePipe('en-US');
-    let date = post.createdOn;
-    let isEdited = false;
-
-    if (post.modifiedOn) {
-      date = post.modifiedOn;
-      isEdited = true;
-    }
-    return `${datePipe.transform(date, 'fullDate')} ${isEdited ? '(edited)' : ''}`;
-  }
-
-  setProfileImage(post: Post) {
-    return this.postService.setUserProfileImageUrl(post);
-  }
-
-  vote(post: Post, isUpVote: boolean) {
-    this.postService.vote(post.postId, isUpVote).subscribe({
-      next: (response) => {
-        post.votesCount = response.votesCount;
-        post.isUpVote = response.isUpVote;
-        post.isVoted = true;
-      },
-      error: (error) => {
-        console.log("Error: ", error);
-      }
-    });
-  }
-
-  addToFavourite(post?: Post) {
-    if (post) {
-      this.postService.addToFavourite(post.postId).subscribe({
-        next: (response) => {
-          post.isFavourite = response.isFavourite;
-          post.favoritesCount = response.favoritesCount;
-        },
-        error: (error) => {
-          console.log("Error: ", error);
-        }
-      });
-    }
-  }
-
   private fetchPost(postId: string) {
     this.globalLoaderService.showLoader();
     this.postService.getPostById(postId).subscribe({

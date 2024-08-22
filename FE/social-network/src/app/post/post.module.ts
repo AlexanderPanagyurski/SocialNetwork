@@ -6,13 +6,15 @@ import { PostCreateComponent } from './post-create/post-create.component';
 import { PostRoutingModule } from './post-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { PostCardComponent } from './post-card/post-card.component';
 
 
 
 @NgModule({
   declarations: [
     PostDetailsComponent,
-    PostCreateComponent
+    PostCreateComponent,
+    PostCardComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     FormsModule,
     CarouselModule,
     ReactiveFormsModule
+  ],
+  exports:[
+    PostCardComponent
   ]
 })
 export class PostModule { }
