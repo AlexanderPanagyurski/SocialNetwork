@@ -40,9 +40,10 @@ namespace SocialNetwork.WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetPostByIdAsync(string postId)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
             try
             {
-                var post = await this.postsService.GetByIdAsync(postId);
+                var post = await this.postsService.GetByIdAsync(postId, userId);
 
                 return this.Ok(post);
 
