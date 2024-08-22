@@ -8,5 +8,6 @@ export interface User {
     userFollowersCount: number,
     userPostsCount: number,
     createdOn: string,
+    profileImageUrl: Uint8Array,
     userPosts: Post[]
 }

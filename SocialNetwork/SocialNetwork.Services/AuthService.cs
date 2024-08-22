@@ -44,6 +44,7 @@
         {
             var user = await this.dbContext
                 .Users
+                .Include(u=>u.UserImages)
                 .FirstOrDefaultAsync(u => u.Email == userViewModel.Email
                 && u.PasswordHash == this.ComputeHash(userViewModel.Password));
 
@@ -51,6 +52,7 @@
             {
                 UserId = user.Id,
                 UserName = user.UserName,
+                ProfileImageUrl=user.UserImages.FirstOrDefault(x=>x.IsProfileImage)?.Content,
                 Email = user.Email
             }
             : null;

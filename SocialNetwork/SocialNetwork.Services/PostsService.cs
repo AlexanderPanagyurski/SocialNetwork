@@ -25,7 +25,6 @@
                 .ThenInclude(u => u.UserImages)
                 //.Include(p => p.Comments)
                 //.ThenInclude(c => c.Children)
-                //.Include(p => p.Images)
                 .Include(p => p.Votes)
                 .Include(p => p.FavoritePosts)
                 .Include(p => p.Images)
@@ -46,6 +45,7 @@
                 IsDeleted = post.IsDeleted,
                 Title = post.Title,
                 Content = post.Content,
+                UserProfileImageUrl = post.User.UserImages.FirstOrDefault(i => i.IsProfileImage)?.Content,
                 UserUserName = post.User.UserName,
                 UserId = post.User.Id,
                 VotesCount = post.Votes.Count,
@@ -78,6 +78,8 @@
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.Posts)
                 .ThenInclude(p => p.FavoritePosts)
+                .Include(uf => uf.User)
+                .ThenInclude(uf=>uf.UserImages)
                 .ToArrayAsync();
 
             ICollection<PostViewModel> posts = new HashSet<PostViewModel>();
@@ -97,6 +99,7 @@
                         IsDeleted = post.IsDeleted,
                         DeletedOn = post.DeletedOn,
                         Content = post.Content,
+                        UserProfileImageUrl=post.User.UserImages.FirstOrDefault(x=>x.IsProfileImage)?.Content,
                         UserUserName = post.User.UserName,
                         UserId = post.UserId,
                         IsVoted = post.Votes.Any(v => v.UserId == userId),

@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using SocialNetwork.Data.Models;
-using SocialNetwork.Services;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Auth;
+using SocialNetwork.Web.ViewModels.User;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -57,7 +55,15 @@ namespace SocialNetwork.WebApi.Controllers
 
             var token = CreateToken(loginModel);
 
-            return this.Ok(new UserViewModel { Id = loginModel.UserId, Email = loginModel.Email, UserName = loginModel.UserName, Token = token });
+            var response = new AuthUserViewModel
+            {
+                Id = loginModel.UserId,
+                Email = loginModel.Email,
+                UserName = loginModel.UserName,
+                ProfileImageUrl = loginModel.ProfileImageUrl,
+                Token = token
+            };
+            return this.Ok(response);
         }
 
         private string CreateToken(LoginViewModel user)
@@ -83,16 +89,5 @@ namespace SocialNetwork.WebApi.Controllers
 
             return jwt;
         }
-    }
-
-    public class UserViewModel
-    {
-        public string Token { get; set; }
-
-        public string Id { get; set; }
-
-        public string Email { get; set; }
-
-        public string UserName { get; set; }
     }
 }

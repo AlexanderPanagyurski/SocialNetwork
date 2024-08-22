@@ -6,6 +6,8 @@ namespace SocialNetwork.Web.ViewModels.User
     {
         public string UserId { get; set; }
 
+        public byte[]? ProfileImageUrl { get; set; }
+
         public string UserUserName { get; set; }
 
         public string UserEmail { get; set; }

@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     UserDetailsComponent,
     RegisterComponent,
     LoginComponent,
-    NewsfeedComponent
+    NewsfeedComponent,
+    UserEditComponent
   ],
   imports: [
     CommonModule,

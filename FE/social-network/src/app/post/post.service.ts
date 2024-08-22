@@ -49,6 +49,13 @@ export class PostService {
     return response;
   }
 
+  setUserProfileImageUrl(post: Post): string {
+    if (post.userProfileImageUrl) {
+      return `data:image/JPEG;base64,${post.userProfileImageUrl}`;
+    }
+    return '../../../assets/images/default-profile-image.png';
+  }
+
   addToFavourite(postId: string) {
     const response = this.http.post<Post>(`/api/posts/${postId}/favourite`, { postId });
 

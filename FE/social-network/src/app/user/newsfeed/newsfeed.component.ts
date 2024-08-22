@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { PostService } from 'src/app/post/post.service';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { Post } from 'src/app/types/post';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-newsfeed',
@@ -30,15 +31,15 @@ export class NewsfeedComponent implements OnInit {
     let x = document.getElementById(`short-content ${postId}`);
     let y = document.getElementById(`whole-content ${postId}`);
     let hyperlink = document.getElementById(`read-more ${postId}`);
-    
+
     if (x && y && hyperlink && y.style.display === "none") {
-        x.style.display = "none";
-        y.style.display = "block";
-        hyperlink.innerHTML = "Read Less";
-    } else if(x && y && hyperlink && y.style.display !== "none") {
-        x.style.display = "block";
-        y.style.display = "none";
-        hyperlink.innerHTML = "Read More";
+      x.style.display = "none";
+      y.style.display = "block";
+      hyperlink.innerHTML = "Read Less";
+    } else if (x && y && hyperlink && y.style.display !== "none") {
+      x.style.display = "block";
+      y.style.display = "none";
+      hyperlink.innerHTML = "Read More";
     }
   }
 
@@ -85,6 +86,10 @@ export class NewsfeedComponent implements OnInit {
         console.log("Error: ", error);
       }
     });
+  }
+
+  setProfileImage(post:Post){
+    return this.postService.setUserProfileImageUrl(post);
   }
 
   private fetchPosts() {

@@ -5,7 +5,7 @@
     <ul class="list-group autocomplete" *ngIf="searchedUsersCount!==0">
         <li class="list-group-item d-flex align-items-sm-center user-link autocomplete-items"
             *ngFor="let user of searchedUsers" (click)="navigateTo('users', user)">
-            <img src="../../../assets/images/default-profile-image.png" alt="" width="100px"
+            <img attr.src={{setUserProfileImageUrl(user)}} alt="" width="80px"
                 class="rounded-circle user-profile-image">
             <div class="flex-fill pl-3 pr-3">
                 <div class="row">

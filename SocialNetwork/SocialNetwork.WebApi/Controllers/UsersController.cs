@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.Services.Contracts;
+using SocialNetwork.Web.ViewModels.Post;
+using SocialNetwork.Web.ViewModels.User;
 using System.Security.Claims;
 
 namespace SocialNetwork.WebApi.Controllers
@@ -32,7 +34,15 @@ namespace SocialNetwork.WebApi.Controllers
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var user = await this.usersService.GetUserAsync(userId);
-                return this.Ok(new UserViewModel { Id = user.UserId, Email = user.UserEmail, UserName = user.UserUserName });
+
+                var response = new AuthUserViewModel
+                {
+                    Id = user.UserId,
+                    Email = user.UserEmail,
+                    ProfileImageUrl = user.ProfileImageUrl,
+                    UserName = user.UserUserName
+                };
+                return this.Ok(response);
             }
             catch (ArgumentException ex)
             {
@@ -105,6 +115,31 @@ namespace SocialNetwork.WebApi.Controllers
             }
         }
 
+        [HttpPut("{userId}/edit")]
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> EditUserAsync(string userId)
+        {
+            var isAuth = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            string username = Request.Form["username"];
+            IFormFile image = Request.Form.Files[0];
+
+            if (string.IsNullOrEmpty(isAuth) || isAuth != userId)
+            {
+                return this.BadRequest();
+            }
+
+            var viewModel = new AuthUserViewModel
+            {
+                Id = userId,
+                UserName = username,
+                Image = image
+            };
+
+            var response = await this.usersService.EditUserAsync(viewModel);
+
+            return this.Ok(new { userId });
+        }
 
         [HttpGet("/api/search")]
         [AllowAnonymous]
