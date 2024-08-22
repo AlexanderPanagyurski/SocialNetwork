@@ -18,7 +18,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<PostViewModel> GetByIdAsync(string id)
+        public async Task<PostViewModel> GetByIdAsync(string id, string userId)
         {
             var post = await this.dbContext.Posts
                 .Include(p => p.User)
@@ -49,6 +49,9 @@
                 UserUserName = post.User.UserName,
                 UserId = post.User.Id,
                 VotesCount = post.Votes.Count,
+                IsVoted = post.Votes.Any(v => v.UserId == userId),
+                IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
+                IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
                 FavoritesCount = post.FavoritePosts.Count,
                 Images = post.Images.Select(i => new ImagesViewModel
                 {

@@ -4,7 +4,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <div class="media flex-wrap w-100 align-items-center">
-                    <img src="../../../assets/images/default-profile-image.png" style="width:80px; height:80px;"
+                    <img attr.src={{setProfileImage(post)}} style="width:80px; height:80px;"
                         class="d-block ui-w-40 rounded-circle" alt="">
                     <div class="media-body ml-3">
                         <h6 class="author-username" (click)="navigateTo('users',post)">{{post.userUserName}}</h6>
@@ -14,14 +14,16 @@
                     </div>
                     <div class="text-muted small ml-3">
                         <div>
-                            <span>
-                                <i class="fa fa-angle-up"></i>
+                            <span (click)="vote(post,true)">
+                                <i class="fa fa-angle-up"
+                                    [ngStyle]="post.isVoted && post.isUpVote  ? {'color': '#00c200'} : null"></i>
                             </span>
                         </div>
                         <div id="votes-count">{{post.votesCount}}</div>
                         <div>
-                            <span>
-                                <i class="fa fa-angle-down"></i>
+                            <span (click)="vote(post,false)">
+                                <i class="fa fa-angle-down"
+                                    [ngStyle]="post.isVoted && !post.isUpVote  ? {'color': 'red'} : null"></i>
                             </span>
                         </div>
                     </div>
@@ -41,8 +43,8 @@
                 </div>
             </div>
             <div class="card-footer">
-                <span class="card-link m-2 pr-3">
-                    <i class="fa-solid fa-heart"></i>
+                <span class="card-link m-2 pr-3" (click)="addToFavourite(post)">
+                    <i class="fa-solid fa-heart"  [ngStyle]="post.isFavourite  ? {'color': 'red'} : null"></i>
                     <span class="favorites-count ml-2"> {{post.favoritesCount}}</span>
                 </span>
                 <span class="card-link m-2 pr-3">
