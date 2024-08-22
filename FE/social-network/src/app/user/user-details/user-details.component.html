@@ -6,7 +6,8 @@
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center">
-            <img src="../../../assets/images/default-profile-image.png" alt="avatar" class="rounded-circle img-fluid"
+            <img attr.src={{userService.getUserProfileImageUrl(user)}}
+            style="display: block; width: 100%;" alt="avatar" class="rounded-circle img-fluid"
               style="width: 150px;">
             <h5 class="my-3">{{user.userUserName}}</h5>
             <p class="text-muted mb-1"><span>Posts: {{user.userPostsCount}}</span></p>

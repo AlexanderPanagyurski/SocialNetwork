@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { User } from '../types/user';
@@ -69,6 +69,15 @@ export class UserService implements OnDestroy {
     return response;
   }
 
+  edit(formData: FormData, userId: string) {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'multipart/form-data');
+    headers.set('Accept', '*/*');
+    const response = this.http.put<User>(`/api/users/${userId}/edit`, formData, { headers });
+
+    return response;
+  }
+
   register(email: string, userName: string, password: string) {
     debugger;
     return this.http.post('/api/auth/register', { email, userName, password });
@@ -92,6 +101,21 @@ export class UserService implements OnDestroy {
       .get<UserForAuth>('/api/users/profile')
       .pipe(tap(user => this.user$$.next(user)));
   }
+
+  get userProfileImageUrl(): string {
+    if (this.user?.profileImageUrl) {
+      return `data:image/JPEG;base64,${this.user.profileImageUrl}`;
+    }
+    return '../../../assets/images/default-profile-image.png';
+  }
+
+  getUserProfileImageUrl(user: User) {
+    if (user.profileImageUrl) {
+      return `data:image/JPEG;base64,${user.profileImageUrl}`;
+    }
+    return '../../../assets/images/default-profile-image.png';
+  }
+
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();

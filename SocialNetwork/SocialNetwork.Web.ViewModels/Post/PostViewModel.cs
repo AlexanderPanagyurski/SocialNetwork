@@ -8,7 +8,7 @@ namespace SocialNetwork.Web.ViewModels.Post
     {
         public string PostId { get; set; }
 
-        public string UserProfileImage { get; set; }
+        public byte[]? UserProfileImageUrl { get; set; }
 
         public string UserId { get; set; }
 

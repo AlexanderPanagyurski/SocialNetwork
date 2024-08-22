@@ -16,7 +16,7 @@ export class UserDetailsComponent implements OnInit {
   usersFollowers: User[] = [];
 
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
     private globalLoaderService: GlobalLoaderService) { }

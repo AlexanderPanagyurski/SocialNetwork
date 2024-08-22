@@ -5,7 +5,8 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="media flex-wrap w-100 align-items-center">
-                        <img src="../../../assets/images/default-profile-image.png" style="width:80px; height:80px;"
+                        <img attr.src={{setProfileImage(post)}}
+                        style="width:80px; height:80px;"
                             class="d-block ui-w-40 rounded-circle" alt="">
                         <div class="media-body ml-3">
                             <h6 class="author-username" (click)="navigateTo('users',post)">{{post.userUserName}}</h6>

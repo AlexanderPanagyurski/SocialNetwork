@@ -6,6 +6,8 @@ namespace SocialNetwork.Services.Contracts
         Task<IEnumerable<UserViewModel>> GetUsersAsync();
         Task<UserViewModel> GetUserAsync(string userId);
 
+        Task<string> EditUserAsync(AuthUserViewModel user);
+
         Task<IEnumerable<UserViewModel>> GetUsersByUsernameAsync(string? username);
 
         Task<IEnumerable<UserViewModel>> GetUserFollwers(string userId);

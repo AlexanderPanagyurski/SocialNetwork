@@ -32,6 +32,13 @@ export class SearchComponent {
     })
   }
 
+  setUserProfileImageUrl(user: User) {
+    if (user.profileImageUrl) {
+      return `data:image/JPEG;base64,${user.profileImageUrl}`;
+    }
+    return '../../../assets/images/default-profile-image.png';
+  }
+
   navigateTo(path: string, user?: User) {
     this.searchedUsers = [];
 

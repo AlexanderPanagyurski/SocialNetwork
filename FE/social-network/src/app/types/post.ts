@@ -3,6 +3,7 @@ import { PostImage } from "./postImage";
 export interface Post {
     postId: string,
     userId: string,
+    userProfileImageUrl: Uint8Array,
     userUserName: string,
     createdOn: Date,
     modifiedOn: Date,

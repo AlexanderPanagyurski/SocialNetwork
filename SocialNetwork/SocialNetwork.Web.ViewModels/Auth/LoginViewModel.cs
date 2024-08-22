@@ -6,6 +6,8 @@
 
         public string Email { get; set; }
 
+        public byte[]? ProfileImageUrl { get; set; }
+
         public string UserName { get; set; }
     }
 }

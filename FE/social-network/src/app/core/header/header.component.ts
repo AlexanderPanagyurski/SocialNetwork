@@ -13,7 +13,7 @@ export class HeaderComponent {
   title: string = "SocialNetwork";
 
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private router: Router) { }
 
   get user(): UserForAuth {
