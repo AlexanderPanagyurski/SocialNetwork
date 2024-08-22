@@ -48,7 +48,7 @@
                 UserProfileImageUrl = post.User.UserImages.FirstOrDefault(i => i.IsProfileImage)?.Content,
                 UserUserName = post.User.UserName,
                 UserId = post.User.Id,
-                VotesCount = post.Votes.Count,
+                VotesCount = post.Votes.Sum(x => (int)x.VoteType),
                 IsVoted = post.Votes.Any(v => v.UserId == userId),
                 IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
                 IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
@@ -82,7 +82,7 @@
                 .ThenInclude(u => u.Posts)
                 .ThenInclude(p => p.FavoritePosts)
                 .Include(uf => uf.User)
-                .ThenInclude(uf=>uf.UserImages)
+                .ThenInclude(uf => uf.UserImages)
                 .ToArrayAsync();
 
             ICollection<PostViewModel> posts = new HashSet<PostViewModel>();
@@ -102,12 +102,12 @@
                         IsDeleted = post.IsDeleted,
                         DeletedOn = post.DeletedOn,
                         Content = post.Content,
-                        UserProfileImageUrl=post.User.UserImages.FirstOrDefault(x=>x.IsProfileImage)?.Content,
+                        UserProfileImageUrl = post.User.UserImages.FirstOrDefault(x => x.IsProfileImage)?.Content,
                         UserUserName = post.User.UserName,
                         UserId = post.UserId,
                         IsVoted = post.Votes.Any(v => v.UserId == userId),
                         IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
-                        VotesCount = post.Votes.Count,
+                        VotesCount = post.Votes.Sum(x => (int)x.VoteType),
                         IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
                         FavoritesCount = post.FavoritePosts.Count(),
                         Images = post.Images.Select(i => new ImagesViewModel
