@@ -6,12 +6,8 @@
 }
 
 .author-username,
-.read-more {
-    cursor: pointer;
-}
-
-.author-username,
 .read-more:hover {
+    cursor: pointer;
     color: #007bff;
 }
 
@@ -72,4 +68,15 @@
 .dropdown {
     margin-left: auto;
     order: 1;
+}
+.socials i {
+    margin-right: 14px;
+    font-size: 17px;
+    color: #d2c8c8;
+    cursor: pointer
+}
+
+.feed-image img {
+    width: 100%;
+    height: auto
 }
