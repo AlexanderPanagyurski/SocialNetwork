@@ -13,6 +13,7 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { PostModule } from "../post/post.module";
+import FavouritePostsComponent from './favourite-posts/favourite-posts.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PostModule } from "../post/post.module";
     RegisterComponent,
     LoginComponent,
     NewsfeedComponent,
-    UserEditComponent
+    UserEditComponent,
+    FavouritePostsComponent
   ],
   imports: [
     CommonModule,

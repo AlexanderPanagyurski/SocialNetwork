@@ -1,4 +1,5 @@
-﻿using SocialNetwork.Web.ViewModels.User;
+﻿using SocialNetwork.Web.ViewModels.Post;
+using SocialNetwork.Web.ViewModels.User;
 namespace SocialNetwork.Services.Contracts
 {
     public interface IUsersService
@@ -12,6 +13,8 @@ namespace SocialNetwork.Services.Contracts
 
         Task<IEnumerable<UserViewModel>> GetUserFollwers(string userId);
         Task<IEnumerable<UserViewModel>> GetUserFollwings(string userId);
+
+        Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId);
 
         Task ManageSubscriptionAsync(string userId, string followingId);
     }

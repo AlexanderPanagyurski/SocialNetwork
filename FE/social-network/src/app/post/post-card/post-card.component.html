@@ -27,6 +27,13 @@
                 </slide>
             </carousel>
         </div>
+        <div class="post-content">
+            <span id="short-content {{post.postId}}">
+                {{shortContent(post.content)}}
+            </span>
+            <span id="whole-content {{post.postId}}" style="display:none">{{post.content}}</span>
+            <span class="read-more" id="read-more {{post.postId}}" *ngIf="isLargePostContent(post.content)" (click)="readMore(post.postId)">Read More</span>
+        </div>
         <div class="card-footer bg-white">
             <span class="card-link mt-1 ml-2" (click)="addToFavourite(post)">
                 <i class="fa-solid fa-heart" [ngStyle]="post.isFavourite  ? {'color': 'red'} : null"></i>

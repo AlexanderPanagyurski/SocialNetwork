@@ -149,5 +149,12 @@ namespace SocialNetwork.WebApi.Controllers
             return this.Ok(users);
         }
 
+        [HttpGet("{userId}/favourite-posts")]
+        public async Task<IActionResult> GetFavouritePostsAsync(string userId)
+        {
+            var posts = await this.usersService.GetFavouritePostsAsync(userId);
+
+            return this.Ok(posts);
+        }
     }
 }
