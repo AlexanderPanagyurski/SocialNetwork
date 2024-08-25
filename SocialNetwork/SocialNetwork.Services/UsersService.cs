@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialNetwork.Data;
 using SocialNetwork.Data.Models;
+using SocialNetwork.Data.Models.Enums;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Post;
 using SocialNetwork.Web.ViewModels.User;
@@ -38,6 +39,47 @@ namespace SocialNetwork.Services
             await this.dbContext.SaveChangesAsync();
 
             return user.Id;
+        }
+
+        public async Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId)
+        {
+            var posts = await this.dbContext
+                .FavoritePosts
+                .Include(fp => fp.Post)
+                .ThenInclude(p => p.Votes)
+                .Include(fp => fp.Post)
+                .ThenInclude(p => p.Comments)
+                .Include(fp => fp.Post)
+                .ThenInclude(p => p.Images)
+                .Include(fp => fp.User)
+                .ThenInclude(u => u.UserImages)
+                .Where(fp => fp.UserId == userId).Select(fp => new PostViewModel
+                {
+                    UserId = fp.User.Id,
+                    UserUserName = fp.User.UserName,
+                    UserProfileImageUrl = fp.User.UserImages.FirstOrDefault(i => i.IsProfileImage).Content,
+                    PostId = fp.Post.Id,
+                    Title = fp.Post.Title,
+                    Content = fp.Post.Content,
+                    CreatedOn = fp.Post.CreatedOn,
+                    ModifiedOn = fp.Post.ModifiedOn,
+                    Images = fp.Post.Images
+                      .Select(i => new ImagesViewModel
+                      {
+                          Id = i.Id,
+                          ImageUrl = i.Content,
+                          PostId = i.PostId
+                      }),
+                    VotesCount = fp.Post.Votes.Sum(v => (int)v.VoteType),
+                    IsFavourite = true,
+                    IsVoted = fp.Post.Votes.Any(v => v.UserId == userId),
+                    IsUpVote = fp.Post.Votes.Any(v => v.UserId == userId && v.VoteType == VoteType.UpVote),
+                    IsOwner = fp.Post.UserId == userId,
+                    FavoritesCount = fp.Post.FavoritePosts.Count(),
+                })
+                .ToArrayAsync();
+
+            return posts;
         }
 
         public async Task<UserViewModel> GetUserAsync(string userId)

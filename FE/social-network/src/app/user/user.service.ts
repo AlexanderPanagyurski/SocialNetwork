@@ -6,6 +6,7 @@ import { UserForAuth } from '../types/userForAuth';
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { AUTH_COOKIE_KEY } from '../constants';
+import { Post } from '../types/post';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,12 @@ export class UserService implements OnDestroy {
       url += `?username=${username}`;
     }
     const response = this.http.get<User[]>(url);
+    return response;
+  }
+
+  getFavouritePosts(userId: string) {
+    const response = this.http.get<Post[]>(`/api/users/${userId}/favourite-posts`);
+
     return response;
   }
 
