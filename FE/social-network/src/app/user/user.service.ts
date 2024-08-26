@@ -52,6 +52,12 @@ export class UserService implements OnDestroy {
     return response;
   }
 
+  getUserPosts(userId: string) {
+    const response = this.http.get<Post[]>(`/api/users/${userId}/posts`);
+
+    return response;
+  }
+
   getUserById(userId: string) {
     const { apiUrl } = environment;
 
