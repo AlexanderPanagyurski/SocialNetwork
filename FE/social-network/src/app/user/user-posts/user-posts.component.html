@@ -1,0 +1,8 @@
+<app-global-loader />
+<div *ngIf="posts.length">
+    <div *ngFor="let post of posts" class="row mt-4">
+        <div class="post col-sm-6">
+            <app-post-card [post]="post"/>
+        </div>
+    </div>
+</div>

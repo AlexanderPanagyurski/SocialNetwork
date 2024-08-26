@@ -14,6 +14,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { PostModule } from "../post/post.module";
 import FavouritePostsComponent from './favourite-posts/favourite-posts.component';
+import { UserPostsComponent } from './user-posts/user-posts.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import FavouritePostsComponent from './favourite-posts/favourite-posts.component
     LoginComponent,
     NewsfeedComponent,
     UserEditComponent,
-    FavouritePostsComponent
+    FavouritePostsComponent,
+    UserPostsComponent
   ],
   imports: [
     CommonModule,

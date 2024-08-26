@@ -156,5 +156,13 @@ namespace SocialNetwork.WebApi.Controllers
 
             return this.Ok(posts);
         }
+
+        [HttpGet("{userId}/posts")]
+        public async Task<IActionResult> GetUserPostsAsync(string userId)
+        {
+            var posts = await this.usersService.GetUserPostsAsync(userId);
+
+            return this.Ok(posts);
+        }
     }
 }

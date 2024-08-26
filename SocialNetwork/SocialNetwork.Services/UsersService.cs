@@ -156,6 +156,46 @@ namespace SocialNetwork.Services
             return userFollowings;
         }
 
+        public async Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId)
+        {
+            var posts = await this.dbContext.Posts
+                .Include(p => p.Votes)
+                .Include(p => p.Comments)
+                .Include(p => p.Images)
+                .Include(p => p.User)
+                .ThenInclude(u => u.UserImages)
+                .Include(p => p.FavoritePosts)
+                .Where(p => p.UserId == userId)
+                .OrderByDescending(p => p.CreatedOn)
+                .Select(p => new PostViewModel
+                {
+                    UserId = p.User.Id,
+                    UserUserName = p.User.UserName,
+                    UserProfileImageUrl = p.User.UserImages.FirstOrDefault(i => i.IsProfileImage).Content,
+                    PostId = p.Id,
+                    Title = p.Title,
+                    Content = p.Content,
+                    CreatedOn = p.CreatedOn,
+                    ModifiedOn = p.ModifiedOn,
+                    Images = p.Images
+                      .Select(i => new ImagesViewModel
+                      {
+                          Id = i.Id,
+                          ImageUrl = i.Content,
+                          PostId = i.PostId
+                      }),
+                    VotesCount = p.Votes.Sum(v => (int)v.VoteType),
+                    FavoritesCount = p.FavoritePosts.Count(),
+                    IsFavourite = p.FavoritePosts.Any(p => p.UserId == userId),
+                    IsVoted = p.Votes.Any(v => v.UserId == userId),
+                    IsUpVote = p.Votes.Any(v => v.UserId == userId && v.VoteType == VoteType.UpVote),
+                    IsOwner = p.UserId == userId,
+                })
+                .ToArrayAsync();
+
+            return posts;
+        }
+
         public async Task<IEnumerable<UserViewModel>> GetUsersAsync()
         {
             var users = await this.dbContext
