@@ -32,6 +32,8 @@ namespace SocialNetwork.Web.ViewModels.Post
 
         public int FavoritesCount { get; set; }
 
+        public int CommentsCount { get; set; }
+
         public bool IsOwner { get; set; }
 
         public bool IsVoted { get; set; }
@@ -40,9 +42,6 @@ namespace SocialNetwork.Web.ViewModels.Post
 
         public bool IsFavourite { get; set; }
 
-        public IEnumerable<PostCommentViewModel> Comments { get; set; }
-
         public IEnumerable<ImagesViewModel> Images { get; set; }
-
     }
 }

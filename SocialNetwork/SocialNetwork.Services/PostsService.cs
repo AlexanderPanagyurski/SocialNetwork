@@ -110,6 +110,7 @@
                         VotesCount = post.Votes.Sum(x => (int)x.VoteType),
                         IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
                         FavoritesCount = post.FavoritePosts.Count(),
+                        CommentsCount = post.Comments.Count(),
                         Images = post.Images.Select(i => new ImagesViewModel
                         {
                             Id = i.Id,
