@@ -35,6 +35,8 @@
 
         public string UserId { get; set; }
 
-        public string UserProfileImage { get; set; }
+        public byte[] UserProfileImage { get; set; }
+
+        public IEnumerable<PostCommentViewModel> Children { get; set; }
     }
 }

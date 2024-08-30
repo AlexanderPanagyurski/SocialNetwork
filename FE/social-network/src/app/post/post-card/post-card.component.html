@@ -1,9 +1,10 @@
+<app-post-comments-popup [postComments]="postComments" [postId]="postId"/>
 <div class="card mb-4">
     <div class="bg-white mt-2">
         <div>
             <div class="d-flex flex-row justify-content-between align-items-center p-2">
-                <div class="d-flex flex-row align-items-center feed-text px-2"><img attr.src={{setProfileImage(post)}}
-                        style="width:50px;" class="d-block ui-w-40 rounded-circle" alt="">
+                <div class="d-flex flex-row align-items-center feed-text px-2">
+                    <img [src]="setProfileImage(post)" style="width:50px;" class="d-block ui-w-40 rounded-circle" alt="{{post.userUserName}} profile image">
                     <div class="d-flex flex-column flex-wrap ml-2">
                         <span class="author-username font-weight-bold"
                             (click)="navigateTo('users',post)">{{post.userUserName}}</span>
@@ -39,7 +40,8 @@
                 <i class="fa-solid fa-heart" [ngStyle]="post.isFavourite  ? {'color': 'red'} : null"></i>
                 <span class="favorites-count ml-2"> {{post.favoritesCount}}</span>
             </span>
-            <span class="card-link mt-1 ml-4">
+            <span class="card-link mt-1 ml-4" (click)="loadPostComments(post)" data-toggle="modal"
+            [attr.data-target]="'#posts-modal-'+post.postId">
                 <i class="fa fa-comment"></i>
                 <span class="comment pl-2">0</span>
             </span>

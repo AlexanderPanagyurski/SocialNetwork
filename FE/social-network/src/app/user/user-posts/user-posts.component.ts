@@ -21,7 +21,6 @@ export class UserPostsComponent {
 
 
   ngOnInit(): void {
-    debugger;
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId') || '';
       this.fetchPosts(this.userId);

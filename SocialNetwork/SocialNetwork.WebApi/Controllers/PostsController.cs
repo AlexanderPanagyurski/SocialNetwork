@@ -145,6 +145,34 @@ namespace SocialNetwork.WebApi.Controllers
             return this.Ok(new { isFavourite, favoritesCount });
         }
 
+
+        [HttpGet("{postId}/comments")]
+        public async Task<IActionResult> GetCommentsAsync(string postId)
+        {
+            try
+            {
+                var comments = await this.postsService.GetCommentsAsync(postId);
+
+                return this.Ok(comments);
+            }
+            catch (ArgumentException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+        }
+
+
+
+        [HttpPost("{postId}/comment")]
+        public async Task<IActionResult> AddCommentAsync(string postId, string? parentId, string content)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var comment = await this.postsService.AddCommentAsync(postId, parentId, userId, content);
+
+            return this.Ok(comment);
+        }
+
         // TODO: Implement tags filtation "posts/tags/{tagName}"
 
     }

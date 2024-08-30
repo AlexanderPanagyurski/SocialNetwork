@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using SocialNetwork.Data.Common;
 
     public class Comment : BaseDeletableModel<string>
@@ -21,7 +22,7 @@
 
         public virtual User User { get; set; }
 
-        public string ParentId { get; set; }
+        public string? ParentId { get; set; }
 
         public virtual Comment Parent { get; set; }
 

@@ -10,6 +10,9 @@
         {
             comment.HasKey(x => x.Id);
 
+            comment.Property(x => x.ParentId)
+                .IsRequired(false);
+
             comment.Property(x => x.Content)
                 .IsRequired();
 

@@ -7,6 +7,8 @@ import { PostRoutingModule } from './post-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { PostCardComponent } from './post-card/post-card.component';
+import { PostCommentsPopupComponent } from './post-comments-popup/post-comments-popup.component';
+import { CommentCardComponent } from './comment-card/comment-card.component';
 
 
 
@@ -14,7 +16,9 @@ import { PostCardComponent } from './post-card/post-card.component';
   declarations: [
     PostDetailsComponent,
     PostCreateComponent,
-    PostCardComponent
+    PostCardComponent,
+    PostCommentsPopupComponent,
+    CommentCardComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +29,7 @@ import { PostCardComponent } from './post-card/post-card.component';
     ReactiveFormsModule
   ],
   exports:[
+    PostCommentsPopupComponent,
     PostCardComponent
   ]
 })

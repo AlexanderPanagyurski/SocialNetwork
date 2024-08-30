@@ -210,5 +210,100 @@
         {
             return await this.dbContext.FavoritePosts.CountAsync(x => x.PostId == postId);
         }
+
+        public async Task<IEnumerable<PostCommentViewModel>> GetCommentsAsync(string postId)
+        {
+            var postDoesExist = await this.dbContext.Posts.AnyAsync(p => p.Id == postId);
+
+            if (!postDoesExist)
+            {
+                throw new ArgumentException("Cannot find post.");
+            }
+
+            var comments = await this.dbContext
+                .Comments
+                .Include(c => c.Parent)
+                .ThenInclude(c => c.Children)
+                .Include(c => c.Post)
+                .Include(c => c.User)
+                .ThenInclude(u => u.UserImages)
+                .Where(c => c.PostId == postId && c.ParentId == null)
+                .Select(c => new PostCommentViewModel
+                {
+                    Id = c.Id,
+                    ParentId = c.ParentId,
+                    Content = c.Content,
+                    CreatedOn = c.CreatedOn,
+                    UserId = c.UserId,
+                    UserUserName = c.User.UserName,
+                    UserProfileImage = c.User.UserImages.FirstOrDefault(u => u.IsProfileImage).Content,
+                    Children = c.Children.Select(x => new PostCommentViewModel
+                    {
+                        Id = x.Id,
+                        ParentId = x.ParentId,
+                        Content = x.Content,
+                        CreatedOn = x.CreatedOn,
+                        UserId = x.UserId,
+                        UserUserName = x.User.UserName,
+                        UserProfileImage = x.User.UserImages.FirstOrDefault(u => u.IsProfileImage).Content,
+                    })
+                })
+                .ToArrayAsync();
+
+            return comments;
+        }
+
+        public async Task<PostCommentViewModel> AddCommentAsync(
+            string postId,
+            string? parentId,
+            string userId,
+            string content)
+        {
+            var user = await this.dbContext
+                .Users
+                .Include(u => u.UserImages)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+
+            if (user == null)
+            {
+                throw new ArgumentException("User not found.");
+            }
+
+            var post = await this.dbContext
+                .Posts
+                .Include(p => p.Comments)
+                .FirstOrDefaultAsync(p => p.Id == postId);
+
+            if (post == null)
+            {
+                throw new ArgumentException("Post not found.");
+            }
+
+            var comment = new Comment
+            {
+                PostId = postId,
+                ParentId = parentId,
+                UserId = user.Id,
+                Content = content
+            };
+
+            post.Comments.Add(comment);
+
+            await dbContext.SaveChangesAsync();
+
+            var viewModel = new PostCommentViewModel
+            {
+                Id = comment.Id,
+                ParentId = comment.ParentId,
+                Content = comment.Content,
+                UserId = user.Id,
+                CreatedOn = comment.CreatedOn,
+                UserUserName = user.UserName,
+                UserProfileImage = user.UserImages.FirstOrDefault(u => u.IsProfileImage)?.Content
+            };
+
+            return viewModel;
+        }
     }
 }

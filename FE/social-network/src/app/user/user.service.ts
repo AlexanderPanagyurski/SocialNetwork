@@ -92,7 +92,6 @@ export class UserService implements OnDestroy {
   }
 
   register(email: string, userName: string, password: string) {
-    debugger;
     return this.http.post('/api/auth/register', { email, userName, password });
   }
 
