@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
 import { Post } from '../types/post';
 import { CookieService } from 'ngx-cookie-service';
 import { CreatePost } from '../types/createPost';
+import { PostComment } from '../types/post-comment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,18 @@ export class PostService {
 
   getPostById(id: string) {
     const response = this.http.get<Post>(`/api/posts/${id}`);
+
+    return response;
+  }
+
+  getPostComments(postId: string) {
+    const response = this.http.get<PostComment[]>(`/api/posts/${postId}/comments`);
+
+    return response;
+  }
+
+  addPostComment(postId: string, parentId: string, content: string) {
+    const response = this.http.post<PostComment>(`/api/posts/${postId}/comment`, { parentId, content });
 
     return response;
   }

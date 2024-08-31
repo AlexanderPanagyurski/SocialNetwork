@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/post/post.service';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { Post } from 'src/app/types/post';
 import { UserService } from '../user.service';
+import { PostComment } from 'src/app/types/post-comment';
 
 @Component({
   selector: 'app-newsfeed',

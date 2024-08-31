@@ -1,25 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { Post } from 'src/app/types/post';
 import { PostService } from '../post.service';
 import { DatePipe } from '@angular/common';
+import { PostComment } from 'src/app/types/post-comment';
 
 @Component({
   selector: 'app-post-card',
   templateUrl: './post-card.component.html',
   styleUrls: ['./post-card.component.css']
 })
-export class PostCardComponent {
+export class PostCardComponent implements OnDestroy {
   postId: string = '';
+  postComments: PostComment[] = [];
   @Input() post: Post = {} as Post;
 
-  
+  get dataTarget(): string {
+    return `#post-modal-${this.postId}`;
+  }
   constructor(
     private postService: PostService,
     private route: ActivatedRoute,
     private router: Router,
     private globalLoaderService: GlobalLoaderService) { }
+
+  ngOnDestroy(): void {
+    this.postComments = [];
+  }
 
   navigateTo(path: string, post: Post) {
     this.router.navigate([path, post.userId]);
@@ -67,7 +75,7 @@ export class PostCardComponent {
       });
     }
   }
-  
+
   isLargePostContent(content: string): boolean {
     return content.length > 300;
   }
@@ -90,6 +98,22 @@ export class PostCardComponent {
       y.style.display = "none";
       hyperlink.innerHTML = "Read More";
     }
+  }
+
+  loadPostComments(post: Post) {
+    this.globalLoaderService.showLoader();
+    this.postComments = [];
+    this.postService.getPostComments(post.postId).subscribe({
+      next: (postComments) => {
+        this.postComments = postComments;
+        this.postId=post.postId;
+        this.globalLoaderService.hideLoader();
+      },
+      error: (err) => {
+        console.log('Error: ', err);
+        this.globalLoaderService.hideLoader();
+      }
+    })
   }
 
   private fetchPost(postId: string) {

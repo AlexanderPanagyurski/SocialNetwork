@@ -101,7 +101,6 @@ export class UserEditComponent implements OnInit {
   private fetchUser(userId: string) {
     this.userService.getUserById(userId).subscribe({
       next: (user) => {
-        debugger;
         this.user = user;
       },
       error: (err) => {

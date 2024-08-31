@@ -14,5 +14,6 @@ export interface Post {
     isFavourite: boolean,
     votesCount: number,
     favoritesCount: number,
+    commentsCount: number,
     images: PostImage[]
 }

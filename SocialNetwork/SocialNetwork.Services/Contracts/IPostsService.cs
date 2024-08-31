@@ -10,6 +10,10 @@
 
         Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId);
 
+        Task<IEnumerable<PostCommentViewModel>> GetCommentsAsync(string postId);
+
+        Task<PostCommentViewModel> AddCommentAsync(string postId, string? parentId, string userId, string content);
+
         Task<bool> AddToFavouriteAsync(string postId, string userId);
 
         Task<int> GetFavouritesCountAsync(string postId);
