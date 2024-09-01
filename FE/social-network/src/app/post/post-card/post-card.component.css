@@ -5,7 +5,7 @@
     font-size: 25px;
 }
 
-.author-username,
+.author-username:hover,
 .read-more:hover {
     cursor: pointer;
     color: #007bff;
@@ -35,7 +35,7 @@
     color: #007bff;
 }
 
-.fa-heart,
+.fa-heart:hover,
 .fa-comment:hover {
     cursor: pointer;
 }
