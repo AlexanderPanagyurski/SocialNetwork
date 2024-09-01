@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DEFAULT_USER_IMAGE_URL } from 'src/app/constants';
 import { User } from 'src/app/types/user';
 import { UserService } from 'src/app/user/user.service';
 
@@ -36,7 +37,7 @@ export class SearchComponent {
     if (user.profileImageUrl) {
       return `data:image/JPEG;base64,${user.profileImageUrl}`;
     }
-    return '../../../assets/images/default-profile-image.png';
+    return DEFAULT_USER_IMAGE_URL;
   }
 
   navigateTo(path: string, user?: User) {

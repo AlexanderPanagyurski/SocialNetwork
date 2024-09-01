@@ -127,12 +127,15 @@ namespace SocialNetwork.Services
                 .UserFollowers
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.Posts)
+                .Include(uf => uf.User)
+                .ThenInclude(u => u.UserImages)
                 .Where(uf => uf.UserId == userId)
                 .Select(uf => new UserViewModel
                 {
                     UserId = uf.FollowerId,
                     UserEmail = uf.Follower.Email,
                     UserUserName = uf.Follower.UserName,
+                    ProfileImageUrl = uf.Follower.UserImages.FirstOrDefault(x => x.IsProfileImage).Content,
                 })
                 .ToArrayAsync();
 
@@ -145,12 +148,15 @@ namespace SocialNetwork.Services
                 .UserFollowers
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.Posts)
+                .Include(uf=>uf.User)
+                .ThenInclude(u=>u.UserImages)
                 .Where(uf => uf.FollowerId == userId && !uf.IsDeleted)
                 .Select(uf => new UserViewModel
                 {
                     UserId = uf.User.Id,
                     UserEmail = uf.User.Email,
                     UserUserName = uf.User.UserName,
+                    ProfileImageUrl = uf.User.UserImages.FirstOrDefault(x => x.IsProfileImage).Content,
                 }).ToArrayAsync();
 
             return userFollowings;
@@ -202,6 +208,7 @@ namespace SocialNetwork.Services
                 .Users
                 .Include(u => u.Followings)
                 .Include(u => u.Posts)
+                .Include(u=>u.UserImages)
                 .Select(u => new UserViewModel
                 {
                     UserId = u.Id,
@@ -210,6 +217,7 @@ namespace SocialNetwork.Services
                     UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id),
                     UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id),
                     UserPostsCount = u.Posts.Count(p => !p.IsDeleted),
+                    ProfileImageUrl = u.UserImages.FirstOrDefault(x => x.IsProfileImage).Content,
                 })
                 .ToArrayAsync();
 

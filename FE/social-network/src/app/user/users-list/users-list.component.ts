@@ -59,6 +59,10 @@ export class UsersListComponent implements OnInit {
     this.router.navigate([path, user.userId]);
   }
 
+  setProfileImage(user: User) {
+    return this.userService.getUserProfileImageUrl(user);
+  }
+
   private fetchUsers() {
     this.globalLoaderService.showLoader();
 
