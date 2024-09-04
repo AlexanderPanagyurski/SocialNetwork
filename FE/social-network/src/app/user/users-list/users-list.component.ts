@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { UserService } from 'src/app/user/user.service';
 import { User } from 'src/app/types/user';
@@ -13,14 +13,20 @@ export class UsersListComponent implements OnInit {
   users: User[] = [];
   isLoading: boolean = true;
   usersFollowers: User[] = [];
+  username: string = '';
 
   constructor(
     public userService: UserService,
+    private route: ActivatedRoute,
     private router: Router,
     private globalLoaderService: GlobalLoaderService) { }
 
   ngOnInit(): void {
-    this.fetchUsers();
+    this.route.queryParams.subscribe(params => {
+      this.username = params['username'] || '';
+      console.log(this.username);
+      this.fetchUsers(this.username);
+    });
   }
 
   loadUserFollowers(userId: string) {
@@ -63,10 +69,10 @@ export class UsersListComponent implements OnInit {
     return this.userService.getUserProfileImageUrl(user);
   }
 
-  private fetchUsers() {
+  private fetchUsers(username?:string) {
     this.globalLoaderService.showLoader();
 
-    this.userService.getUsers().subscribe({
+    this.userService.getUsers(username!).subscribe({
       next: (users) => {
         this.users = users;
         this.globalLoaderService.hideLoader();

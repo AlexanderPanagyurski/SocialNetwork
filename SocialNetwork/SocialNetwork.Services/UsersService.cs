@@ -148,8 +148,8 @@ namespace SocialNetwork.Services
                 .UserFollowers
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.Posts)
-                .Include(uf=>uf.User)
-                .ThenInclude(u=>u.UserImages)
+                .Include(uf => uf.User)
+                .ThenInclude(u => u.UserImages)
                 .Where(uf => uf.FollowerId == userId && !uf.IsDeleted)
                 .Select(uf => new UserViewModel
                 {
@@ -202,26 +202,32 @@ namespace SocialNetwork.Services
             return posts;
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetUsersAsync()
+        public async Task<IEnumerable<UserViewModel>> GetUsersAsync(string? username)
         {
-            var users = await this.dbContext
+            IQueryable<User> users = this.dbContext
                 .Users
                 .Include(u => u.Followings)
                 .Include(u => u.Posts)
-                .Include(u=>u.UserImages)
-                .Select(u => new UserViewModel
-                {
-                    UserId = u.Id,
-                    UserEmail = u.Email,
-                    UserUserName = u.UserName,
-                    UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id),
-                    UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id),
-                    UserPostsCount = u.Posts.Count(p => !p.IsDeleted),
-                    ProfileImageUrl = u.UserImages.FirstOrDefault(x => x.IsProfileImage).Content,
-                })
-                .ToArrayAsync();
+                .Include(u => u.UserImages);
 
-            return users;
+            if (username != null)
+            {
+                users = users.Where(u => u.UserName.Contains(username));
+            }
+
+            var response =await users.Select(u => new UserViewModel
+            {
+                UserId = u.Id,
+                UserEmail = u.Email,
+                UserUserName = u.UserName,
+                UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id),
+                UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id),
+                UserPostsCount = u.Posts.Count(p => !p.IsDeleted),
+                ProfileImageUrl = u.UserImages.FirstOrDefault(x => x.IsProfileImage).Content,
+            })
+             .ToArrayAsync();
+
+            return response;
         }
 
         public async Task<IEnumerable<UserViewModel>> GetUsersByUsernameAsync(string? username)

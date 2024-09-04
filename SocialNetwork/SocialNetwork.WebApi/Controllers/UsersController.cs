@@ -20,9 +20,9 @@ namespace SocialNetwork.WebApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetUsersAsync()
+        public async Task<IActionResult> GetUsersAsync(string? username)
         {
-            var users = await usersService.GetUsersAsync();
+            var users = await usersService.GetUsersAsync(username);
 
             return this.Ok(users);
         }

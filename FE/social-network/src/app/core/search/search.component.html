@@ -1,7 +1,10 @@
 <div class="searchInputWrapper ml-4">
-    <input class="searchInput" type="text" name="username" placeholder="Search username..." (keyup)="searchUser($event)"
-        autocomplete="off" />
-    <i class="searchInputIcon fa fa-search"></i>
+    <form class="form-inline my-2 my-lg-0" #form="ngForm">
+        <input class="searchInput" type="text" name="username" ngModel
+            #inputUsername="ngModel"
+            placeholder="Search username..." (keyup)="searchUser($event)" autocomplete="off" />
+        <i class="searchInputIcon fa fa-search" (click)="searchUsersWithUsername(form)"></i>
+    </form>
     <ul class="list-group autocomplete" *ngIf="searchedUsersCount!==0">
         <li class="list-group-item d-flex align-items-sm-center user-link autocomplete-items"
             *ngFor="let user of searchedUsers" (click)="navigateTo('users', user)">

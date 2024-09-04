@@ -30,10 +30,17 @@ export class UserService implements OnDestroy {
     });
   }
 
-  getUsers() {
+  getUsers(username: string) {
     const { apiUrl } = environment;
 
-    const response = this.http.get<User[]>(`${apiUrl}/users`);
+    let url = `${apiUrl}/users`;
+
+    if (username) {
+      url += `?username=${username}`;
+    }
+
+    const response = this.http.get<User[]>(url);
+    
     return response;
   }
 

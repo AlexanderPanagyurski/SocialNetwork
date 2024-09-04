@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { DEFAULT_USER_IMAGE_URL } from 'src/app/constants';
 import { User } from 'src/app/types/user';
 import { UserService } from 'src/app/user/user.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-search',
@@ -31,6 +33,17 @@ export class SearchComponent {
         console.log('Error: ', error);
       }
     })
+  }
+
+  searchUsersWithUsername(form: NgForm) {
+    const { username } = form.value;
+    this.searchedUsers = [];
+
+    if (username) {
+      this.router.navigate(['users'], { queryParams: { username: username } });
+    } else {
+      this.router.navigate(['users']);
+    }
   }
 
   setUserProfileImageUrl(user: User) {
