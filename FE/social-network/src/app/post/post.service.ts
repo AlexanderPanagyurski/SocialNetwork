@@ -4,6 +4,7 @@ import { Post } from '../types/post';
 import { CookieService } from 'ngx-cookie-service';
 import { CreatePost } from '../types/createPost';
 import { PostComment } from '../types/post-comment';
+import { DEFAULT_USER_IMAGE_URL } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,7 @@ export class PostService {
     if (post.userProfileImageUrl) {
       return `data:image/JPEG;base64,${post.userProfileImageUrl}`;
     }
-    return '../../../assets/images/default-profile-image.png';
+    return DEFAULT_USER_IMAGE_URL;
   }
 
   addToFavourite(postId: string) {

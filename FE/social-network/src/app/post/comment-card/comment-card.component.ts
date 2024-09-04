@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PostComment } from 'src/app/types/post-comment';
 import { DatePipe } from '@angular/common';
+import { DEFAULT_USER_IMAGE_URL } from 'src/app/constants';
 
 @Component({
   selector: 'app-comment-card',
@@ -26,6 +27,6 @@ export class CommentCardComponent {
     if (comment.userProfileImage) {
       return `data:image/JPEG;base64,${comment.userProfileImage}`;
     }
-    return '../../../assets/images/default-profile-image.png';
+    return DEFAULT_USER_IMAGE_URL;
   }
 }

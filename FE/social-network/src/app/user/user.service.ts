@@ -5,7 +5,7 @@ import { User } from '../types/user';
 import { UserForAuth } from '../types/userForAuth';
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { AUTH_COOKIE_KEY } from '../constants';
+import { AUTH_COOKIE_KEY, DEFAULT_USER_IMAGE_URL } from '../constants';
 import { Post } from '../types/post';
 
 @Injectable({
@@ -30,10 +30,17 @@ export class UserService implements OnDestroy {
     });
   }
 
-  getUsers() {
+  getUsers(username: string) {
     const { apiUrl } = environment;
 
-    const response = this.http.get<User[]>(`${apiUrl}/users`);
+    let url = `${apiUrl}/users`;
+
+    if (username) {
+      url += `?username=${username}`;
+    }
+
+    const response = this.http.get<User[]>(url);
+    
     return response;
   }
 
@@ -118,14 +125,14 @@ export class UserService implements OnDestroy {
     if (this.user?.profileImageUrl) {
       return `data:image/JPEG;base64,${this.user.profileImageUrl}`;
     }
-    return '../../../assets/images/default-profile-image.png';
+    return DEFAULT_USER_IMAGE_URL;
   }
 
   getUserProfileImageUrl(user: User) {
     if (user.profileImageUrl) {
       return `data:image/JPEG;base64,${user.profileImageUrl}`;
     }
-    return '../../../assets/images/default-profile-image.png';
+    return DEFAULT_USER_IMAGE_URL;
   }
 
 
