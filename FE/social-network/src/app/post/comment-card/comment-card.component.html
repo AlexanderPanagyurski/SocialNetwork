@@ -1,8 +1,8 @@
 <div class="card-body p-4" *ngFor="let postComment of postComments">
-    <div class="d-flex flex-start">
-        <img class="rounded-circle shadow-1-strong me-3" [src]="setProfileImage(postComment)" alt="avatar"
-            width="40" height="40">
-        <div>
+    <div class="d-flex" style="width: 100%;">
+        <img class="rounded-circle shadow-1-strong me-3" [src]="setProfileImage(postComment)" alt="avatar" width="40"
+            height="40">
+        <div class="comment-content" style="width: 100%;">
             <h6 class="fw-bold mb-1">{{postComment.userUserName}}</h6>
             <span class="mb-0">
                 {{postComment.content}}
@@ -11,13 +11,26 @@
                 <p class="date mb-0">
                     {{checkIfEdited(postComment)}}
                 </p>
-                <i class="fa-solid fa-reply ml-2" (click)="reply(postComment)"></i>
+                <i class="fa-solid fa-reply ml-2" (click)="loadReply(postComment.id)"></i>
                 <i class="fa-solid fa-pen ml-2"></i>
                 <i class="fa-solid fa-heart ml-2"></i>
             </div>
+            <form class="m-2" #form="ngForm" *ngIf="loadReplyCommentTextArea && replyOnId===postComment.id" style="width: 100%;">
+                <div class="form-group">
+                    <textarea class="form-control" id="input-comment-{{postComment.id}}" name="content" rows="3" ngModel
+                        #inputComment="ngModel" required>
+                    </textarea>
+                </div>
+                <div class="float-end mt-2 pt-1">
+                    <button type="button" class="btn btn-primary" id="button-{{postComment.id}}"
+                        [disabled]="form.invalid" (click)="addComment(form, postComment)">
+                        Add comment
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="ml-2" *ngIf="postComment.children">
-        <app-comment-card [postComments]="postComment.children" />
+        <app-comment-card [postComments]="postComment.children" [postId]="postId"/>
     </div>
 </div>
