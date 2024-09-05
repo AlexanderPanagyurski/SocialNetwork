@@ -6,6 +6,11 @@
     color: red;
 }
 
+.fa-reply:hover,
+.fa-pen:hover{
+    color: #007bff;
+}
+
 .date{
     font-size: small;
 }
