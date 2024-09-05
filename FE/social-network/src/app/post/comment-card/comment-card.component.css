@@ -1,0 +1,11 @@
+.fa-solid:hover {
+    cursor: pointer;
+}
+
+.fa-heart:hover{
+    color: red;
+}
+
+.date{
+    font-size: small;
+}

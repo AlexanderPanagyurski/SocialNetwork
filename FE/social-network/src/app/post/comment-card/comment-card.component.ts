@@ -20,7 +20,7 @@ export class CommentCardComponent {
       date = postComment.modifiedOn;
       isEdited = true;
     }
-    return `${datePipe.transform(date, 'fullDate')} ${isEdited ? '(edited)' : ''}`;
+    return `${datePipe.transform(date, 'short')} ${isEdited ? '(edited)' : ''}`;
   }
 
   setProfileImage(comment: PostComment) {
@@ -28,5 +28,9 @@ export class CommentCardComponent {
       return `data:image/JPEG;base64,${comment.userProfileImage}`;
     }
     return DEFAULT_USER_IMAGE_URL;
+  }
+
+  reply(postComment: PostComment) {
+    console.log(postComment);
   }
 }

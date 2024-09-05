@@ -164,16 +164,23 @@ namespace SocialNetwork.WebApi.Controllers
 
 
         [HttpPost("{postId}/comment")]
-        public async Task<IActionResult> AddCommentAsync(string postId, string? parentId, string content)
+        public async Task<IActionResult> AddCommentAsync(AddPostComment viewModel)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var comment = await this.postsService.AddCommentAsync(postId, parentId, userId, content);
+            var comment = await this.postsService.AddCommentAsync(viewModel.PostId, viewModel.ParentId, userId, viewModel.Content);
 
             return this.Ok(comment);
         }
 
         // TODO: Implement tags filtation "posts/tags/{tagName}"
 
+    }
+
+    public class AddPostComment
+    {
+        public string PostId { get; set; }
+        public string? ParentId { get; set; }
+        public string Content { get; set; }
     }
 }

@@ -34,18 +34,12 @@ export class PostService {
   }
 
   addPostComment(postId: string, parentId: string, content: string) {
-    const response = this.http.post<PostComment>(`/api/posts/${postId}/comment`, { parentId, content });
+    const response = this.http.post<PostComment>(`/api/posts/${postId}/comment`, { postId, content });
 
     return response;
   }
 
   create(formData: FormData) {
-    // const post: CreatePost = {
-    //   postId: '',
-    //   title: title,
-    //   content: content,
-    //   images: images
-    // }
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'multipart/form-data');
     headers.set('Accept', '*/*');

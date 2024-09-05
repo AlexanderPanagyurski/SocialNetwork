@@ -25,6 +25,7 @@ import { CommentCardComponent } from './comment-card/comment-card.component';
     SharedModule,
     PostRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     CarouselModule,
     ReactiveFormsModule
   ],

@@ -14,13 +14,21 @@
                     <app-global-loader />
                     <app-comment-card [postComments]="postComments" />
                 </div>
-                <form class="m-2">
+                <form class="m-2" #form="ngForm">
                     <div class="form-group">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea 
+                            class="form-control"  
+                            id="input-comment-{{postId}}"
+                            name="content"
+                            rows="3"
+                            ngModel
+                            #inputComment="ngModel"
+                            required>
+                        </textarea>
                     </div>
                     <div class="float-end mt-2 pt-1">
-                        <button type="button" class="btn btn-primary">
-                            Post comment
+                        <button type="button" class="btn btn-primary" id="button-{{postId}}" [disabled]="form.invalid" (click)="addComment(form)">
+                            Add comment
                         </button>
                     </div>
                 </form>

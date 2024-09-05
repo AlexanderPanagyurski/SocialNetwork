@@ -43,7 +43,7 @@
             <span class="card-link mt-1 ml-4" (click)="loadPostComments(post)" data-toggle="modal"
             [attr.data-target]="'#posts-modal-'+post.postId">
                 <i class="fa fa-comment"></i>
-                <span class="comment pl-2">{{post.commentsCount}}</span>
+                <span class="comment pl-2" id="post-comments-{{postId}}">{{post.commentsCount}}</span>
             </span>
             <div class="dropdown">
                 <span (click)="vote(post,true)">
