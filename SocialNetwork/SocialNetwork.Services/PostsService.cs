@@ -27,6 +27,7 @@
                 //.ThenInclude(c => c.Children)
                 .Include(p => p.Votes)
                 .Include(p => p.FavoritePosts)
+                .Include(p => p.Comments)
                 .Include(p => p.Images)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -49,6 +50,7 @@
                 UserUserName = post.User.UserName,
                 UserId = post.User.Id,
                 VotesCount = post.Votes.Sum(x => (int)x.VoteType),
+                CommentsCount = post.Comments.Count(),
                 IsVoted = post.Votes.Any(v => v.UserId == userId),
                 IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
                 IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
@@ -229,6 +231,8 @@
                 .Include(c => c.User)
                 .ThenInclude(u => u.UserImages)
                 .Where(c => c.PostId == postId && c.ParentId == null)
+                .OrderByDescending(c => c.ModifiedOn)
+                .ThenByDescending(c => c.CreatedOn)
                 .Select(c => new PostCommentViewModel
                 {
                     Id = c.Id,
