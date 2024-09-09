@@ -1,18 +1,5 @@
 <form class="post-create-form" [formGroup]="form" (ngSubmit)="create()">
     <div class="row">
-        <div class="col-sm-6">
-            <label>Title</label>
-            <input class="form-control {{addformErrorBorder(controlTouched('title'), controlHasAnyErrors('title'))}}" 
-            type="text"
-            name="title" 
-            id="post-title"
-            formControlName="title"
-            />
-            <ng-container *ngIf="controlTouched('title')">
-                <p class="error-message" *ngIf="controlHasErrors('title','required')">Title is required.</p>
-                <p class="error-message" *ngIf="controlHasErrors('title','minlength')">Title should be at least 6 characters.</p>
-            </ng-container>    
-        </div>
         <div class="col-sm-6 form-group">
             <label>Images</label>
             <input class="form-control" 

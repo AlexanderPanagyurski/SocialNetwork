@@ -5,3 +5,22 @@
 .post-body {
     padding: 0px 0px 0px 0px;
 }
+
+.newsfeed-start{
+    width: 50%;
+    margin: auto;
+}
+
+.list-unstyled > li > label > i {
+    cursor: pointer;
+    color: #007bff;
+}
+.error-message {
+    color: red;
+    padding-top: .5rem;
+}
+
+.form-error {
+    border-color:  red;
+    box-shadow: 0 0 0 0.2rem rgba(255, 67, 54, 0.25);
+}

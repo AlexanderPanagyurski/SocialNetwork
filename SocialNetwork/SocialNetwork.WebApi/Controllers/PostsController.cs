@@ -65,13 +65,11 @@ namespace SocialNetwork.WebApi.Controllers
                 return this.BadRequest();
             }
 
-            string title = Request.Form["title"];
             string content = Request.Form["content"];
             IEnumerable<IFormFile> images = Request.Form.Files;
 
             var viewModel = new CreatePostViewModel()
             {
-                Title = title,
                 Content = content,
                 Images = images
             };

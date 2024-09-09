@@ -44,7 +44,6 @@
                 ModifiedOn = post.ModifiedOn,
                 DeletedOn = post.DeletedOn,
                 IsDeleted = post.IsDeleted,
-                Title = post.Title,
                 Content = post.Content,
                 UserProfileImageUrl = post.User.UserImages.FirstOrDefault(i => i.IsProfileImage)?.Content,
                 UserUserName = post.User.UserName,
@@ -98,7 +97,6 @@
                     posts.Add(new PostViewModel
                     {
                         PostId = post.Id,
-                        Title = post.Title,
                         CreatedOn = post.CreatedOn,
                         ModifiedOn = post.ModifiedOn,
                         IsDeleted = post.IsDeleted,
@@ -131,7 +129,6 @@
             var post = new Post
             {
                 Content = input.Content,
-                Title = input.Title,
                 UserId = userId,
             };
 
@@ -162,7 +159,6 @@
                 throw new ArgumentException("Post not found.");
             }
 
-            post.Title = input.Title;
             post.Content = input.Content;
             post.ModifiedOn = DateTime.UtcNow;
 

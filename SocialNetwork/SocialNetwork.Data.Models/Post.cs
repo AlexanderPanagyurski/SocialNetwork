@@ -12,8 +12,6 @@
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public string Title { get; set; }
-
         public string Content { get; set; }
 
         [Required]

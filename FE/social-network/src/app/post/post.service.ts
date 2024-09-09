@@ -34,7 +34,7 @@ export class PostService {
   }
 
   addPostComment(postId: string, parentId: string, content: string) {
-    const response = this.http.post<PostComment>(`/api/posts/${postId}/comment`, { postId, content });
+    const response = this.http.post<PostComment>(`/api/posts/${postId}/comment`, { postId, parentId, content });
 
     return response;
   }

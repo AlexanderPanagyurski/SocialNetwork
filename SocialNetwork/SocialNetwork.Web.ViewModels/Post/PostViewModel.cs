@@ -20,8 +20,6 @@ namespace SocialNetwork.Web.ViewModels.Post
 
         public DateTime? DeletedOn { get; set; }
 
-        public string Title { get; set; }
-
         public string Content { get; set; }
 
         //public string SanitizedContent => new HtmlSanitizer().Sanitize(this.Content);
