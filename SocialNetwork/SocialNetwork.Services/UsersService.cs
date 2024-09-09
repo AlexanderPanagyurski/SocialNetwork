@@ -59,7 +59,6 @@ namespace SocialNetwork.Services
                     UserUserName = fp.User.UserName,
                     UserProfileImageUrl = fp.User.UserImages.FirstOrDefault(i => i.IsProfileImage).Content,
                     PostId = fp.Post.Id,
-                    Title = fp.Post.Title,
                     Content = fp.Post.Content,
                     CreatedOn = fp.Post.CreatedOn,
                     ModifiedOn = fp.Post.ModifiedOn,
@@ -109,7 +108,6 @@ namespace SocialNetwork.Services
                 UserPosts = user.Posts.Where(p => !p.IsDeleted).Select(p => new PostViewModel
                 {
                     PostId = p.Id,
-                    Title = p.Title,
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
                     ModifiedOn = p.ModifiedOn,
@@ -179,7 +177,6 @@ namespace SocialNetwork.Services
                     UserUserName = p.User.UserName,
                     UserProfileImageUrl = p.User.UserImages.FirstOrDefault(i => i.IsProfileImage).Content,
                     PostId = p.Id,
-                    Title = p.Title,
                     Content = p.Content,
                     CreatedOn = p.CreatedOn,
                     ModifiedOn = p.ModifiedOn,

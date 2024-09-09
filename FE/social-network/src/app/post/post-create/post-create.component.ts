@@ -12,7 +12,6 @@ export class PostCreateComponent {
 
   form = this.fb.group({
     //controls
-    title: ['', [Validators.required, Validators.minLength(6)]],
     content: ['', [Validators.required, Validators.minLength(6)]],
   });
 
@@ -47,10 +46,9 @@ export class PostCreateComponent {
       return;
     }
 
-    const { title, content } = this.form.value;
+    const { content } = this.form.value;
 
     const formData = new FormData();
-    formData.append('title', title!);
     formData.append('content', content!);
 
     for (const photo of this.images) {
