@@ -25,6 +25,8 @@
 
         public virtual ICollection<Image> Images { get; set; } = new HashSet<Image>();
 
-        public virtual ICollection<FavoritePost> FavoritePosts { get; set; }
+        public virtual ICollection<FavoritePost> FavoritePosts { get; set; } = new HashSet<FavoritePost>();
+
+        public virtual ICollection<PostTag> PostTags { get; set; } = new HashSet<PostTag>();
     }
 }
