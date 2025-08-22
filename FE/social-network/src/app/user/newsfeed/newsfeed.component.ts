@@ -16,6 +16,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class NewsfeedComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   pageSize: number = 5;
+  hasMorePosts: boolean = true;
 
   posts: Post[] = [];
 
@@ -38,15 +39,21 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     window.addEventListener('scroll', this.onWindowScroll, true);
   }
 
-  onLoadMore() {
-    this.currentPage++;
-    this.fetchPosts();
-  }
 
   ngOnDestroy() {
     window.removeEventListener('scroll', this.onWindowScroll, true);
   }
-  
+
+  onLoadMore() {
+    if (!this.hasMorePosts) {
+      return;
+    }
+
+    this.currentPage++;
+
+    this.fetchPosts();
+  }
+
   onWindowScroll = () => {
     const threshold = 150; // px from bottom
     const position = window.innerHeight + window.scrollY;
@@ -118,20 +125,30 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     }
   }
 
+
   fetchPosts() {
+    if (!this.hasMorePosts) {
+      return; // No more posts to load
+    }
+
     const skip = (this.currentPage - 1) * this.pageSize;
     const take = this.pageSize;
     this.globalLoaderService.showLoader();
 
-    this.postService.loadNewsfeed(skip, take).subscribe({
-      next: (newPosts) => {
-        this.posts = [...this.posts, ...newPosts]; // Append for infinite scroll
-        this.globalLoaderService.hideLoader();
-      },
-      error: (err) => {
-        this.globalLoaderService.hideLoader();
-        console.log('Error: ', err);
-      }
-    });
+    setTimeout(() => {
+      this.postService.loadNewsfeed(skip, take).subscribe({
+        next: (newPosts) => {
+          this.posts = [...this.posts, ...newPosts];
+          if (newPosts.length < this.pageSize) {
+            this.hasMorePosts = false; // No more posts to load
+          }
+          this.globalLoaderService.hideLoader();
+        },
+        error: (err) => {
+          this.globalLoaderService.hideLoader();
+          console.log('Error: ', err);
+        }
+      });
+    }, 1000);
   }
 }
