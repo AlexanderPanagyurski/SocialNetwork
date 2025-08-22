@@ -8,12 +8,13 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import FavouritePostsComponent from './favourite-posts/favourite-posts.component';
 import { UserPostsComponent } from './user-posts/user-posts.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   { path: 'newsfeed', component: NewsfeedComponent },
   { path: 'users', component: UsersListComponent },
   { path: 'users/:userId', component: UserDetailsComponent },
-  { path: 'users/:userId/edit', component: UserEditComponent },
+  { path: 'users/:userId/edit', component: UserEditComponent, canActivate: [AuthGuard] },
   { path: 'users/:userId/favourite-posts', component: FavouritePostsComponent },
   { path: 'users/:userId/posts', component: UserPostsComponent },
   { path: 'login', component: LoginComponent },

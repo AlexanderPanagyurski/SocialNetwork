@@ -13,7 +13,7 @@ import { Post } from '../types/post';
 })
 export class UserService implements OnDestroy {
   private user$$ = new BehaviorSubject<UserForAuth | undefined>(undefined);
-  private user$ = this.user$$.asObservable();
+  public user$ = this.user$$.asObservable();
 
   user: UserForAuth | undefined;
   userSubscription: Subscription;
@@ -33,15 +33,19 @@ export class UserService implements OnDestroy {
   getUsers(username: string) {
     const { apiUrl } = environment;
 
-    let url = `${apiUrl}/users`;
+    let url = `/api/users`;
 
     if (username) {
       url += `?username=${username}`;
     }
 
     const response = this.http.get<User[]>(url);
-    
+
     return response;
+  }
+
+  manageSubscription(followedUserId: string) {
+    return this.http.post<void>(`/api/users/subscription`, { followedUserId });
   }
 
   getUsersByUsername(username: string) {

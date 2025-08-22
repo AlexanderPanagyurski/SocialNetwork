@@ -100,7 +100,7 @@ namespace SocialNetwork.WebApi.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{postId}")]
         public async Task<IActionResult> DeletePostAsync(string postId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

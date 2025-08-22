@@ -9,6 +9,7 @@ export interface Post {
     modifiedOn: Date,
     title: string,
     content: string,
+    isOwner: boolean,
     isVoted: boolean,
     isUpVote: boolean,
     isFavourite: boolean,

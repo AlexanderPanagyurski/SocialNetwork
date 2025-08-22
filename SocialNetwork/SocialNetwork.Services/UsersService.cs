@@ -199,7 +199,7 @@ namespace SocialNetwork.Services
             return posts;
         }
 
-        public async Task<IEnumerable<UserViewModel>> GetUsersAsync(string? username)
+        public async Task<IEnumerable<UserViewModel>> GetUsersAsync(string? authUserId, string? username)
         {
             IQueryable<User> users = this.dbContext
                 .Users
@@ -212,11 +212,12 @@ namespace SocialNetwork.Services
                 users = users.Where(u => u.UserName.Contains(username));
             }
 
-            var response =await users.Select(u => new UserViewModel
+            var response = await users.Select(u => new UserViewModel
             {
                 UserId = u.Id,
                 UserEmail = u.Email,
                 UserUserName = u.UserName,
+                IsFollowed = dbContext.UserFollowers.Any(uf => uf.FollowerId == authUserId && uf.UserId==u.Id),
                 UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id),
                 UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id),
                 UserPostsCount = u.Posts.Count(p => !p.IsDeleted),

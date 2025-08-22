@@ -8,6 +8,8 @@ namespace SocialNetwork.Web.ViewModels.User
 
         public byte[]? ProfileImageUrl { get; set; }
 
+        public bool IsFollowed { get; set; }
+
         public string UserUserName { get; set; }
 
         public string UserEmail { get; set; }

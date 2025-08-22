@@ -105,6 +105,7 @@
                         UserProfileImageUrl = post.User.UserImages.FirstOrDefault(x => x.IsProfileImage)?.Content,
                         UserUserName = post.User.UserName,
                         UserId = post.UserId,
+                        IsOwner = post.UserId == userId,
                         IsVoted = post.Votes.Any(v => v.UserId == userId),
                         IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
                         VotesCount = post.Votes.Sum(x => (int)x.VoteType),

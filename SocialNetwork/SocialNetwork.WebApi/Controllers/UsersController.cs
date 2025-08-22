@@ -22,9 +22,19 @@ namespace SocialNetwork.WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetUsersAsync(string? username)
         {
-            var users = await usersService.GetUsersAsync(username);
+            try
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return this.Ok(users);
+                var users = await usersService.GetUsersAsync(userId, username);
+                return this.Ok(users);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet("[action]")]
@@ -67,14 +77,13 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpPost("subscription")]
-
-        public async Task<IActionResult> ManageSubscriptionAsync(string followedUserId)
+        public async Task<IActionResult> ManageSubscriptionAsync([FromBody] SubscriptionRequest subscriptionRequest)
         {
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                await usersService.ManageSubscriptionAsync(userId, followedUserId);
+                await usersService.ManageSubscriptionAsync(userId, subscriptionRequest.FollowedUserId);
             }
             catch (ArgumentException ex)
             {
@@ -82,6 +91,7 @@ namespace SocialNetwork.WebApi.Controllers
             }
             return NoContent();
         }
+
 
         [HttpGet("{userId}/followers")]
         [AllowAnonymous]
@@ -164,5 +174,9 @@ namespace SocialNetwork.WebApi.Controllers
 
             return this.Ok(posts);
         }
+    }
+    public class SubscriptionRequest
+    {
+        public string FollowedUserId { get; set; }
     }
 }
