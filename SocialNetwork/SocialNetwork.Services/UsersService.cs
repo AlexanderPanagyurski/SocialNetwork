@@ -41,7 +41,7 @@ namespace SocialNetwork.Services
             return user.Id;
         }
 
-        public async Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId)
+        public async Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId, int skip, int take)
         {
             var posts = await this.dbContext
                 .FavoritePosts
@@ -76,6 +76,8 @@ namespace SocialNetwork.Services
                     IsOwner = fp.Post.UserId == userId,
                     FavoritesCount = fp.Post.FavoritePosts.Count(),
                 })
+                .Skip(skip)
+                .Take(take)
                 .ToArrayAsync();
 
             return posts;
