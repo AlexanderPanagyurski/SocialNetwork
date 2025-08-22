@@ -15,8 +15,8 @@ export class PostService {
     private cookieService: CookieService,
     private http: HttpClient) { }
 
-  loadNewsfeed() {
-    const response = this.http.get<Post[]>('/api/posts');
+  loadNewsfeed(skip: number = 0, take: number = 5) {
+    const response = this.http.get<Post[]>(`/api/posts?skip=${skip}&take=${take}`);
 
     return response;
   }

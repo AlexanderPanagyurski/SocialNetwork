@@ -65,64 +65,55 @@
             return viewModel;
         }
 
-        public async Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId)
+        public async Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId, int skip, int take)
         {
-            var userFollowings = await this.dbContext
+            // Get IDs of users the current user is following
+            var followedUserIds = await this.dbContext
                 .UserFollowers
                 .Where(uf => uf.FollowerId == userId && !uf.IsDeleted)
-                .Include(uf => uf.User)
-                .ThenInclude(u => u.Posts)
-                .ThenInclude(p => p.Votes)
-                .Include(uf => uf.User)
-                .ThenInclude(u => u.Posts)
-                .ThenInclude(p => p.Comments)
-                .Include(uf => uf.User)
-                .ThenInclude(u => u.Posts)
-                .ThenInclude(p => p.Images)
-                .Include(uf => uf.User)
-                .ThenInclude(u => u.Posts)
-                .ThenInclude(p => p.FavoritePosts)
-                .Include(uf => uf.User)
-                .ThenInclude(uf => uf.UserImages)
-                .ToArrayAsync();
+                .Select(uf => uf.UserId)
+                .ToListAsync();
 
-            ICollection<PostViewModel> posts = new HashSet<PostViewModel>();
-
-            foreach (var userFollowing in userFollowings)
-            {
-                var currentFollowingPosts = userFollowing.User.Posts.Where(p => !p.IsDeleted);
-
-                foreach (var post in currentFollowingPosts)
+            // Query posts from followed users, apply pagination at DB level
+            var posts = await this.dbContext.Posts
+                .Where(p => followedUserIds.Contains(p.UserId) && !p.IsDeleted)
+                .OrderByDescending(p => p.CreatedOn)
+                .Skip(skip)
+                .Take(take)
+                .Include(p => p.User)
+                    .ThenInclude(u => u.UserImages)
+                .Include(p => p.Votes)
+                .Include(p => p.Comments)
+                .Include(p => p.Images)
+                .Include(p => p.FavoritePosts)
+                .Select(post => new PostViewModel
                 {
-                    posts.Add(new PostViewModel
+                    PostId = post.Id,
+                    CreatedOn = post.CreatedOn,
+                    ModifiedOn = post.ModifiedOn,
+                    IsDeleted = post.IsDeleted,
+                    DeletedOn = post.DeletedOn,
+                    Content = post.Content,
+                    UserProfileImageUrl = post.User.UserImages.FirstOrDefault(x => x.IsProfileImage) != null ? post.User.UserImages.FirstOrDefault(x => x.IsProfileImage).Content : null,
+                    UserUserName = post.User.UserName,
+                    UserId = post.UserId,
+                    IsOwner = post.UserId == userId,
+                    IsVoted = post.Votes.Any(v => v.UserId == userId),
+                    IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
+                    VotesCount = post.Votes.Sum(x => (int)x.VoteType),
+                    IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
+                    FavoritesCount = post.FavoritePosts.Count(),
+                    CommentsCount = post.Comments.Count(),
+                    Images = post.Images.Select(i => new ImagesViewModel
                     {
+                        Id = i.Id,
                         PostId = post.Id,
-                        CreatedOn = post.CreatedOn,
-                        ModifiedOn = post.ModifiedOn,
-                        IsDeleted = post.IsDeleted,
-                        DeletedOn = post.DeletedOn,
-                        Content = post.Content,
-                        UserProfileImageUrl = post.User.UserImages.FirstOrDefault(x => x.IsProfileImage)?.Content,
-                        UserUserName = post.User.UserName,
-                        UserId = post.UserId,
-                        IsOwner = post.UserId == userId,
-                        IsVoted = post.Votes.Any(v => v.UserId == userId),
-                        IsUpVote = post.Votes.Any(v => v.UserId == userId && v.VoteType == Data.Models.Enums.VoteType.UpVote),
-                        VotesCount = post.Votes.Sum(x => (int)x.VoteType),
-                        IsFavourite = post.FavoritePosts.Any(x => x.UserId == userId),
-                        FavoritesCount = post.FavoritePosts.Count(),
-                        CommentsCount = post.Comments.Count(),
-                        Images = post.Images.Select(i => new ImagesViewModel
-                        {
-                            Id = i.Id,
-                            PostId = post.Id,
-                            ImageUrl = i.Content
-                        }).ToArray()
-                    });
-                }
-            }
+                        ImageUrl = i.Content
+                    }).ToArray()
+                })
+                .ToListAsync();
 
-            return posts.OrderByDescending(x => x.CreatedOn);
+            return posts;
         }
 
         public async Task<string> CreateAsync(CreatePostViewModel input, string userId)
