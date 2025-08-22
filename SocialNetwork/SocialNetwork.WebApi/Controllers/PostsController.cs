@@ -22,7 +22,7 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPostsAsync()
+        public async Task<IActionResult> GetPostsAsync([FromQuery] int skip = 0, [FromQuery] int take = 5)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -31,7 +31,7 @@ namespace SocialNetwork.WebApi.Controllers
                 this.BadRequest();
             }
 
-            var posts = await this.postsService.GetPostsAsync(userId);
+            var posts = await this.postsService.GetPostsAsync(userId, skip, take);
 
             return this.Ok(posts);
         }

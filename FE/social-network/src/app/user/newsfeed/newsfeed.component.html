@@ -52,10 +52,10 @@
   </div>
 </form>
 <div *ngIf="posts.length">
-    <div *ngFor="let post of posts" class="row mt-4">
-        <div class="post col-sm-6">
-            <app-post-card [post]="post" (postDeleted)="onPostDeleted($event)"/>
-        </div>
+  <div *ngFor="let post of posts" class="row mt-4">
+    <div class="post col-sm-6">
+      <app-post-card [post]="post" (postDeleted)="onPostDeleted($event)"/>
     </div>
+  </div>
 </div>
 <app-global-loader />

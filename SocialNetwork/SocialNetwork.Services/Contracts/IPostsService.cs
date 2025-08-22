@@ -8,7 +8,7 @@
     {
         Task<PostViewModel> GetByIdAsync(string id, string userId);
 
-        Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId);
+        Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId, int skip, int take);
 
         Task<IEnumerable<PostCommentViewModel>> GetCommentsAsync(string postId);
 

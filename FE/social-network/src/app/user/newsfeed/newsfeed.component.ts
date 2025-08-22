@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/post/post.service';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
@@ -13,7 +13,11 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './newsfeed.component.html',
   styleUrls: ['./newsfeed.component.css']
 })
-export class NewsfeedComponent implements OnInit {
+export class NewsfeedComponent implements OnInit, OnDestroy {
+  currentPage: number = 1;
+  pageSize: number = 5;
+  hasMorePosts: boolean = true;
+
   posts: Post[] = [];
 
   form = this.fb.group({
@@ -32,7 +36,32 @@ export class NewsfeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPosts();
+    window.addEventListener('scroll', this.onWindowScroll, true);
   }
+
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.onWindowScroll, true);
+  }
+
+  onLoadMore() {
+    if (!this.hasMorePosts) {
+      return;
+    }
+
+    this.currentPage++;
+
+    this.fetchPosts();
+  }
+
+  onWindowScroll = () => {
+    const threshold = 150; // px from bottom
+    const position = window.innerHeight + window.scrollY;
+    const height = document.body.offsetHeight;
+    if (height - position < threshold) {
+      this.onLoadMore();
+    }
+  };
 
   onPostDeleted(postId: string) {
     // Remove the deleted post from the posts array in the parent component
@@ -63,7 +92,6 @@ export class NewsfeedComponent implements OnInit {
   }
 
   create() {
-    debugger;
     if (this.form.invalid) {
       return;
     }
@@ -96,20 +124,31 @@ export class NewsfeedComponent implements OnInit {
       }
     }
   }
-  
-  private fetchPosts() {
+
+
+  fetchPosts() {
+    if (!this.hasMorePosts) {
+      return; // No more posts to load
+    }
+
+    const skip = (this.currentPage - 1) * this.pageSize;
+    const take = this.pageSize;
     this.globalLoaderService.showLoader();
 
-    this.postService.loadNewsfeed().subscribe({
-      next: (posts) => {
-        this.posts = posts;
-        console.log(this.posts);
-        this.globalLoaderService.hideLoader();
-      },
-      error: (err) => {
-        this.globalLoaderService.hideLoader();
-        console.log('Error: ', err);
-      }
-    });
+    setTimeout(() => {
+      this.postService.loadNewsfeed(skip, take).subscribe({
+        next: (newPosts) => {
+          this.posts = [...this.posts, ...newPosts];
+          if (newPosts.length < this.pageSize) {
+            this.hasMorePosts = false; // No more posts to load
+          }
+          this.globalLoaderService.hideLoader();
+        },
+        error: (err) => {
+          this.globalLoaderService.hideLoader();
+          console.log('Error: ', err);
+        }
+      });
+    }, 1000);
   }
 }
