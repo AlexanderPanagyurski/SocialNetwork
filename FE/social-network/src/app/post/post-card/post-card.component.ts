@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { Post } from 'src/app/types/post';
@@ -15,6 +15,7 @@ export class PostCardComponent implements OnDestroy {
   postId: string = '';
   postComments: PostComment[] = [];
   @Input() post: Post = {} as Post;
+  @Output() postDeleted = new EventEmitter<string>();
 
   get dataTarget(): string {
     return `#post-modal-${this.postId}`;
@@ -106,7 +107,7 @@ export class PostCardComponent implements OnDestroy {
     this.postService.getPostComments(post.postId).subscribe({
       next: (postComments) => {
         this.postComments = postComments;
-        this.postId=post.postId;
+        this.postId = post.postId;
         this.globalLoaderService.hideLoader();
       },
       error: (err) => {
@@ -114,6 +115,16 @@ export class PostCardComponent implements OnDestroy {
         this.globalLoaderService.hideLoader();
       }
     })
+  }
+  deletePost(postId: string) {
+    this.postService.deletePost(postId).subscribe({
+      next: () => {
+        this.postDeleted.emit(postId);
+      },
+      error: (error) => {
+        console.log("Error: ", error);
+      }
+    });
   }
 
   private fetchPost(postId: string) {

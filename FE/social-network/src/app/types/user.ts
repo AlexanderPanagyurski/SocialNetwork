@@ -7,6 +7,7 @@ export interface User {
     userFollowingsCount: number,
     userFollowersCount: number,
     userPostsCount: number,
+    isFollowed: boolean,
     createdOn: string,
     profileImageUrl: Uint8Array,
     userPosts: Post[]

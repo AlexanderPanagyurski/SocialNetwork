@@ -16,18 +16,10 @@
                         data-toggle="modal" data-target="#users-modal">
                         Followings: {{user.userFollowingsCount}}</p>
                 </div>
-                <!-- @if (!item.IsFollowed)
-                {
-                    <form asp-area="" asp-controller="Users" asp-action="Follow" asp-route-userId="@item.UserId" method="post">
-                        <button class="btn btn-outline-primary">Follow</button>
-                    </form>
-                }
-                else
-                {
-                    <form asp-area="" asp-controller="Users" asp-action="Follow" asp-route-userId="@item.UserId" method="post">
-                        <button class="btn btn-primary">Followed</button>
-                    </form>
-                } -->
+                <div class="d-flex justify-content-center mb-2">
+                    <button *ngIf="!user.isFollowed" type="button" (click)="follow(user.userId)" class="btn btn-primary">Follow</button>
+                    <button *ngIf="user.isFollowed" type="button"(click)="unfollow(user.userId)" class="btn btn-secondary">Followed</button>
+                </div>
             </div>
         </div>
     </div>

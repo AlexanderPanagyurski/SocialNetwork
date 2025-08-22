@@ -34,6 +34,11 @@ export class NewsfeedComponent implements OnInit {
     this.fetchPosts();
   }
 
+  onPostDeleted(postId: string) {
+    // Remove the deleted post from the posts array in the parent component
+    this.posts = this.posts.filter(post => post.postId !== postId);
+  }
+
   navigateTo(path: string, post: Post) {
     this.router.navigate([path, post.userId]);
   }

@@ -39,6 +39,13 @@ export class PostService {
     return response;
   }
 
+  deletePost(postId: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+     return this.http.delete<void>(`/api/posts/${postId}`, { headers });
+  }
+
   create(formData: FormData) {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'multipart/form-data');

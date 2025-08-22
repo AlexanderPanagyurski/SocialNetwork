@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { NgForm, ValidationErrors } from '@angular/forms';
@@ -11,13 +11,19 @@ import { UserForAuth } from 'src/app/types/userForAuth';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   emailDomains: string[] = EMAIL_DOMAINS;
 
   constructor(
     private router: Router,
     private cookieService: CookieService,
     private userService: UserService) { }
+    
+  ngOnInit(): void {
+    if(this.cookieService.check(AUTH_COOKIE_KEY)){
+      this.router.navigate(['/newsfeed']);
+    }
+  }
 
   login(form: NgForm) {
     if (form.invalid) {

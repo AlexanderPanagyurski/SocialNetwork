@@ -69,7 +69,34 @@ export class UsersListComponent implements OnInit {
     return this.userService.getUserProfileImageUrl(user);
   }
 
-  private fetchUsers(username?:string) {
+  follow(followedUserId: string) {
+    this.userService.manageSubscription(followedUserId).subscribe({
+      next: () => {
+        this.users.map(user =>
+          user.userId === followedUserId
+            ? { ...user, isFollowed: false }
+            : user
+        );
+      },
+      error: (error) => {
+        console.log("Error: ", error);
+      }
+    });
+  }
+
+  unfollow(followedUserId: string) {
+    this.userService.manageSubscription(followedUserId).subscribe({
+      next: () => {
+        this.users.map(user =>
+          user.userId === followedUserId
+            ? { ...user, isFollowed: true }
+            : user
+        );
+      },
+    });
+  }
+
+  private fetchUsers(username?: string) {
     this.globalLoaderService.showLoader();
 
     this.userService.getUsers(username!).subscribe({
