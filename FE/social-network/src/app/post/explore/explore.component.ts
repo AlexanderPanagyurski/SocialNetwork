@@ -13,7 +13,7 @@ import { PostService } from '../post.service';
 })
 export class ExploreComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 6;
   hasMorePosts: boolean = true;
 
   posts: Post[] = [];

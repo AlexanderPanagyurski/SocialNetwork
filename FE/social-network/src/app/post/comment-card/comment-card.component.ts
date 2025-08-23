@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
 import { PostComment } from 'src/app/types/post-comment';
 import { DatePipe } from '@angular/common';
 import { DEFAULT_USER_IMAGE_URL } from 'src/app/constants';
@@ -16,7 +16,11 @@ export class CommentCardComponent {
   @Input() postId: string | undefined;
   @Input() postComments: PostComment[] = [] as PostComment[];
 
-  constructor(private postService: PostService) { }
+  constructor(
+    private postService: PostService,
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) { }
 
   checkIfEdited(postComment: PostComment): string {
     const datePipe: DatePipe = new DatePipe('en-US');
@@ -50,14 +54,14 @@ export class CommentCardComponent {
     console.log('Replying on: ', postComment.id);
 
     const { content } = form.value;
-    debugger;
+
     this.postService.addPostComment(this.postId!, postComment.id, content).subscribe({
       next: (response) => {
         postComment.children.push(response);
-        let commentsCount = document.getElementById(`post-comments-${this.postId}`);
+        const commentsCount  = this.el.nativeElement.querySelector(`#post-comments-${this.postId}`);
         if (commentsCount) {
-          let count = Number(commentsCount.innerHTML)
-          commentsCount.innerHTML = (++count).toString();
+          const count = Number(commentsCount.innerHTML);
+          this.renderer.setProperty(commentsCount, 'innerHTML', (count + 1).toString());
         }
       },
       error: (error) => {
@@ -66,3 +70,9 @@ export class CommentCardComponent {
     })
   }
 }
+
+
+// const commentsCountEl = this.el.nativeElement.querySelector(`#post-comments-${this.postId}`);
+// if (commentsCountEl) {
+//   this.renderer.setProperty(commentsCountEl, 'innerHTML', this.postComments.length.toString());
+// }

@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { filter, map, Observable } from "rxjs";
 import { UserService } from "../user/user.service";
 import { CookieService } from "ngx-cookie-service";
+import { AUTH_COOKIE_KEY } from "../constants";
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -11,23 +12,12 @@ export class AuthGuard implements CanActivate {
         private userService: UserService,
         private router: Router) { }
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        if (this.userService.isLogged) {
-            this.router.createUrlTree(['/newsfeed']);
+    canActivate(): boolean {
+        if (this.cookieService.check(AUTH_COOKIE_KEY)) {
             return true;
+        } else {
+            this.router.navigate(['/login']); // Redirect to login if not logged in
+            return false;
         }
-        return false
-        return this.userService.user$.pipe(
-            filter((user) => user !== undefined),
-            map((user) => {
-                if (!user) {
-                    this.router.navigate(['/login']);
-                    return false;
-                }
-                return true;
-            }))
     }
 }

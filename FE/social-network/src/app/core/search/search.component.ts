@@ -22,8 +22,15 @@ export class SearchComponent {
     return this.searchedUsers.length;
   }
 
-  searchUser(event: any) {
-    let username = event.target.value;
+  searchUser(event: Event) {
+    const target = event.target as HTMLInputElement | null;
+
+    if (!target) {
+      return;
+    }
+
+    let username = target.value;
+    
     this.userService.getUsersByUsername(username).subscribe({
       next: (response) => {
         console.log(response);

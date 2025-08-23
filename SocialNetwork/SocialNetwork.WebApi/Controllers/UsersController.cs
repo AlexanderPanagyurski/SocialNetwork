@@ -43,7 +43,7 @@ namespace SocialNetwork.WebApi.Controllers
             try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user = await this.usersService.GetUserAsync(userId);
+                var user = await this.usersService.GetUserAsync(userId, userId);
 
                 var response = new AuthUserViewModel
                 {
@@ -62,11 +62,11 @@ namespace SocialNetwork.WebApi.Controllers
 
         [HttpGet("{userId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetUserAsync(string userId)
+        public async Task<IActionResult> GetUserAsync([FromHeader] string authUserId, [FromRoute] string userId)
         {
             try
             {
-                var user = await usersService.GetUserAsync(userId);
+                var user = await usersService.GetUserAsync(authUserId, userId);
 
                 return Ok(user);
             }
@@ -162,7 +162,7 @@ namespace SocialNetwork.WebApi.Controllers
         [HttpGet("{userId}/favourite-posts")]
         public async Task<IActionResult> GetFavouritePostsAsync([FromRoute] string userId, [FromQuery] int skip = 0, [FromQuery] int take = 5)
         {
-            var posts = await this.usersService.GetFavouritePostsAsync(userId,skip, take);
+            var posts = await this.usersService.GetFavouritePostsAsync(userId, skip, take);
 
             return this.Ok(posts);
         }

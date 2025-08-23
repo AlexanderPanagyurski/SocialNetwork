@@ -23,6 +23,7 @@ namespace SocialNetwork.WebApi.Controllers
 
 
         [HttpGet("explore")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPostsAsync([FromQuery] int skip = 0, [FromQuery] int take = 5)
         {
             var posts = await this.postsService.GetAllPostsAsync(skip, take);
