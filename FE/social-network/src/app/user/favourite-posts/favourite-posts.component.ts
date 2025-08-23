@@ -47,7 +47,7 @@ export default class FavouritePostsComponent implements OnInit, OnDestroy {
   }
 
   onWindowScroll = () => {
-    const threshold = 150; // px from bottom
+    const threshold = 150;
     const position = window.innerHeight + window.scrollY;
     const height = document.body.offsetHeight;
     if (height - position < threshold) {

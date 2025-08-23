@@ -168,9 +168,9 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpGet("{userId}/posts")]
-        public async Task<IActionResult> GetUserPostsAsync(string userId)
+        public async Task<IActionResult> GetUserPostsAsync([FromRoute] string userId, [FromQuery] int skip = 0, [FromQuery] int take = 5)
         {
-            var posts = await this.usersService.GetUserPostsAsync(userId);
+            var posts = await this.usersService.GetUserPostsAsync(userId, skip, take);
 
             return this.Ok(posts);
         }

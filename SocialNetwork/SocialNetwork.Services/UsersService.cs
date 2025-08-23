@@ -162,7 +162,7 @@ namespace SocialNetwork.Services
             return userFollowings;
         }
 
-        public async Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId)
+        public async Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId, int skip, int take)
         {
             var posts = await this.dbContext.Posts
                 .Include(p => p.Votes)
@@ -173,6 +173,8 @@ namespace SocialNetwork.Services
                 .Include(p => p.FavoritePosts)
                 .Where(p => p.UserId == userId)
                 .OrderByDescending(p => p.CreatedOn)
+                .Skip(skip)
+                .Take(take)
                 .Select(p => new PostViewModel
                 {
                     UserId = p.User.Id,
