@@ -160,17 +160,17 @@ namespace SocialNetwork.WebApi.Controllers
         }
 
         [HttpGet("{userId}/favourite-posts")]
-        public async Task<IActionResult> GetFavouritePostsAsync(string userId)
+        public async Task<IActionResult> GetFavouritePostsAsync([FromRoute] string userId, [FromQuery] int skip = 0, [FromQuery] int take = 5)
         {
-            var posts = await this.usersService.GetFavouritePostsAsync(userId);
+            var posts = await this.usersService.GetFavouritePostsAsync(userId,skip, take);
 
             return this.Ok(posts);
         }
 
         [HttpGet("{userId}/posts")]
-        public async Task<IActionResult> GetUserPostsAsync(string userId)
+        public async Task<IActionResult> GetUserPostsAsync([FromRoute] string userId, [FromQuery] int skip = 0, [FromQuery] int take = 5)
         {
-            var posts = await this.usersService.GetUserPostsAsync(userId);
+            var posts = await this.usersService.GetUserPostsAsync(userId, skip, take);
 
             return this.Ok(posts);
         }

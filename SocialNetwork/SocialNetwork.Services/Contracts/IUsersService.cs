@@ -10,8 +10,8 @@ namespace SocialNetwork.Services.Contracts
         Task<IEnumerable<UserViewModel>> GetUsersByUsernameAsync(string? username);
         Task<IEnumerable<UserViewModel>> GetUserFollwers(string userId);
         Task<IEnumerable<UserViewModel>> GetUserFollwings(string userId);
-        Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId);
-        Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId);
+        Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId, int skip, int take);
+        Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId, int skip, int take);
         Task ManageSubscriptionAsync(string userId, string followingId);
     }
 }

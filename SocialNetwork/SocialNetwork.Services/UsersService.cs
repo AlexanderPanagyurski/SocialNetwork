@@ -41,7 +41,7 @@ namespace SocialNetwork.Services
             return user.Id;
         }
 
-        public async Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId)
+        public async Task<IEnumerable<PostViewModel>> GetFavouritePostsAsync(string userId, int skip, int take)
         {
             var posts = await this.dbContext
                 .FavoritePosts
@@ -76,6 +76,8 @@ namespace SocialNetwork.Services
                     IsOwner = fp.Post.UserId == userId,
                     FavoritesCount = fp.Post.FavoritePosts.Count(),
                 })
+                .Skip(skip)
+                .Take(take)
                 .ToArrayAsync();
 
             return posts;
@@ -160,7 +162,7 @@ namespace SocialNetwork.Services
             return userFollowings;
         }
 
-        public async Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId)
+        public async Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId, int skip, int take)
         {
             var posts = await this.dbContext.Posts
                 .Include(p => p.Votes)
@@ -171,6 +173,8 @@ namespace SocialNetwork.Services
                 .Include(p => p.FavoritePosts)
                 .Where(p => p.UserId == userId)
                 .OrderByDescending(p => p.CreatedOn)
+                .Skip(skip)
+                .Take(take)
                 .Select(p => new PostViewModel
                 {
                     UserId = p.User.Id,

@@ -57,14 +57,14 @@ export class UserService implements OnDestroy {
     return response;
   }
 
-  getFavouritePosts(userId: string) {
-    const response = this.http.get<Post[]>(`/api/users/${userId}/favourite-posts`);
+  getFavouritePosts(userId: string, skip: number, take: number): Observable<Post[]> {
+    const response = this.http.get<Post[]>(`/api/users/${userId}/favourite-posts?skip=${skip}&take=${take}`);
 
     return response;
   }
 
-  getUserPosts(userId: string) {
-    const response = this.http.get<Post[]>(`/api/users/${userId}/posts`);
+  getUserPosts(userId: string, skip: number, take: number): Observable<Post[]> {
+    const response = this.http.get<Post[]>(`/api/users/${userId}/posts?skip=${skip}&take=${take}`);
 
     return response;
   }
