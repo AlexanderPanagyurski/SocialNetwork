@@ -18,8 +18,9 @@
                 data-target="#users-modal">Followings: {{user.userFollowingsCount}}</span>
             </p>
             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
-            <div class="d-flex justify-content-center mb-2">
-              <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Follow</button>
+            <div class="d-flex justify-content-center mb-2" *ngIf="userLoggedIn">
+              <button *ngIf="!user.isFollowed" type="button" (click)="follow(user.userId)" class="btn btn-primary">Follow</button>
+              <button *ngIf="user.isFollowed" type="button"(click)="unfollow(user.userId)" class="btn btn-secondary">Followed</button>
             </div>
           </div>
         </div>

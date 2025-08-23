@@ -83,7 +83,7 @@ namespace SocialNetwork.Services
             return posts;
         }
 
-        public async Task<UserViewModel> GetUserAsync(string userId)
+        public async Task<UserViewModel> GetUserAsync(string? authUserId, string userId)
         {
             var user = await this.dbContext
                 .Users
@@ -103,6 +103,7 @@ namespace SocialNetwork.Services
                 ProfileImageUrl = user.UserImages.FirstOrDefault(x => x.IsProfileImage)?.Content,
                 UserEmail = user.Email,
                 UserUserName = user.UserName,
+                IsFollowed = dbContext.UserFollowers.Any(uf => uf.FollowerId == authUserId && uf.UserId == userId && !uf.IsDeleted),
                 CreatedOn = user.CreatedOn.ToString("D"),
                 UserPostsCount = user.Posts.Count(p => !p.IsDeleted),
                 UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == user.Id && !uf.IsDeleted),

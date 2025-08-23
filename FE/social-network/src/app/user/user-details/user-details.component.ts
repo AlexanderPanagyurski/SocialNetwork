@@ -27,6 +27,14 @@ export class UserDetailsComponent implements OnInit {
       this.userId = params.get('userId') || '';
       this.fetchUser(this.userId);
     });
+
+    if (this.user.userId == this.userId) {
+      this.user.isFollowed = true;
+    }
+  }
+
+  get userLoggedIn(): boolean {
+    return this.userService.isLogged;
   }
 
   loadUserFollowers(userId: string) {
@@ -58,6 +66,25 @@ export class UserDetailsComponent implements OnInit {
         this.globalLoaderService.hideLoader();
         console.log('Error: ', err);
       }
+    });
+  }
+
+  follow(followedUserId: string) {
+    this.userService.manageSubscription(followedUserId).subscribe({
+      next: () => {
+        this.user.isFollowed = true;
+      },
+      error: (error) => {
+        console.log("Error: ", error);
+      }
+    });
+  }
+
+  unfollow(followedUserId: string) {
+    this.userService.manageSubscription(followedUserId).subscribe({
+      next: () => {
+        this.user.isFollowed = false;
+      },
     });
   }
 

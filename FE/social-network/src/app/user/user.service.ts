@@ -72,7 +72,11 @@ export class UserService implements OnDestroy {
   getUserById(userId: string) {
     const { apiUrl } = environment;
 
-    const response = this.http.get<User>(`${apiUrl}/users/${userId}`);
+    const headers = new HttpHeaders({
+      'authUserId': this.user?.id || '',
+    });
+
+    const response = this.http.get<User>(`${apiUrl}/users/${userId}`, { headers });
 
     return response;
   }
