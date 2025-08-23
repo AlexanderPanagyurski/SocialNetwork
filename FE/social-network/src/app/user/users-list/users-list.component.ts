@@ -28,6 +28,12 @@ export class UsersListComponent implements OnInit {
       this.fetchUsers(this.username);
     });
   }
+  
+  
+  get userLoggedIn(): boolean {
+    return this.userService.isLogged;
+  }
+
 
   loadUserFollowers(userId: string) {
     this.globalLoaderService.showLoader();

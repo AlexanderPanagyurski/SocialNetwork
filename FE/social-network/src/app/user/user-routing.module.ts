@@ -11,12 +11,12 @@ import { UserPostsComponent } from './user-posts/user-posts.component';
 import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'newsfeed', component: NewsfeedComponent },
+  { path: 'newsfeed', component: NewsfeedComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersListComponent },
   { path: 'users/:userId', component: UserDetailsComponent },
   { path: 'users/:userId/edit', component: UserEditComponent, canActivate: [AuthGuard] },
-  { path: 'users/:userId/favourite-posts', component: FavouritePostsComponent },
-  { path: 'users/:userId/posts', component: UserPostsComponent },
+  { path: 'users/:userId/favourite-posts', component: FavouritePostsComponent, canActivate: [AuthGuard] },
+  { path: 'users/:userId/posts', component: UserPostsComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 ]
