@@ -105,8 +105,8 @@ namespace SocialNetwork.Services
                 UserUserName = user.UserName,
                 CreatedOn = user.CreatedOn.ToString("D"),
                 UserPostsCount = user.Posts.Count(p => !p.IsDeleted),
-                UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == user.Id),
-                UserFollowersCount = user.Followings.Count(uf => uf.UserId == user.Id),
+                UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == user.Id && !uf.IsDeleted),
+                UserFollowersCount = user.Followings.Count(uf => uf.UserId == user.Id && !uf.IsDeleted),
                 UserPosts = user.Posts.Where(p => !p.IsDeleted).Select(p => new PostViewModel
                 {
                     PostId = p.Id,
@@ -129,7 +129,7 @@ namespace SocialNetwork.Services
                 .ThenInclude(u => u.Posts)
                 .Include(uf => uf.User)
                 .ThenInclude(u => u.UserImages)
-                .Where(uf => uf.UserId == userId)
+                .Where(uf => uf.UserId == userId && !uf.IsDeleted)
                 .Select(uf => new UserViewModel
                 {
                     UserId = uf.FollowerId,
@@ -221,9 +221,9 @@ namespace SocialNetwork.Services
                 UserId = u.Id,
                 UserEmail = u.Email,
                 UserUserName = u.UserName,
-                IsFollowed = dbContext.UserFollowers.Any(uf => uf.FollowerId == authUserId && uf.UserId==u.Id),
-                UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id),
-                UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id),
+                IsFollowed = dbContext.UserFollowers.Any(uf => uf.FollowerId == authUserId && uf.UserId==u.Id && !uf.IsDeleted),
+                UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id && !uf.IsDeleted),
+                UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id && !uf.IsDeleted),
                 UserPostsCount = u.Posts.Count(p => !p.IsDeleted),
                 ProfileImageUrl = u.UserImages.FirstOrDefault(x => x.IsProfileImage).Content,
             })
@@ -251,8 +251,8 @@ namespace SocialNetwork.Services
                     UserEmail = u.Email,
                     UserUserName = u.UserName,
                     ProfileImageUrl = u.UserImages.FirstOrDefault(x => x.IsProfileImage).Content,
-                    UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id),
-                    UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id),
+                    UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id && !uf.IsDeleted),
+                    UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id && !uf.IsDeleted),
                     UserPostsCount = u.Posts.Count(p => !p.IsDeleted),
 
                 })
@@ -287,7 +287,7 @@ namespace SocialNetwork.Services
             }
             else
             {
-                user.Followings.Add(new UserFollower { UserId = followedUser.Id, FollowerId = user.Id });
+                this.dbContext.UserFollowers.Add(new UserFollower { UserId = followedUser.Id, FollowerId = user.Id });
             }
             await this.dbContext.SaveChangesAsync();
         }
