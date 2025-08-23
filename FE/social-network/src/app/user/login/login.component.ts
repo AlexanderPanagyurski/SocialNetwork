@@ -12,6 +12,7 @@ import { UserForAuth } from 'src/app/types/userForAuth';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  errorMessage: string = '';
   emailDomains: string[] = EMAIL_DOMAINS;
 
   constructor(
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         error: (err) => {
-          console.log('Error: ', err);
+          this.errorMessage = err.error?.error || 'Login failed. Please try again.';
         }
       });
   }

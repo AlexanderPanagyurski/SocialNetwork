@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { CreatePost } from '../types/createPost';
 import { PostComment } from '../types/post-comment';
 import { DEFAULT_USER_IMAGE_URL } from '../constants';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,12 @@ export class PostService {
   constructor(
     private cookieService: CookieService,
     private http: HttpClient) { }
+
+  getPosts(skip: number = 0, take: number = 5): Observable<Post[]> {
+    const response = this.http.get<Post[]>(`/api/posts/explore?skip=${skip}&take=${take}`);
+
+    return response;
+  }
 
   loadNewsfeed(skip: number = 0, take: number = 5) {
     const response = this.http.get<Post[]>(`/api/posts?skip=${skip}&take=${take}`);
@@ -43,7 +50,7 @@ export class PostService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-     return this.http.delete<void>(`/api/posts/${postId}`, { headers });
+    return this.http.delete<void>(`/api/posts/${postId}`, { headers });
   }
 
   create(formData: FormData) {

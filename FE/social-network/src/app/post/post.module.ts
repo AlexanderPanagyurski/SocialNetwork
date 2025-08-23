@@ -9,6 +9,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { PostCardComponent } from './post-card/post-card.component';
 import { PostCommentsPopupComponent } from './post-comments-popup/post-comments-popup.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
+import { ExploreComponent } from './explore/explore.component';
 
 
 
@@ -18,7 +19,8 @@ import { CommentCardComponent } from './comment-card/comment-card.component';
     PostCreateComponent,
     PostCardComponent,
     PostCommentsPopupComponent,
-    CommentCardComponent
+    CommentCardComponent,
+    ExploreComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { CommentCardComponent } from './comment-card/comment-card.component';
   ],
   exports:[
     PostCommentsPopupComponent,
-    PostCardComponent
+    PostCardComponent,
+    ExploreComponent
   ]
 })
 export class PostModule { }
