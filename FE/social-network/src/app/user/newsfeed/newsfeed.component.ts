@@ -25,7 +25,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     content: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-  images: any[] = [];
+  images: File[] = [];
 
   constructor(
     private router: Router,
@@ -117,9 +117,11 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     });
   }
 
-  onFileSelect(event: any) {
-    if (event.target.files.length > 0) {
-      for (const file of event.target.files) {
+  onFileSelect(event: Event) {
+    const target = event.target as HTMLInputElement;
+
+    if (target.files && target.files.length > 0) {
+      for (const file of Array.from(target.files)) {
         this.images.push(file);
       }
     }

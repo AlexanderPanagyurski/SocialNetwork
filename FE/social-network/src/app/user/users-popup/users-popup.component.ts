@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
 import { User } from 'src/app/types/user';
@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
 })
 export class UsersPopupComponent {
   @Input() userFollowers: User[] = [] as User[];
-  @ViewChild('userModalClose') userModalClose: any;
+  @ViewChild('userModalClose') userModalClose!: ElementRef<HTMLButtonElement>;
 
 
   constructor(

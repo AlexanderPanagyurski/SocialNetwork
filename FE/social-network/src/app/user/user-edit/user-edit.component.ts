@@ -17,7 +17,7 @@ export class UserEditComponent implements OnInit {
   emailDomains: string[] = EMAIL_DOMAINS;
   userId: string | undefined;
   user: User | undefined;
-  image: any;
+  image: File | undefined;
 
   form = this.fb.group(
     {
@@ -70,7 +70,10 @@ export class UserEditComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('username', username!);
-    formData.append('image', this.image, this.image.name);
+    
+    if (this.image) {
+      formData.append('image', this.image, this.image.name);
+    }
 
     this.userService.edit(formData, this.userId!).subscribe(
       {
@@ -90,9 +93,11 @@ export class UserEditComponent implements OnInit {
     return '';
   }
 
-  onFileSelect(event: any) {
-    if (event.target.files.length > 0) {
-      for (const file of event.target.files) {
+  onFileSelect(event: Event) {
+    const target = event.target as HTMLInputElement;
+
+    if (target.files && target.files.length > 0) {
+      for (const file of Array.from(target.files)) {
         this.image = file;
       }
     }
