@@ -39,9 +39,13 @@
             </label>
           </li>
           <li>
-            <label for="emojis">
+            <label (click)="toggleEmojiPicker()" class="emoji-icon" style="cursor: pointer;">
               <i class="far fa-smile px-2"></i>
             </label>
+            <div *ngIf="showEmojiPicker" class="position-absolute bg-white border rounded p-2 shadow"
+            style="z-index: 1000; top: 40px; left: 0; width: 350px; height: 400px;">
+            <emoji-mart (emojiSelect)="addEmoji($event)"></emoji-mart>
+            </div>
           </li>
         </ul>
         <div class="d-flex align-items-center">

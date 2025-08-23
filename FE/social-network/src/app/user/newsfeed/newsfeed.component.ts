@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/post/post.service';
 import { GlobalLoaderService } from 'src/app/services/global-loader.service';
@@ -17,6 +17,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   pageSize: number = 5;
   hasMorePosts: boolean = true;
+  showEmojiPicker = false;
 
   posts: Post[] = [];
 
@@ -42,6 +43,30 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     window.removeEventListener('scroll', this.onWindowScroll, true);
+  }
+
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+    console.log('showEmojiPicker:', this.showEmojiPicker);
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    // Assuming the emoji picker has tag 'emoji-mart' and the smile icon label has a class or id
+    if (
+      this.showEmojiPicker &&
+      !target.closest('emoji-mart') &&
+      !target.closest('.emoji-icon')
+    ) {
+      this.showEmojiPicker = false;
+    }
+  }
+
+  addEmoji(event: any) {
+    const emoji = event.emoji.native;
+    const currentContent = this.form.get('content')?.value || '';
+    this.form.get('content')?.setValue(currentContent + emoji);
   }
 
   onLoadMore() {

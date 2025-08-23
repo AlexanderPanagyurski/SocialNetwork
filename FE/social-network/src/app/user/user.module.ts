@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersPopupComponent } from './users-popup/users-popup.component';
@@ -15,6 +15,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { PostModule } from "../post/post.module";
 import FavouritePostsComponent from './favourite-posts/favourite-posts.component';
 import { UserPostsComponent } from './user-posts/user-posts.component';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
@@ -36,12 +37,15 @@ import { UserPostsComponent } from './user-posts/user-posts.component';
     FormsModule,
     ReactiveFormsModule,
     CarouselModule,
-    PostModule
+    PostModule,
+    PickerComponent
 ],
+schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
     UsersListComponent,
     UsersPopupComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    NewsfeedComponent
   ]
 })
 export class UserModule { }
