@@ -132,7 +132,12 @@ namespace SocialNetwork.WebApi.Controllers
             var isAuth = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             string username = Request.Form["username"];
-            IFormFile image = Request.Form.Files[0];
+            IFormFile image = null;
+
+            if (Request.Form.Files.Any())
+            {
+                image = Request.Form.Files[0];
+            }
 
             if (string.IsNullOrEmpty(isAuth) || isAuth != userId)
             {

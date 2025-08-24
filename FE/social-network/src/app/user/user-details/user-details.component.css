@@ -1,13 +1,67 @@
-.user-post-link {
-    text-decoration: none;
+.thumb {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.thumbnail {
+    position: relative;
+    display: block;
+}
+
+.thumbnail:hover {
+    filter: brightness(80%);
+}
+
+/* Overlay container (hidden by default) */
+.card-img-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.likes-container {
+    display: none;
+}
+
+.likes-container:hover {
+    display: block;
+}
+
+/* Show overlay on hover */
+.thumbnail:hover .card-img-overlay {
+    display: flex;
+}
+
+/* Content inside overlay */
+.image-likes {
+    font-size: 24px;
+    color: white;
+}
+
+.likes {
+    color: white;
+    font-size: 20px;
+    display: none;
+}
+
+.thumbnail:hover .likes {
+    display: block;
+}
+
+/* Add spacing between heart and count */
+.d-flex.align-items-center>*:not(:last-child) {
+    margin-right: 0.5rem;
+}
+
+.thumb {
     cursor: pointer;
 }
 
 .user-followers {
     cursor: pointer;
-    padding: 0px;
-}
-
-.post-container {
-    height: 400px;
 }
