@@ -31,11 +31,15 @@ namespace SocialNetwork.Services
 
             user.UserName = viewModel.UserName;
 
-            using (var stream = new MemoryStream())
+            if (viewModel.Image != null)
             {
-                await viewModel.Image.CopyToAsync(stream);
-                user.UserImages.Add(new UserImage { Content = stream.ToArray(), UserId = user.Id, IsProfileImage = true });
+                using (var stream = new MemoryStream())
+                {
+                    await viewModel.Image.CopyToAsync(stream);
+                    user.UserImages.Add(new UserImage { Content = stream.ToArray(), UserId = user.Id, IsProfileImage = true });
+                }
             }
+
             await this.dbContext.SaveChangesAsync();
 
             return user.Id;
@@ -222,7 +226,7 @@ namespace SocialNetwork.Services
                 UserId = u.Id,
                 UserEmail = u.Email,
                 UserUserName = u.UserName,
-                IsFollowed = dbContext.UserFollowers.Any(uf => uf.FollowerId == authUserId && uf.UserId==u.Id && !uf.IsDeleted),
+                IsFollowed = dbContext.UserFollowers.Any(uf => uf.FollowerId == authUserId && uf.UserId == u.Id && !uf.IsDeleted),
                 UserFollowingsCount = dbContext.UserFollowers.Count(uf => uf.FollowerId == u.Id && !uf.IsDeleted),
                 UserFollowersCount = u.Followings.Count(uf => uf.UserId == u.Id && !uf.IsDeleted),
                 UserPostsCount = u.Posts.Count(p => !p.IsDeleted),

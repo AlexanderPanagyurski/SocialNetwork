@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SocialNetwork.Data.Models;
 using SocialNetwork.Services.Contracts;
 using SocialNetwork.Web.ViewModels.Post;
 using System.Security.Claims;
@@ -57,6 +58,21 @@ namespace SocialNetwork.WebApi.Controllers
 
                 return this.Ok(post);
 
+            }
+            catch (ArgumentException ex)
+            {
+                return this.NotFound(ex.Message);
+            }
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetUserPostsAsync([FromRoute] string userId, [FromQuery] int skip, [FromQuery] int take)
+        {
+            try
+            {
+                var post = await this.postsService.GetUserPostsAsync(userId, skip, take);
+
+                return this.Ok(post);
             }
             catch (ArgumentException ex)
             {

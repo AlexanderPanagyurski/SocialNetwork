@@ -323,5 +323,30 @@
 
             return viewModel;
         }
+
+        public async Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId, int skip, int take)
+        {
+            var posts = await this.dbContext.Posts
+                .Where(p => p.UserId == userId && !p.IsDeleted)
+                .OrderByDescending(p => p.CreatedOn)
+                .Skip(skip)
+                .Take(take)
+                .Include(p => p.Images)
+                .Include(p => p.FavoritePosts)
+                .Select(post => new PostViewModel
+                {
+                    PostId = post.Id,
+                    FavoritesCount = post.FavoritePosts.Count(),
+                    Images = post.Images.Select(i => new ImagesViewModel
+                    {
+                        Id = i.Id,
+                        PostId = post.Id,
+                        ImageUrl = i.Content
+                    }).ToArray()
+                })
+                .ToListAsync();
+
+            return posts;
+        }
     }
 }

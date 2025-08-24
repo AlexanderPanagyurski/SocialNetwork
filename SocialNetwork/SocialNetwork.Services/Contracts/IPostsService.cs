@@ -12,6 +12,8 @@
 
         Task<IEnumerable<PostViewModel>> GetPostsAsync(string userId, int skip, int take);
 
+        Task<IEnumerable<PostViewModel>> GetUserPostsAsync(string userId, int skip, int take);
+
         Task<IEnumerable<PostCommentViewModel>> GetCommentsAsync(string postId);
 
         Task<PostCommentViewModel> AddCommentAsync(string postId, string? parentId, string userId, string content);

@@ -22,6 +22,12 @@ export class PostService {
     return response;
   }
 
+  getUserPosts(userId: string, skip: number = 0, take: number = 5): Observable<Post[]> {
+    const response = this.http.get<Post[]>(`/api/posts/user/${userId}?skip=${skip}&take=${take}`);
+
+    return response;
+  }
+
   loadNewsfeed(skip: number = 0, take: number = 5) {
     const response = this.http.get<Post[]>(`/api/posts?skip=${skip}&take=${take}`);
 
