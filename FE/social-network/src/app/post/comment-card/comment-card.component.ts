@@ -57,7 +57,7 @@ export class CommentCardComponent {
 
     this.postService.addPostComment(this.postId!, postComment.id, content).subscribe({
       next: (response) => {
-        postComment.children.push(response);
+        postComment.children = [...postComment.children, response];
         const commentsCount  = this.el.nativeElement.querySelector(`#post-comments-${this.postId}`);
         if (commentsCount) {
           const count = Number(commentsCount.innerHTML);
@@ -70,9 +70,3 @@ export class CommentCardComponent {
     })
   }
 }
-
-
-// const commentsCountEl = this.el.nativeElement.querySelector(`#post-comments-${this.postId}`);
-// if (commentsCountEl) {
-//   this.renderer.setProperty(commentsCountEl, 'innerHTML', this.postComments.length.toString());
-// }
